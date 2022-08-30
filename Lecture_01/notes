@@ -1,0 +1,22 @@
+Lecture 01 - August 29, 2022
+
+Plan for today
++ Syllabus slides
++ Syllabus document
++ Submitty stuff
+  - Class schedule
+  - Office hours schedule
+  - Notes, slides, code, labs, etc.
++ Lab 01
+  - Wednesday 8/31, time is according to your registration section
+  - In-person attendance of labs is required
+    * Lab handouts will be posted on Submitty
++ Slides: Chapter-0
+  - Goal: 1-72
+  - Transitioning from C++ --> C
+  - Lots of code to look at
+
+To install gcc via native Ubuntu or WSL (Windows Subsystem for Linux)
+1. sudo apt-get update
+2. sudo apt-get install gcc 
+3. hit 'y' then 'enter' at prompt to install any necessary dependencies
