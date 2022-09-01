@@ -1,0 +1,7 @@
+Lecture 02 - September 1, 2022
+
+Plan for today
++ Slides
+  - Goal: Up through slide 72
+  - Memory, C strings, I/O
+  - Also: more command line stuff
