@@ -40,17 +40,29 @@ Notes:
   - otherwise, you'd want to manually set all arrays to 0 (good practice)
   If your malloc/calloc returns null, the allocation failed
 */
+
+  for (int i = 0; i < mat->rows; i++){
+    mat->data[i] = (double*)calloc(mat->cols, sizeof(double));
+    if (mat->data[i] == NULL){
+      perror("mm_alloc: allocation failed.");
+      exit(-1);
+    }
+  }
   
   return 0;
 }
 
 int mm_free(matrix* mat)
 {
-/*
-Notes:
+  /*
+  Notes:
   Reverse the allocation process, but you'll be calling free() instead
-*/
-  
+  */
+  for (int i = 0; i < mat->rows; i++){
+    free(mat->data[i]);
+    mat->data[i] = NULL;
+  }
+
   return 0;
 }
 
@@ -65,6 +77,13 @@ Notes:
   Use 2 digits of precision after the decimal (use "%10.2lf\t" as format string)
   See output.txt for expected output formatting
 */
+
+  for (int i = 0; i < mat->rows; i++){
+    for (int j = 0; j < mat->cols; j++){
+      printf("%10.2lf/t", mat->data[i][j]);
+    }
+    printf("\n");
+  }
   
   return 0;
 }
@@ -80,6 +99,46 @@ Notes:
   - You can use sscanf to parse each matrix entry
   - First value is data[0][0], next is data[0][1] ... data[#rows-1][#columns-1]
 */
+
+  FILE *in_file = fopen(filename, "r");
+
+  // if the file has not been read properly
+  if (in_file == NULL) {
+    perror("mm_read: failed to open file.");
+    exit(-1);
+  }
+
+  // get rows and columns
+  int r = -1;
+  int c;
+  // check if the rows and columns are read successfully
+  if (fscanf(in_file, "%d %d", &r, &c) != 2) {
+    perror("mm_read: failed to read matrix dimensions.");
+    exit(-1);
+  }
+  // if r is not changed, then the file is empty
+  if (r == -1) {
+    perror("mm_read: failed to read from file.");
+    exit(-1);
+  }
+
+  mat->rows = r;
+  mat->cols = c;
+  
+  // allocate space
+  mm_alloc(mat);
+
+  // add matrix data
+  for (int i = 0; i < r; i++){
+    for (int j = 0; j < c; j++){
+      double tmp;
+      if (fscanf(in_file, "%lf", &tmp) != 1) {
+        perror("mm_read: failed to read matrix values.");
+        exit(-1);
+      }
+      mat->data[i][j] = tmp;
+    }
+  }
   
   return 0;
 }
