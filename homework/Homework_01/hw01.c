@@ -41,6 +41,11 @@ Notes:
   - otherwise, you'd want to manually set all arrays to 0 (good practice)
   If your malloc/calloc returns null, the allocation failed
 */
+  if (mat->rows == 0 || mat->cols == 0) {
+    printf("mm_alloc: allocation failed.\n");
+    exit(-1);
+  }
+
   mat->data = (double**)calloc(mat->rows, sizeof(double*));
 
   for (int i = 0; i < mat->rows; i++){
@@ -94,28 +99,21 @@ Notes:
   return 0;
 }
 
-// checks whether the rows and columns are strictly digits
+// checks whether the rows and columns are strictly integers
 int check_rows_columns(char rows[15], char columns[15]){
-  int i = 0;
-  while (rows[i] != '\0' || i < 15) {
+
+  for (int i = 0; i < strlen(rows); i++){
     if (isdigit(rows[i]) == 0) {
       return 0;
     }
-    i++;
   }
 
-  i = 0;
-  while (rows[i] != '\0' || i < 15) {
+  for (int i = 0; i < strlen(columns); i++){
     if (isdigit(columns[i]) == 0) {
       return 0;
     }
-    i++;
   }
 
-  int x = atoi(rows);
-  int y = atoi(columns);
-
-  if (x == 0 || y == 0) return 0;
   return 1;
 }
 
@@ -174,7 +172,7 @@ Notes:
       mat->data[i][j] = tmp;
     }
   }
-  
+  fclose(in_file);
   return 0;
 }
 
