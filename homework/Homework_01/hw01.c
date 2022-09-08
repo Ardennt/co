@@ -11,6 +11,7 @@ CSCI-2500 Fall 2021
 #include<unistd.h>
 #include<string.h>
 #include<errno.h>
+#include <ctype.h> // for isdigit()
 
 /******************************************************************************/
 /* Function Calls */
@@ -45,7 +46,7 @@ Notes:
   for (int i = 0; i < mat->rows; i++){
     mat->data[i] = (double*)calloc(mat->cols, sizeof(double));
     if (mat->data[i] == NULL){
-      perror("mm_alloc: allocation failed.");
+      printf("mm_alloc: allocation failed.\n");
       exit(-1);
     }
   }
@@ -79,14 +80,43 @@ Notes:
   See output.txt for expected output formatting
 */
 
+  printf("\n/******** START of 2-D Matrix **********************************/\n");
+
   for (int i = 0; i < mat->rows; i++){
     for (int j = 0; j < mat->cols; j++){
       printf("%10.2lf\t", mat->data[i][j]);
     }
     printf("\n");
   }
+
+  printf("/******** END of 2-D Matrix ************************************/\n");
   
   return 0;
+}
+
+// checks whether the rows and columns are strictly digits
+int check_rows_columns(char rows[15], char columns[15]){
+  int i = 0;
+  while (rows[i] != '\0' || i < 15) {
+    if (isdigit(rows[i]) == 0) {
+      return 0;
+    }
+    i++;
+  }
+
+  i = 0;
+  while (rows[i] != '\0' || i < 15) {
+    if (isdigit(columns[i]) == 0) {
+      return 0;
+    }
+    i++;
+  }
+
+  int x = atoi(rows);
+  int y = atoi(columns);
+
+  if (x == 0 || y == 0) return 0;
+  return 1;
 }
 
 int mm_read(char* filename, matrix* mat) 
@@ -105,25 +135,28 @@ Notes:
 
   // if the file has not been read properly
   if (in_file == NULL) {
-    perror("mm_read: failed to open file.");
+    printf("mm_read: failed to open file.\n");
     exit(-1);
   }
 
   // get rows and columns
-  int r = -1;
-  int c;
-  // check if the rows and columns are read successfully
-  if (fscanf(in_file, "%d %d", &r, &c) != 2) {
-    perror("mm_read: failed to read matrix dimensions.");
-    exit(-1);
-  }
-  // if r is not changed, then the file is empty
-  if (r == -1) {
-    perror("mm_read: failed to read from file.");
-    exit(-1);
-  }
+  char rowCheck[15];
+  char colCheck[15];
+  int r, c;
 
+  // file is empty
+  if (fscanf(in_file, "%s %s", rowCheck, colCheck) == 0) {
+    printf("mm_read: failed to read from file.\n");
+    exit(-1);
+  }
   
+  // check if failed to read matrix dimensions
+  if (check_rows_columns(rowCheck, colCheck) == 0) {
+    printf("mm_read: failed to read matrix dimensions.\n");
+    exit(-1);
+  }
+  r = atoi(rowCheck);
+  c = atoi(colCheck);
 
   mat->rows = r;
   mat->cols = c;
@@ -135,7 +168,7 @@ Notes:
     for (int j = 0; j < c; j++){
       double tmp;
       if (fscanf(in_file, "%lf", &tmp) != 1) {
-        perror("mm_read: failed to read matrix values.");
+        printf("mm_read: failed to read matrix values.\n");
         exit(-1);
       }
       mat->data[i][j] = tmp;
@@ -157,7 +190,7 @@ Notes:
 
   // check if it is possible to multiply the inputs
   if (mat1->cols != mat2->rows){
-    perror("mm_matrix_mult: dimension mismatch between matrices.");
+    printf("mm_matrix_mult: dimension mismatch between matrices.\n");
     exit(-1);
   }
 
@@ -171,7 +204,7 @@ Notes:
   for (int i = 0; i < mat1->rows; i++){
     result_matrix->data[i] = (double*)calloc(result_matrix->cols, sizeof(double));
     if (result_matrix->data[i] == NULL){
-      perror("mm_alloc: allocation failed.");
+      printf("mm_alloc: allocation failed.\n");
       exit(-1);
     }
   }
