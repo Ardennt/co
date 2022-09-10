@@ -47,6 +47,10 @@ Notes:
   }
 
   mat->data = (double**)calloc(mat->rows, sizeof(double*));
+  if (mat->data == NULL) {
+    printf("mm_alloc: allocation failed.\n");
+    exit(-1);
+  }
 
   for (int i = 0; i < mat->rows; i++){
     mat->data[i] = (double*)calloc(mat->cols, sizeof(double));
@@ -69,6 +73,8 @@ int mm_free(matrix* mat)
     free(mat->data[i]);
     mat->data[i] = NULL;
   }
+
+  free(mat->data);
 
   return 0;
 }
@@ -100,22 +106,22 @@ Notes:
 }
 
 // checks whether the rows and columns are strictly integers
-int check_rows_columns(char rows[15], char columns[15]){
+// int check_rows_columns(char rows[15], char columns[15]){
 
-  for (int i = 0; i < strlen(rows); i++){
-    if (isdigit(rows[i]) == 0) {
-      return 0;
-    }
-  }
+//   for (int i = 0; i < strlen(rows); i++){
+//     if (isdigit(rows[i]) == 0) {
+//       return 0;
+//     }
+//   }
 
-  for (int i = 0; i < strlen(columns); i++){
-    if (isdigit(columns[i]) == 0) {
-      return 0;
-    }
-  }
+//   for (int i = 0; i < strlen(columns); i++){
+//     if (isdigit(columns[i]) == 0) {
+//       return 0;
+//     }
+//   }
 
-  return 1;
-}
+//   return 1;
+// }
 
 int mm_read(char* filename, matrix* mat) 
 {
@@ -138,23 +144,19 @@ Notes:
   }
 
   // get rows and columns
-  char rowCheck[15];
-  char colCheck[15];
+  char row_and_col[50];
+  fgets(row_and_col, sizeof(row_and_col), in_file);
   int r, c;
-
+  
+  int success = sscanf(row_and_col, "%d %d", &r, &c);
   // file is empty
-  if (fscanf(in_file, "%s %s", rowCheck, colCheck) == 0) {
+  if (success == 0) {
     printf("mm_read: failed to read from file.\n");
     exit(-1);
-  }
-  
-  // check if failed to read matrix dimensions
-  if (check_rows_columns(rowCheck, colCheck) == 0) {
+  } else if (success != 2) {
     printf("mm_read: failed to read matrix dimensions.\n");
     exit(-1);
   }
-  r = atoi(rowCheck);
-  c = atoi(colCheck);
 
   mat->rows = r;
   mat->cols = c;
