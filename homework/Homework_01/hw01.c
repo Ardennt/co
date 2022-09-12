@@ -105,24 +105,6 @@ Notes:
   return 0;
 }
 
-// checks whether the rows and columns are strictly integers
-// int check_rows_columns(char rows[15], char columns[15]){
-
-//   for (int i = 0; i < strlen(rows); i++){
-//     if (isdigit(rows[i]) == 0) {
-//       return 0;
-//     }
-//   }
-
-//   for (int i = 0; i < strlen(columns); i++){
-//     if (isdigit(columns[i]) == 0) {
-//       return 0;
-//     }
-//   }
-
-//   return 1;
-// }
-
 int mm_read(char* filename, matrix* mat) 
 {
 /*
