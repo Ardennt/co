@@ -1,0 +1,7 @@
+Lecture 03 - September 6, 2022
+
+Plan for today
++ Slides
+  - Goal: Up through slide 58
+  - Memory, basic Unix/Linux usage
+  - sizeof.c, memory-addresses.c, function-pointer.c

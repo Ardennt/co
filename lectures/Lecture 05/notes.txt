@@ -1,0 +1,11 @@
+Lecture 05 - September 17, 2021
+
+Plan for today
++ Homework 2
+  - Will be posted tomorrow or Wednesday
++ Slides
+  - Goal: Up through slide 156
+  - More Unix/Linux, piping and input/output redirection
+  - unix_commands.sh, io_fun.c, io_fun.sh
+  - ./a.out 2>&1 | tee output.txt
+

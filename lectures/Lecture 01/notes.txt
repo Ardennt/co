@@ -12,7 +12,7 @@ Plan for today
   - In-person attendance of labs is required
     * Lab handouts will be posted on Submitty
 + Slides: Chapter-0
-  - Goal: 1-72
+  - Goal: 1-17
   - Transitioning from C++ --> C
   - Lots of code to look at
 

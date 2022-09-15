@@ -1,0 +1,7 @@
+Lecture 04 - September 8, 2022
+
+Plan for today
++ Slides
+  - Goal: Up through slide 123
+  - Basic Unix/Linux usage
+  - unix_commands.sh, io_fun.c, io_fun.sh
