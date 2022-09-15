@@ -19,19 +19,19 @@ int main()
   char line[128];
 
   while (fgets(line, 128, file)){
-    char line_copy[128];
-    char* counter = line_copy;
+    if (strlen(line) == 1) continue;
+
+    char* line_copy = calloc(128, sizeof(char));
+    char *counter = line_copy;
     for (char* i = line; *i != '\0'; i++){
         if (isalnum(*i)) {
             *counter = *i;
             counter++;
         }
     }
-
-    if ((int)strlen(line_copy) != 0) {
-        printf("%s", line_copy);
-        printf("[%d alnum chars]\n", (int)strlen(line_copy));
-    }
+    if (strcmp(line_copy, "Chapter2") == 0) break;
+    printf("%s ", line_copy);
+    printf("[%d alnum chars]\n", (int)strlen(line_copy));
 
   }
   
