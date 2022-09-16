@@ -1,0 +1,152 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+\begin{center}
+    \textbf{CSCI 2500 — Computer Organization\\
+    Homework 02 (document version 1.0) — Due September 22, 2022\\
+    It’s All About Performance!\\}
+\end{center}
+
+\begin{enumerate}
+    \item List and describe three types of computers.
+    \begin{enumerate}
+        \item Personal Computers
+        \begin{itemize}
+            \item Personal computers, like its name states, is designed for an 
+            individual to use. It incorporates I/O systems such as a graphics 
+            display (output), a keyboard (input), and a mouse (input). 
+            \item The most common type of a personal computer nowadays is a laptop, 
+            a portable personal computer that has a display, an internal keyboard, 
+            and a mouse (typically referred to as a touchpad).
+            \item Personal computers are able to run a variety of software and
+            they can download many third-party apps.
+        \end{itemize}
+
+        \item Servers
+        \begin{itemize}
+            \item Servers are computers designed to be ran by multiple users. They are
+            typically only accessible via network.
+            \item Due to their high costs, they are designed to be extremely reliable since, 
+            unlike a common crash on a PC, it may be costly to repair the damages.
+            \item These servers include supercomputers as well, which are designed to solve
+            and engineer complex algorithms.
+        \end{itemize}
+
+        \item Embedded Computers
+        \begin{itemize}
+            \item Hidden components of various systems. It belongs inside of another device
+            used to run applications or any type of software. These have low failure tolerance
+            because such would be devastating.
+            \item Systems such as thermostats use embedded computers to control the actual
+            unit.
+            \item Another example can be seen in electric kettles, components that make
+            the kettle auto-shut off when the desired temperature is reached.
+        \end{itemize}
+    \end{enumerate}
+    \item The seven great ideas in computer architecture are similar to ideas from other fields. Match the seven ideas from computer architecture, "Use Abstraction to Simplify Design", "Make the Common Case Fast", "Performance via Parallelism", "Performance via Pipelining", "Performance via Prediction", "Hierarchy of Memories", and "Dependability via Redundancy" to the following ideas from other fields:
+    \begin{enumerate}
+        \item Assembly lines in automobile manufacturing
+        \begin{description}
+            \item[Performance via Pipelining] 
+        \end{description}
+
+        \item Suspension bridge cables
+        \begin{description}
+            \item[Dependability via Redundancy] 
+        \end{description}
+
+        \item Aircraft and marine navigation systems that incorporate wind information
+        \begin{description}
+            \item[Performance via Prediction] 
+        \end{description}
+
+        \item Express elevators in buildings
+        \begin{description}
+            \item[Make the Common Case Fast] 
+        \end{description}
+
+        \item Library reserve desk
+        \begin{description}
+            \item[Hierarchy of Memories] 
+        \end{description}
+
+        \item Increasing the gate area on a CMOS transistor to decrease its switching time
+        \begin{description}
+            \item[Performance via Parallelism] 
+        \end{description}
+
+        \item Building self-driving cars whose control systems partially rely on existing sensor systems already installed into the base vehicle, such as lane departure systems and smart cruise control systems
+        \begin{description}
+            \item[Use Abstraction to Simplify Design] 
+        \end{description}
+    \end{enumerate}
+    
+    \item Describe the steps that transform a program written in a high-level language such as C into a representation that is directly executed by a computer processor.
+    \begin{enumerate}
+        \item Some programmer writes a high level language program, such as C (like mentioned in the question),
+        we can assume the programmer wrote \textbf{A + B}.
+        \item The compiler, such as gcc (the one used for C) converts this high level language A + B into an
+        assembly language, which is interpreted as \textbf{add A, B}.
+        \item Then, an assembler converts that assembly language into binary machine language. Binary machine
+        language consists of two symbols 0 and 1, which tells the program to turn on or off some specific
+        function.
+        \item The program is successfully executed.
+    \end{enumerate}
+
+    \item Assume a color display using 8 bits for each of the primary colors (red, green, blue) per pixel and a frame size of 1280 × 1024.
+    \begin{enumerate}
+        \item What is the minimum size in bytes of the frame buffer to store a frame?
+        \begin{center}
+             To calculate the total number of pixels on the display\\
+             We can use the following formula.
+             \begin{align*}
+                P(w, h) = wh
+            \end{align*}
+            Where w = width, h = height \\
+            \begin{align*}
+                P(1280, 1024) & = 1280(1024) \\
+                              & = 1310720
+            \end{align*}
+            We know that 8 bits = 1 byte, and there are 3 total colors.
+            \begin{align*}
+                S_m = 1310720(3) = 3932160
+            \end{align*}
+            The minimum size in byte of the frame buffer to store a frame is\\
+            \textbf{3932160 bytes/frame}
+        \end{center}
+        
+        \item How long would it take, at a minimum, for the frame to be sent over a 100 Mbit/s network?
+        \begin{center}
+            100Mbit = 12.5Mbyte, since 100/8 = 12.5
+            \begin{align*}
+                \frac{3932160}{12500000} = \textbf{0.3145728s}
+            \end{align*}
+        \end{center}
+    \end{enumerate}
+    \item 
+    Consider three different processors P1, P2, and P3 executing the same instruction set. P1 has a 3 GHz clock rate and a CPI of 1.5. P2 has a 2.5 GHz clock rate and a CPI of 1.0. P3 has a 4.0 GHz clock rate and has a CPI of 2.2.
+    
+    \begin{enumerate}
+        \item Which processor has the highest performance expressed in instructions per second?
+        \begin{center}
+            P2 has the highest performance
+            \begin{align*}
+                P_2 = \frac{2.5 \times 10^9}{1.0} = 2.5 \times 10^9I_s
+            \end{align*}
+
+        \end{center}
+        
+        \item If the processors each execute a program in 10 seconds, find the number of cycles and the number of instructions.
+        \begin{center}
+            
+        \end{center}
+
+        \item We are trying to reduce the execution time by 30\% but this leads to an increase of 20\% in the CPI. What clock rate should we have to get this time reduction?
+    \end{enumerate}
+    
+    
+\end{enumerate}
+
+\end{document}
