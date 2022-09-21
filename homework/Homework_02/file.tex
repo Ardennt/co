@@ -15,7 +15,7 @@
     \begin{enumerate}
         \item Which processor has the highest performance expressed in instructions per second?
         \begin{center}
-            P2 has the highest performance
+            \textbf{P2 has the highest performance}
             \begin{align*}
                 P_2 = \frac{2.5 \times 10^9}{1.0} = 2.5 \times 10^9I_s
             \end{align*}
@@ -31,9 +31,9 @@
             \end{align*}
         \end{center}
         \begin{enumerate}
-            \item P1 \\$N_c = 3 \times 10^9 \times 10 = 3\times10^{10}$ cycles\\$I_c = \frac{3\times10^9\times10}{1.5} = 2\times10^{10}$ instructions
-            \item P2 \\$N_c = 2.5 \times 10^9 \times 10 = 2.5 \times 10^{10}$ cycles\\$I_c = \frac{2.5\times10^9\times10}{1.0} = 2.5\times10^{10}$ instructions
-            \item P3 \\$N_c = 4 \times 10^9 \times 10 = 4\times10^{10}$ cycles \\ $I_c = \frac{4\times10^9\times10}{2.2} = 1.82\times10^{10}$ instructions
+            \item P1 \\$N_c = 3 \times 10^9 \times 10 = 3\times10^{10}$ cycles\\$I_c = \frac{3\times10^9\times10}{1.5} = 2\times10^{10}$ \textbf{instructions}
+            \item P2 \\$N_c = 2.5 \times 10^9 \times 10 = 2.5 \times 10^{10}$ cycles\\$I_c = \frac{2.5\times10^9\times10}{1.0} = 2.5\times10^{10}$ \textbf{instructions}
+            \item P3 \\$N_c = 4 \times 10^9 \times 10 = 4\times10^{10}$ cycles \\ $I_c = \frac{4\times10^9\times10}{2.2} = 1.82\times10^{10}$ \textbf{instructions}
         \end{enumerate}
         
 
@@ -53,8 +53,8 @@
     \begin{enumerate}
         \item What is the global CPI for each implementation?
         \begin{itemize}
-            \item $P_1 = 1\times0.1+2\times0.2+3\times0.5+3\times0.2=2.6$
-            \item $P_2 = 2\times0.1+2\times0.2+2\times0.5+2\times0.2=2.0$
+            \item $P_1 = 1\times0.1+2\times0.2+3\times0.5+3\times0.2=\textbf{2.6}$
+            \item $P_2 = 2\times0.1+2\times0.2+2\times0.5+2\times0.2=\textbf{2.0}$
         \end{itemize}
         \item Find the clock cycles required in both cases.
         \begin{itemize}
@@ -76,8 +76,8 @@
     \begin{enumerate}
         \item Find the average CPI for each program given that the processor has a clock cycle time of 1 ns.
         \begin{itemize}
-            \item $CPU_A = \frac{E_t}{I_c \times C_c} = \frac{1.1}{10^9 \times 10^{-9}} = 1.1$
-            \item $CPU_a = \frac{E_t}{I_c \times C_c} = \frac{1.5}{1.2\times10^9\times10^{-9}} = 1.25$
+            \item $CPU_A = \frac{E_t}{I_c \times C_c} = \frac{1.1}{10^9 \times 10^{-9}} = \textbf{1.1}$
+            \item $CPU_a = \frac{E_t}{I_c \times C_c} = \frac{1.5}{1.2\times10^9\times10^{-9}} = \textbf{1.25}$
         \end{itemize}
         \item Assume the compiled programs run on two different processors. If the execution times on the two processors are the same, how much faster is the clock of the processor running compiler A's code versus the clock of the processor running compiler B's code?
         \begin{itemize}
@@ -90,8 +90,8 @@
         \end{itemize}
         \item A new compiler is developed that uses only 6.0E8 instructions and has an average CPI of 1.1. What is the speedup of using this new compiler versus using compiler A or B on the original processor?
         \begin{itemize}
-            \item compiler A: $\frac{1.1 \times 10^9}{1.1 \times 6.0 \times 10^8} = 1.67$
-            \item compiler B: $\frac{1.25 \times 1.2 \times 10^9}{1.1 \times 6.0 \times 10^8} = 2.27$
+            \item compiler A: $\frac{1.1 \times 10^9}{1.1 \times 6.0 \times 10^8} = \textbf{1.67}$
+            \item compiler B: $\frac{1.25 \times 1.2 \times 10^9}{1.1 \times 6.0 \times 10^8} = \textbf{2.27}$
         \end{itemize}
     \end{enumerate}
     
@@ -113,22 +113,22 @@
             % processor 1
             \text{processor count: 1}\\
             E_t &= \frac{2.56 \times 10^9 + 15.36 \times 10^9 + 1.28 \times 10^9}{2 \times 10^9}\\
-            &= 9.6s\\
+            &= \textbf{9.6s}\\
             % processor 2
             \text{processor count: 2}\\
             E_t &= \frac{\frac{2.56 \times 10^9}{0.7(2)} + \frac{15.36 \times 10^9}{0.7(2)} + 1.28 \times 10^9}{2 \times 10^9}\\
-            &= 7.04s\\
-            speedup &= \frac{9.6}{7.04} = 1.36\times\\
+            &= \textbf{7.04s}\\
+            speedup &= \frac{9.6}{7.04} = \textbf{1.36}\times\\
             % processor 4
             \text{processor count: 4}\\
             E_t &= \frac{\frac{2.56 \times 10^9}{0.7(4)} + \frac{15.36 \times 10^9}{0.7(4)} + 1.28 \times 10^9}{2 \times 10^9}\\
-            &= 3.84s\\
-            speedup &= \frac{9.6}{3.84} = 2.5\times\\
+            &= \textbf{3.84s}\\
+            speedup &= \frac{9.6}{3.84} = \textbf{2.5}\times\\
             %processor 8
             \text{processor count: 8}\\
             E_t &= \frac{\frac{2.56 \times 10^9}{0.7(8)} + \frac{15.36 \times 10^9}{0.7(8)} + 1.28 \times 10^9}{2 \times 10^9}\\
-            &= 2.24s\\
-            speedup &= \frac{9.6}{2.24} = 4.29\times\\
+            &= \textbf{2.24s}\\
+            speedup &= \frac{9.6}{2.24} = \textbf{4.29}\times\\
         \end{align*}
         \item
         If the CPI of the arithmetic instructions was doubled, what would the impact be on the execution time of the program on 1, 2, 4, or 8 processors?
@@ -137,62 +137,125 @@
             % processor 1
             \text{processor count: 1}\\
             E_t &= \frac{5.12 \times 10^9 + 15.36 \times 10^9 + 1.28 \times 10^9}{2 \times 10^9}\\
-            &= 10.88s\\
+            &= \textbf{10.88s}\\
             % processor 2
             \text{processor count: 2}\\
             E_t &= \frac{\frac{5.12 \times 10^9}{0.7(2)} + \frac{15.36 \times 10^9}{0.7(2)} + 1.28 \times 10^9}{2 \times 10^9}\\
-            &= 7.95s\\
+            &= \textbf{7.95s}\\
             % processor 4
             \text{processor count: 4}\\
             E_t &= \frac{\frac{5.12 \times 10^9}{0.7(4)} + \frac{15.36 \times 10^9}{0.7(4)} + 1.28 \times 10^9}{2 \times 10^9}\\
-            &= 4.30s\\
+            &= \textbf{4.30s}\\
             % processor 8
             \text{processor count: 8}\\
             E_t &= \frac{\frac{5.12 \times 10^9}{0.7(8)} + \frac{15.36 \times 10^9}{0.7(8)} + 1.28 \times 10^9}{2 \times 10^9}\\
-            &= 2.47s\\
+            &= \textbf{2.47s}\\
         \end{align*}
         \item
         To what should the CPI of load/store instructions be reduced in order for a single processor to match the performance of four processors using the original CPI values?
         \begin{align*}
             E_{t4} &= \frac{CPI_{ar1} \times I_{car1} + CPI_{ls1} \times I_{cls1} + CPI_{b1} \times I_{cb1}}{C_r}\\
             3.84 &= \frac{2.56 \times 10^9 +  CPI_{ls1} \times 1.28 \times 10^9 + 1.28 \times 10^9}{2 \times 10^9}\\
-            CPI_{ls1} &= 3.01
+            CPI_{ls1} &= \textbf{3.01}
         \end{align*}
     \end{enumerate}
     \item The results of the SPEC CPU2006 bzip2 benchmark running on an AMD Barcelona has an instruction count of 2.389E12, an execution time of 750 s, and a reference time of 9650 s.
     \begin{enumerate}
         \item
         Find the CPI if the clock cycle time is 0.333 ns.
+        \begin{align*}
+            E_t &= C_c \times CPI \times I_c\\
+            CPI &= \frac{E_t}{C_c \times I_c}\\
+            CPI &= \frac{750}{0.333 \times 10^{-9} (2.389 \times 10^{12})}\\
+            &= \frac{750}{795.537}\\
+            &= \textbf{0.942}
+        \end{align*}
         
         \item
         Find the SPECratio.
+        \begin{align*}
+            SPEC_r = \frac{R_t}{E_t} &= \frac{9650}{750}\\
+            &= \textbf{12.87}
+        \end{align*}
         
         \item
         Find the increase in CPU time if the number of instructions of the benchmark is increased by 10\% without affecting the CPI.
-        
+        \begin{align*}
+            E_t\ new = E_t \times 1.1 \rightarrow E_t\ new &= 750 \times 1.1\\
+            &= \textbf{825}
+        \end{align*}
         \item
         Find the increase in CPU time if the number of instructions of the benchmark is increased by 10\% and the CPI is increased by 5\%.
-        
+        \begin{align*}
+            E_t\ new = E_t \times (1.1 \times 1.05) \rightarrow E_t\ new &= 750 \times (1.155)\\
+            &= \textbf{866.25}
+        \end{align*}
         \item
         Find the change in the SPECratio for this change.
+        \begin{align*}
+            \text{Change in spec ratio for (c)}\\
+            SPEC_r\ c = \frac{9650}{825} &= 11.697\\
+            \frac{original\ spec}{current\ spec} = \frac{12.87}{11.70} &= 1.1\\
+            \text{The original SPECratio was \textbf{1.1} times greater}
+        \end{align*}
+        \begin{align*}
+            \text{Change in spec ratio for (d)}\\
+            SPEC_r\ c = \frac{9650}{866.25} &= 11.14\\
+            \frac{original\ spec}{current\ spec} = \frac{12.87}{11.14} &= 1.2\\
+            \text{The original SPECratio was \textbf{1.2} times greater}
+        \end{align*}
         
         \item
         Suppose that we are developing a new version of the AMD Barcelona processor with a 4 GHz clock rate. We have added some additional instructions to the instruction set in such a way that the number of instructions has been reduced by 15\%. The execution time is reduced to 700 s and the new SPECratio is 13.7. Find the new CPI.
-        
+        \begin{align*}
+            C_r &= 4 \times 10^9\\
+            new\ I_c = 0.85I_c &= 2.03\\
+            E_t &= 700\\
+            SPEC_r &= 13.7\\\\
+            CPI = \frac{E_t \times C_r}{I_c} &= \frac{700 \times 4 \times 10^9}{2.03 \times 10^{12}}\\
+            &= 1.38\\
+            \text{The new CPI is \textbf{1.38}}
+        \end{align*}
         \item
         This CPI value is larger than obtained in 1.11.1 as the clock rate was increased from 3 GHz to 4 GHz. Determine whether the increase in the CPI is similar to that of the clock rate. If they are dissimilar, why?
-        
+        \begin{itemize}
+            \item CPI and Clock Rate aren't the only variables that have been changed
+            \item If we divide CPI old by new, $\frac{CPI_o}{CPI_n} = \frac{1.38}{0.942} = 1.46$
+            \item CPI change was \textbf{0.46}
+            \item Clock rate change was $\frac{C_{c\ new}}{C_{c\ old}} = \frac{4 \times 10^9}{3 \times 10^9} = 1.33$
+            \item Clcok rate change was \textbf{0.33}
+            \item They are dissimilar because other variables uch as execution time and the number of instructions were also changed.
+        \end{itemize}
         \item
         By how much has the CPU time been reduced?
-        
+        \begin{itemize}
+            \item CPU time has been reduced by $\frac{750}{700} = 1.07$, it has been reduced by \textbf{7\%}
+        \end{itemize}
         \item
         For a second benchmark, libquantum, assume an execution time of 960 ns, CPI of 1.61, and clock rate of 3 GHz. If the execution time is reduced by an additional 10\% without affecting to the CPI and with a clock rate of 4 GHz, determine the number of instructions.
-        
+        \begin{align*}
+            E_t = 960 \times 10^{-9} \rightarrow E_t = 960 \times 0.9 \times 10^{-9} &= 864 \times 10^{-9}\\
+            CPI &= 1.61\\
+            C_r = 3 \times 10^9 -> C_{r\ new} &= 4 \times 10^9\\
+            I_c = \frac{E_t \times C_r}{CPI} &= \frac{864 \times 10^{-9} \times 4 \times 10^9}{1.61}\\
+            &= 2146.6 \textbf{ instructions}
+        \end{align*}
         \item
         Determine the clock rate required to give a further 10\% reduction in CPU time while maintaining the number of instructions and with the CPI unchanged.
-        
+        \begin{align*}
+            E_t &= 864 \times 0.9 \times 10^{-9}\\
+            C_r = \frac{I_c \times CPI}{E_t} &= \frac{2146.6 \times 1.61}{864 \times 0.9 \times 10^{-9}}\\
+            &= 4.4 \times 10^9 \leftarrow \textbf{clock rate necessary}
+        \end{align*}
         \item
         Determine the clock rate if the CPI is reduced by 15\% and the CPU time by 20\% while the number of instructions is unchanged.
+        \begin{align*}
+            CPI &= 0.85 \times 1.61\\
+            E_t &= 0.8 \times 960 \times 10^{-9}\\
+            I_c &= 2146.6\\
+            C_r = \frac{I_c \times CPI}{E_t} &= \frac{2146.6 \times 0.85 \times 1.61}{0.8 \times 960 \times 10^{-9}}\\
+            &= 3.8 \times 10^9 \leftarrow \textbf{is the clock rate given the parameters}
+        \end{align*}
     \end{enumerate}
     \item Assume a program requires the execution of $50 \times 10^6$ FP instructions, $110 \times 10^6$ INT instructions, $80 \times 10^6$ L/S instructions, and $16 \times 10^6$ branch instructions. The CPI for each type of instruction is 1, 1, 4, and 2, respectively. Assume that the processor has a 2 GHz clock rate.
     \begin{enumerate}

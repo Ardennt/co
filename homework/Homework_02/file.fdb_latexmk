@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1663634933 "c:/Users/ardennt/Documents/CS/comporg/homework/Homework_02/file.tex" "file.pdf" "file" 1663634933
-  "C:/Users/ardennt/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1663281014 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
+["pdflatex"] 1663792389 "c:/Users/ardennt/Documents/CS/comporg/homework/Homework_02/file.tex" "file.pdf" "file" 1663792390
+  "C:/Users/ardennt/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1663716764 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/ardennt/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1663282601 11548 3d9cfb07b8c30a06de6e585e37cbcea8 ""
   "C:/Users/ardennt/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1663279854 10773107 cb191ebd97441df48cbcb8022a0bad00 ""
   "D:/HDD Apps/MiKTeX/fonts/tfm/jknappen/ec/tcrm1000.tfm" 993062508 1436 c7f957a372ef2fbe93c0982f96625e12 ""
@@ -41,9 +41,9 @@
   "D:/HDD Apps/MiKTeX/tex/latex/geometry/geometry.sty" 1578057145 42759 9cf6c5257b1bc7af01a58859749dd37a ""
   "D:/HDD Apps/MiKTeX/tex/latex/graphics/keyval.sty" 1655058252 2671 7e67d78d9b88c845599a85b2d41f2e39 ""
   "D:/HDD Apps/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1661885168 30282 33c465a64f2bd5ad4a68a7b2f555a29b ""
-  "c:/Users/ardennt/Documents/CS/comporg/homework/Homework_02/file.tex" 1663634932 14833 bd0fa16a71430867b44b1b842c3b490c ""
-  "file.aux" 1663634933 32 77e0dffd05b653a64f0caf3eb9bb454a "pdflatex"
-  "file.tex" 1663634932 14833 bd0fa16a71430867b44b1b842c3b490c ""
+  "c:/Users/ardennt/Documents/CS/comporg/homework/Homework_02/file.tex" 1663792389 18493 db8bc61fea9197a4fb1965536297feab ""
+  "file.aux" 1663792389 32 4d1825978335c8847f72f7c473f9edc8 "pdflatex"
+  "file.tex" 1663792389 18493 db8bc61fea9197a4fb1965536297feab ""
   (generated)
   "file.aux"
   "file.log"
