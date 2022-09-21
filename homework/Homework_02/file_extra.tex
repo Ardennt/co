@@ -1,0 +1,243 @@
+\documentclass[10pt]{article}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+\begin{center}
+    \textbf{CSCI 2500 — Computer Organization\\
+    Homework 02 (document version 1.0) — Due September 22, 2022\\
+    It’s All About Performance!\\}
+\end{center}
+
+\begin{enumerate}
+    \item List and describe three types of computers.
+    \begin{enumerate}
+        \item Personal Computers
+        \begin{itemize}
+            \item Personal computers, like its name states, is designed for an 
+            individual to use. It incorporates I/O systems such as a graphics 
+            display (output), a keyboard (input), and a mouse (input). 
+            \item The most common type of a personal computer nowadays is a laptop, 
+            a portable personal computer that has a display, an internal keyboard, 
+            and a mouse (typically referred to as a touchpad).
+            \item Personal computers are able to run a variety of software and
+            they can download many third-party apps.
+        \end{itemize}
+
+        \item Servers
+        \begin{itemize}
+            \item Servers are computers designed to be ran by multiple users. They are
+            typically only accessible via network.
+            \item Due to their high costs, they are designed to be extremely reliable since, 
+            unlike a common crash on a PC, it may be costly to repair the damages.
+            \item These servers include supercomputers as well, which are designed to solve
+            and engineer complex algorithms.
+        \end{itemize}
+
+        \item Embedded Computers
+        \begin{itemize}
+            \item Hidden components of various systems. It belongs inside of another device
+            used to run applications or any type of software. These have low failure tolerance
+            because such would be devastating.
+            \item Systems such as thermostats use embedded computers to control the actual
+            unit.
+            \item Another example can be seen in electric kettles, components that make
+            the kettle auto-shut off when the desired temperature is reached.
+        \end{itemize}
+    \end{enumerate}
+    \item The seven great ideas in computer architecture are similar to ideas from other fields. Match the seven ideas from computer architecture, "Use Abstraction to Simplify Design", "Make the Common Case Fast", "Performance via Parallelism", "Performance via Pipelining", "Performance via Prediction", "Hierarchy of Memories", and "Dependability via Redundancy" to the following ideas from other fields:
+    \begin{enumerate}
+        \item Assembly lines in automobile manufacturing
+        \begin{description}
+            \item[Performance via Pipelining] 
+        \end{description}
+
+        \item Suspension bridge cables
+        \begin{description}
+            \item[Dependability via Redundancy] 
+        \end{description}
+
+        \item Aircraft and marine navigation systems that incorporate wind information
+        \begin{description}
+            \item[Performance via Prediction] 
+        \end{description}
+
+        \item Express elevators in buildings
+        \begin{description}
+            \item[Make the Common Case Fast] 
+        \end{description}
+
+        \item Library reserve desk
+        \begin{description}
+            \item[Hierarchy of Memories] 
+        \end{description}
+
+        \item Increasing the gate area on a CMOS transistor to decrease its switching time
+        \begin{description}
+            \item[Performance via Parallelism] 
+        \end{description}
+
+        \item Building self-driving cars whose control systems partially rely on existing sensor systems already installed into the base vehicle, such as lane departure systems and smart cruise control systems
+        \begin{description}
+            \item[Use Abstraction to Simplify Design] 
+        \end{description}
+    \end{enumerate}
+    
+    \item Describe the steps that transform a program written in a high-level language such as C into a representation that is directly executed by a computer processor.
+    \begin{enumerate}
+        \item Some programmer writes a high level language program, such as C (like mentioned in the question),
+        we can assume the programmer wrote \textbf{A + B}.
+        \item The compiler, such as gcc (the one used for C) converts this high level language A + B into an
+        assembly language, which is interpreted as \textbf{add A, B}.
+        \item Then, an assembler converts that assembly language into binary machine language. Binary machine
+        language consists of two symbols 0 and 1, which tells the program to turn on or off some specific
+        function.
+        \item The program is successfully executed.
+    \end{enumerate}
+
+    \item Assume a color display using 8 bits for each of the primary colors (red, green, blue) per pixel and a frame size of 1280 × 1024.
+    \begin{enumerate}
+        \item What is the minimum size in bytes of the frame buffer to store a frame?
+        \begin{center}
+             To calculate the total number of pixels on the display\\
+             We can use the following formula.
+             \begin{align*}
+                P(w, h) = wh
+            \end{align*}
+            Where w = width, h = height \\
+            \begin{align*}
+                P(1280, 1024) & = 1280(1024) \\
+                              & = 1310720
+            \end{align*}
+            We know that 8 bits = 1 byte, and there are 3 total colors.
+            \begin{align*}
+                S_m = 1310720(3) = 3932160
+            \end{align*}
+            The minimum size in byte of the frame buffer to store a frame is\\
+            \textbf{3932160 bytes/frame}
+        \end{center}
+        
+        \item How long would it take, at a minimum, for the frame to be sent over a 100 Mbit/s network?
+        \begin{center}
+            100Mbit = 12.5Mbyte, since 100/8 = 12.5
+            \begin{align*}
+                \frac{3932160}{12500000} = \textbf{0.3145728s}
+            \end{align*}
+        \end{center}
+    \end{enumerate}
+    \item 
+    Consider three different processors P1, P2, and P3 executing the same instruction set. P1 has a 3 GHz clock rate and a CPI of 1.5. P2 has a 2.5 GHz clock rate and a CPI of 1.0. P3 has a 4.0 GHz clock rate and has a CPI of 2.2.
+    
+    \begin{enumerate}
+        \item Which processor has the highest performance expressed in instructions per second?
+        \begin{center}
+            P2 has the highest performance
+            \begin{align*}
+                P_2 = \frac{2.5 \times 10^9}{1.0} = 2.5 \times 10^9I_s
+            \end{align*}
+
+        \end{center}
+        
+        \item If the processors each execute a program in 10 seconds, find the number of cycles and the number of instructions.
+        \begin{center}
+            $CPU_t$ = cpu time\\$N_c$ = number of cycles\\$I_c$ = instruction count\\$C_r$ = clock rate\\$t$ = time
+            \begin{align*}
+                N_c = C_r \times t\\
+                I_c = \frac{CPU_t \times C_r}{CPI}
+            \end{align*}
+        \end{center}
+        \begin{enumerate}
+            \item P1 \\$N_c = 3 \times 10^9 \times 10 = 3\times10^{10}$ cycles\\$I_c = \frac{3\times10^9\times10}{1.5} = 2\times10^{10}$ instructions
+            \item P2 \\$N_c = 2.5 \times 10^9 \times 10 = 2.5 \times 10^{10}$ cycles\\$I_c = \frac{2.5\times10^9\times10}{1.0} = 2.5\times10^{10}$ instructions
+            \item P3 \\$N_c = 4 \times 10^9 \times 10 = 4\times10^{10}$ cycles \\ $I_c = \frac{4\times10^9\times10}{2.2} = 1.82\times10^{10}$ instructions
+        \end{enumerate}
+        
+
+        \item We are trying to reduce the execution time by 30\% but this leads to an increase of 20\% in the CPI. What clock rate should we have to get this time reduction?
+        \begin{center}
+            $execution_t = \frac{I_c \times CPI}{C_r}$\\
+            $execution_t * 0.7 = \frac{I_c \times CPI \times 1.2}{NC_r}$\\
+            $NC_r = \frac{I_c \times CPI \times 1.2}{0.7 \times execution_t} =>$ substitute $C_r = \frac{I_c \times CPI}{execution_t}$\\
+            $NC_r = \frac{C_r \times 1.2}{0.7}$\\
+            $NC_r = 1.71 \times C_r$\\
+            Our new clock rate should be \textbf{71\%} greater, or \textbf{1.71} times greater.
+        \end{center}
+    \end{enumerate}
+    \item Consider the table given next, which tracks several performance indicators for Intel desktop processors since 2010.
+    The "Tech" column shows the minimum feature size of each processor's fabrication process. Assume that the die size has remained relatively constant and the number of transistors that comprise each processor scales at (1/ t )2, where t = the minimum feature size.
+    For each performance indicator, calculate the average rate of improvement from 2010 to 2019, as well as the number of years required to double each at that corresponding rate.
+    \begin{enumerate}
+        \item hi
+    \end{enumerate}
+    \item Consider two different implementations of the same instruction set architecture. The instructions can be divided into four classes according to their CPI (class A, B, C, and D). P1 with a clock rate of 2.5 GHz and CPIs of 1, 2, 3, and 3, and P2 with a clock rate of 3 GHz and CPIs of 2, 2, 2, and 2.
+
+    Given a program with a dynamic instruction count of 1.0E6 instructions divided into classes as follows: 10\% class A, 20\% class B, 50\% class C, and 20\% class D, which implementation is faster?
+    \begin{enumerate}
+        \item What is the global CPI for each implementation?
+        \begin{itemize}
+            \item $P_1 = 1\times0.1+2\times0.2+3\times0.5+3\times0.2=2.6$
+            \item $P_2 = 2\times0.1+2\times0.2+2\times0.5+2\times0.2=2.0$
+        \end{itemize}
+        \item Find the clock cycles required in both cases.
+        \begin{itemize}
+            \item $P_1 = 2.6\times10^6$
+            \item $P_2 = 2.0\times10^6$
+        \end{itemize}
+        \begin{align*}
+            E_{t} &= CPI \times I_c \times C_c => C_c = \frac{1}{C_r}\\
+            E_{t} &= CPI \times I_c \times C_r^{-1}\\
+            E_{t1} &= 2.6 \times 10^6\times (2.5\times10)^{-9} = 1.04 \times 10^{-3}\\
+            E_{t2} &= 2.0 \times 10^6\times (3 \times 10)^{-9} = 0.667 \times 10^{-3}
+        \end{align*}
+        \begin{center}
+            P2 is faster due to lower execution time of \textbf{0.667 milliseconds}.
+        \end{center}
+    \end{enumerate}
+    
+    \item Compilers can have a profound impact on the performance of an application. Assume that for a program, compiler A results in a dynamic instruction count of 1.0E9 and has an execution time of 1.1 s, while compiler B results in a dynamic instruction count of 1.2E9 and an execution time of 1.5 s.
+    \begin{enumerate}
+        \item Find the average CPI for each program given that the processor has a clock cycle time of 1 ns.
+        \begin{itemize}
+            \item $CPU_A = \frac{E_t}{I_c \times C_c} = \frac{1.1}{10^9 \times 10^{-9}} = 1.1$
+            \item $CPU_a = \frac{E_t}{I_c \times C_c} = \frac{1.5}{1.2\times10^9\times10^{-9}} = 1.25$
+        \end{itemize}
+        \item Assume the compiled programs run on two different processors. If the execution times on the two processors are the same, how much faster is the clock of the processor running compiler A's code versus the clock of the processor running compiler B's code?
+        \begin{itemize}
+            \item formula for execution time $E_t = CPI \times C_c \times I_c$
+            \item from the above, we derive $C_c = \frac{E_t}{CPI \times I_c}$
+            \item reciprocate clock cycle for clock rate $C_r = \frac{CPI \times I_c}{E_t}$
+            \item we can assume $E_t$ is a constant = 1, therefore we can solve with $\frac{CPI_B \times I_{cB}}{CPI_A \times I_{cA}}$
+            \item difference can be calculated with $\frac{1.25 \times 1.2 \times 10^9}{1.1 \times 10^9} = 1.363$
+            \item Compiler A is running \textbf{1.363} times faster than Compiler B
+        \end{itemize}
+        \item A new compiler is developed that uses only 6.0E8 instructions and has an average CPI of 1.1. What is the speedup of using this new compiler versus using compiler A or B on the original processor?
+        \begin{itemize}
+            \item compiler A: $\frac{1.1 \times 10^9}{1.1 \times 6.0 \times 10^8} = 1.67$
+            \item compiler B: $\frac{1.25 \times 1.2 \times 10^9}{1.1 \times 6.0 \times 10^8} = 2.27$
+        \end{itemize}
+    \end{enumerate}
+    \item The Pentium 4 Prescott processor, released in 2004, had a clock rate of 3.6 GHz and voltage of 1.25 V. Assume that, on average, it consumed 10 W of static power and 90 W of dynamic power.
+
+    The Core i5 Ivy Bridge, released in 2012, had a clock rate of 3.4 GHz and voltage of 0.9 V. Assume that, on average, it consumed 30 W of static power and 40 W of dynamic power.
+    \begin{enumerate}
+        \item For each processor find the average capacitive loads.
+        \begin{itemize}
+            \item For Pentium 4 Prescott: $C = \frac{90}{1.25^2\times3.6\times10^9} = 1.6 \times 10^{-8}$
+            \item For Core i5 Ivy Bridge: $C = \frac{40}{0.9^2 \times3.4 \times 10^9} = 1.45 \times 10^{-8}$
+        \end{itemize}
+        \item Find the percentage of the total dissipated power comprised by static power and the ratio of static power to dynamic power for each technology.
+        \begin{itemize}
+            \item For Pentium 4 Prescott: $E_d = \frac{P_s}{P_s + P_d} \times 100 = \frac{10}{10 + 90} \times 100 = 10\%$ ratio: $\frac{10}{90} = 0.11$
+            \item For Core i5 Ivy Bridge: $E_d = \frac{P_s}{P_s + P_d} \times 100 = \frac{30}{30 + 40} \times 100 = 42.857\%$ ratio: $\frac{30}{40} = 0.75$
+        \end{itemize}
+        \item If the total dissipated power is to be reduced by 10\%, how much should the voltage be reduced to maintain the same leakage current? Note: power is defined as the product of voltage and current.
+        \begin{itemize}
+            \item New voltage will be reduced by 10\% as well.
+        \end{itemize}
+    \end{enumerate}
+    \item Assume for arithmetic, load/store, and branch instructions, a processor has CPIs of 1, 12, and 5, respectively. Also assume that on a single processor a program requires the execution of 2.56E9 arithmetic instructions, 1.28E9 load/store instructions, and 256 million branch instructions. Assume that each processor has a 2 GHz clock frequency.
+
+    Assume that, as the program is parallelized to run over multiple cores, the number of arithmetic and load/store instructions per processor is divided by 0.7 x p (where p is the number of processors) but the number of branch instructions per processor remains the same.
+\end{enumerate}
+
+\end{document}
