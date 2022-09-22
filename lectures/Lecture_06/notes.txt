@@ -1,0 +1,10 @@
+Lecture 06 - September 15, 2022
+
+Plan for today
++ Homework 2
+  - Due September 22, 2022
++ Slides
+  - Chapter 1 slides posted
+  - History of computing, measuring performance
+  - perf_examples.txt
+

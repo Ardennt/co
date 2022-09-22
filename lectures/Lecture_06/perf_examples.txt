@@ -1,0 +1,100 @@
+***Relative performance:
+Performance = 1 / time
+
+1.)
+Processor X takes 20 seconds to complete task.
+Processor Y takes 50 seconds to complete task.
+
+Speedup = perf_X / perf_Y
+Speedup = (1 / time_X) / (1 / time_Y) 
+Speedup = 50 seconds / 20 seconds = 2.5x speedup
+"X is 2.5 times faster than Y"
+
+***CPU Time:
+Time = CPU clock cycles / Clock rate
+Time = (# cycles) / (# cycles / second) => seconds
+
+2.)
+Processor Q has clock of 4GHz (4 billion cycles / second).
+Task P requires 2 billion cycles to complete.
+How long does it take Q to process P?
+
+Time = (2 billion cycles) / (4 billion cycles / second)
+Time = 0.5 seconds
+
+3.)
+Processor A completes task B in 2 seconds.
+B requires 8 billion cycles to compute.
+What is A's clock rate?
+
+Time = cycles / clock rate
+Clock rate = cycles / time
+Clock rate = 8 billion cycles / 2 seconds
+Clock rate = 4 billion cycles / second = 4GHz
+
+4.)
+We want to complete task in 5 seconds on processor B.
+Processor A does it with a 5GHz clock.
+Can design processor B with 7GHz clock, but it requires 1.5x more cycles to complete task.
+Does this design of B hit our goal?
+
+Time = cycles / clock rate
+Time_B = 1.5*(cycles_A) / 7GHz
+Time_B = 1.5*(time_A * clock_A) / 7GHz
+Time_B = 1.5*(5 seconds * 5GHz) / 7GHz
+Time_B = 1.5*(25 billion cycles) / 7 billion cycles / second
+Time_B = 37.5 billion cycles / 7 billion cycles / second
+Time_B = 5.35 second
+NO
+
+
+***CPI:
+Clock cycles = instructions * (cycles / instruction)
+Cycles / instruction = CPI
+Clock cycles = instruction count * CPI
+
+Time = clock cycles / clock rate
+Time = instructions * CPI / clock rate
+
+5.)
+Processor A has CPI of 2.0
+Processor B has CPI of 5.0
+Processor B's clock is 2x faster than A's clock
+Task C takes 10 billion instructions on A.
+Task C takes 5 billion instructions on B.
+Which is faster? And by how much?
+
+Time_A = instructions_A * CPI_A / clock_A
+Time_A = 10 billion instructions * 2 cycles / instruction / clock_A
+Time_A = 20 billion cycles / clock_A
+Time B = instructions_B * CPI_B / clock_B
+Time_B = 5 billion instruction * 5 cycles / instruction / clock_A*2
+Time_B = 12.5 billion cycles / clock_A
+B is faster
+
+Speedup = Time_A / Time_B
+Speedup = 20 billion cycles / clock_A / 12.5 billion cycles / clock_A
+Speedup = 1.6x
+B is 1.6x faster than A for task C
+
+6.)
+For task C:
+Processor A - 2 billion memory instructions, 5 billion add instructions, 4 billion logic instructions
+Processor B - 4 billion memory instructions, 4 billion add instructions, 6 billion logic instructions
+Proccesor A - Memory CPI: 5.0, Add CPI: 1.0, Logic CPI: 1.0
+Processor B - Memory CPI: 3.0, Add CPI, 1.5, Logic CPI: 1.0
+Clock A = 4 GHz
+Clock B = 3 GHz
+Which is faster and by how much? (note: some units omitted for ease of display)
+Time_A = instructions_A * CPI_A / clock_A
+Time_A = (2 billion * 5.0 + 5 billion * 1.0 + 4 billion * 1.0) / 4 billion cycles / second
+Time_A = 4.75 seconds
+Time_B = (4 billion * 3.0 + 4 billion * 1.5 + 6 billion * 1.0) / 3 billion cycles / second
+Time_B = 8 seconds
+Speedup = Time_B / Time_A
+Speedup = 1.68x
+
+
+***The BIG picture
+CPU time = instructions / task * cycles / instruction * seconds / cycle
+

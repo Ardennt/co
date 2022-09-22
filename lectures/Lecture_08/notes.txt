@@ -1,0 +1,42 @@
+Lecture 08 - September 22, 2022
+
+Plan for today
++ New stuff in Submitty
+  - Reference cards for mips
++ Homework 2
+  - Due on September 22, 2022
++ Slides
+  - Setup spim/QtSpim on your system
+    * https://sourceforge.net/projects/spimsimulator/files/
+    * See below for running within WSL
+    * Alternatively, you can use MARS (http://courses.missouristate.edu/kenvollmar/mars/)
+  - Chapter 2 slides (part 1)
+  - Getting into MIPS programming
+  - Basic arithmetic operations, calling functions, memory operations
+    * load_store.s
+
++ Resources
+  - http://web.archive.org/web/20200208081035/http://students.cse.tamu.edu/pritam2309/csce350/reference/quick_ref_MIPS.html
+  - http://matthews.sites.truman.edu/files/2019/11/pseudoinstructions.pdf
+  - COD text book, Appendix A, section A.9 (starting page A-651)
+  - zyBooks: https://learn.zybooks.com/zybook/RPICSCI2500KuzminFall2021/chapter/11/section/9
+  - https://en.wikibooks.org/wiki/MIPS_Assembly/System_Instructions
+  - http://web.archive.org/web/20200208081035/http://students.cse.tamu.edu/pritam2309/csce350/reference/quick_ref_MIPS.html
+  - https://courses.missouristate.edu/KenVollmar/MARS/Help/SyscallHelp.html
+  - https://www2.engr.arizona.edu/~ece369/Resources/spim/QtSPIM_examples.pdf
+
+Getting QtSpim to run in WSL2:
+Do all this:  https://cs233.github.io/oyom_wsl2_setup.html
+Go to:        https://sourceforge.net/projects/spimsimulator/files/
+Download:     qtspim_9.1.22_linux64.deb
+sudo apt-get install qt5-default
+sudo dpkg -i qtspim_9.1.22_linux64.deb
+qtspim
+
+If it doesn't work, then ¯\_(ツ)_/¯
+
+However, spim is also available natively via apt-get
+apt-get install spim
+spim
+
+This is command line only, so you'll need to look up commands, etc. to use it

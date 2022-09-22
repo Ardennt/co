@@ -1,0 +1,13 @@
+Lecture 07 - September 19, 2022
+
+Plan for today
++ Homework 2
+  - Submission page is open on Submitty
++ Test 1
+  - Covers everything before MIPS
+  - Selected practice problem were posted
+  - If you need a lefty seat on this or future tests, please let us know
+  - If you haven't provided us with your DSS paperwork, please do so ASAP
++ Slides
+  - Goal: go through all slides for Chapter 1 (fingers crossed!)
+  - perf_examples.txt
