@@ -1,0 +1,64 @@
+find . -name "*.c" -or -name "*.cc" -or -name "*.cpp" -or -name "*.cxx" -or -name "*.c++" -or -name "*.h" -or -name "*.hxx" -or -name "*.php" -or -name ".py"
+
+find ./ -type f -regex '*.(cpp|cxx|c++|h|hxx|php|py)'
+
+[] <- token, what type of tokens you want
+{} <- token proceeding, then length of the tokens 
+
+find ./ -type f -regex '[a-zA-Z]{4-7}.(cpp|cxx|c++|h|hxx|php|py)'
+
+add the digits 0-9, make sure that it ends with a count 2
+
+find -E ./ -regex '\./([^/]*/)*[a-zA-Z]{4,7}([0-9]{1,2})?\.(c|cc|cpp|cxx|c\+\+|h|hxx|php|py)'
+
+
+helloworld.sh
+touch helloworld.sh
+echo "Hello World" #print command technically
+
+inside sh file
+echo "Hello World"
+
+chmod u+x helloworld.sh
+
+Regex commands:
+. Wild card character, matches any one character othan the new line
+Example:	App.e -> Apple
+
+^ Matches the start of the string
+Example: 	^B -> Banana
+			^B -> Blueberry
+
+$ Matches the end of string
+Example:	e$ -> Apple
+			e$ -> Orange
+
+* Matches upto zero or more occurrences, any number of time the character appears
+Example:	(ap)* -> apple
+			(ap)* -> apapapap
+
+() It is used to match or search for a set of reg exp
+Example:	(Grape|Star)fruit -> Grapefruit
+			(Grape|Star)fruit -> Starfruit
+
+? Matches exactly one or zero character in the string or stream
+Example:	(Grape|Star)fruits? -> Grapefruit
+			(Grape|Star)fruits? -> Startfruit
+			(Grape|Star)fruits? -> Grapefruits
+			(Grape|Star)fruits? -> Startfruits
+
+
+#compiler flags:
+# -Wall turns on most compiler warnings
+# -g adds debugging information to the executable files
+CFLAGS = -g -Wall -fno-inline -fno-omit-frame-pointer
+
+#the build target executable
+PROGRAM = MATRIX_MULT
+OBJFILES = -o
+INCLUDES:= -Iinclude
+
+all: $(PROGRAM)
+$(PROGRAM): $(OBJFILES)
+	$(CC) $(CFLAGS)
+
