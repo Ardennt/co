@@ -1,0 +1,20 @@
+Lecture 10 - September 29, 2022
+
+Plan for today
++ Homework 3
+  - Get started ASAP
+    * You must keep the filename as hw03.s
++ HW 2 solution
+  - Main takeaway from HW1 and HW2:
+    * Be careful with memory management - always use valgrind and/or Dr. Memory
+    * Submitty is not broken (one would hope!), your code is
++ Test 3
+  - Next Monday
+  - Content:
+    * Entire Chapter 0 (C language and all Unix stuff)
+    * Entire Chapter 1 (measuring performance, Amdahl's Law, etc.)
+    * No MIPS on Test 1
+  - See posted practice problems. Solutions will be posted over the weekend
++ Slides
+  - More branching logic, calling functions and the stack
+  - dub_loop.s, lotta_arg.s, leaf.s, logical-ops.s, loop.s, array.s

@@ -1,0 +1,7 @@
+Lecture 09 - September 26, 2022
+
+Plan for today
++ Homework 3
+  - Posted
++ Slides
+  - Additional material on Unix scripting, commands, and tools
