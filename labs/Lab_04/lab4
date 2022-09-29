@@ -60,5 +60,10 @@ INCLUDES:= -Iinclude
 
 all: $(PROGRAM)
 $(PROGRAM): $(OBJFILES)
-	$(CC) $(CFLAGS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(PROGRAMS) $(OBJFILES) -lm
 
+%.o: %.c
+	$CC -C $(CFLAGS) $(INCLUDES) $< -o $@
+
+clean:
+	$(RM) $(OBJFILES) $(PROGRAM)
