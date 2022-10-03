@@ -1,0 +1,9 @@
+10) Within a Unix-like command line environment, we have a directory 
+that contains multiple text files with a ".txt" extension. We wish 
+to pass the contents of all of these files directory directly into 
+program "cool_parser" via stdin. Unfortunately, we don't have the 
+source code for cool_parse and can't modify it. It doesn't matter 
+in which order we pass the file contents to the parse. How can we 
+accomplish our wishes in a single command?
+
+cool_parse < *.txt

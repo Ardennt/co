@@ -1,0 +1,461 @@
+1) Given unsigned int variable n, write exactly one malloc() call to dynamically allocate the exact amount of memory needed to create an array containing exactly n double values. Call this array a and be sure to properly declare this variable. Set all values in a to 1.0 and then free up the allocated memory.
+
+
+2) The code below outputs several memory addresses with printf(). For each output, identify if the printed address would be a location in the heap, stack, or text/code segments of process memory.
+
+void print_output(int n) {
+  printf("Hello World: %d\n", n);
+}
+
+void main()
+{
+  int x = 10;
+  char * s = calloc( x, sizeof( char ) );
+  char * t = "Memory is fun!";
+  void (*fun_ptr)(int) = &print_output;
+  printf("%p\n", &x);
+  printf("%p\n", s);
+  printf("%p\n", t);
+  printf("%p\n", fun_ptr);
+  printf("%p\n", &fun_ptr);
+}
+
+
+3) Construct a function passin_sums() that takes 3 arguments. The first two arguments should be added and saved to the third argument **within** the function passin_sums(). See below - the value of c printed out should be 3 after returning from the function.
+
+void passin_sums()
+{
+  // plz construct me
+}
+
+void main()
+{
+  int a = 1;
+  int b = 2;
+  int c = 0;
+  passin_sums(&a, &b, &c);
+  printf("%d\n", c); // the value printed must be 3
+}
+
+
+4) The cool_letters() function below is supposed to take input string s and return a new string q containing only the characters that also appear in the string v. All other characters should be ignored. For example, if s is "catsLikeDogs" then the function returns "ctsLeos". Unfortunately, the given implementation of this function is incorrect. Find and correct the three errors in the code below. Do not simply rewrite the function or change the coding style/logic used.
+
+char* cool_letters(char* s)
+{
+  char* result;
+  char* v = "coOlLetTErs";
+  int count;
+  for(int i = 0 ; i < strlen(s); i++)
+    for(int j = 0 ; j < strlen(v); j++)
+      if(s[i] == v[j])
+        count++;
+        
+  result = malloc(count);
+  count = 0;
+  for (int i = 0; i < strlen(s); i++)
+    for (int j = 0 ; j < strlen(v); j++)
+      if (s[i] == v[j])
+        result[count++] = s[i];
+  
+  return result;
+}
+
+
+5) We have the below data file, structured as given. Make reasonable assumptions about data types. Construct our read_data() function that takes an input argument of a filename. The function should open the file and create an array of structs, each fully containing the data on a given line. You can make no assumptions about the length of the data file, but still want to limit your total RAM usage (hint: I want you to use realloc). You can assume each line in the data file is under 256 characters. You don't need to do any error handling.
+
+Data:
+BobbyLiu M 34 5.8 180
+Mehmet M 35 5.7 170
+Amelia F 34 5.9 150
+Zepy D 2 2.0 50
+Thelma B 5 1.5 7
+... 
+
+typedef struct {
+  // fill this in - make reasonable assumptions on types
+} my_data;
+
+my_data* read_data(char* filename)
+{
+  // allocate a struct array
+  // read in data line by line
+  // fill in the array
+  // return it
+}
+
+
+6) Short answer: give four differences between C and C++.
+
+
+Solutions:
+
+1)
+double* a = malloc(n*sizeof(double));
+for (int i = 0; i < n; ++i)
+  a[i] = 1.0
+free(a);
+
+2)
+&x = stack
+s  = heap
+t  = text
+fun_ptr = text
+&fun_ptr = stack
+
+3)
+void passing_sums(int* a, int* b, int* c)
+{
+  *c = *a + *b;
+  return;
+}
+
+4)
+1. We don't initialize our count variable. Always initialize your variables.
+2. Allocated space for result is not long enough -- we need an additional byte to ***null terminate our string***.
+3. We don't ***null terminate our string***.
+
+5)
+typedef struct {
+  char name[256];
+  char type;
+  int age;
+  float height;
+  int weight;
+} my_data;
+
+my_data* read_data(char* filename)
+{
+  // initially allocate our array
+  // Note: I wanted you to think of the length of this array as dynamic
+  // - e.g., we keep track of its size, if we hit capacity, we then call
+  //   realloc with double the capacity. This is along the lines of what
+  //   std::vector might do when you append a lot of data to it.
+  int cur_size = 1024;
+  int cur_count = 0;
+  my_data* datas = malloc(cur_size*sizeof(my_data));
+  
+  // open 'er up
+  FILE* my_file = fopen(filename, "r");
+  
+  char buffer[256];
+  while (fgets(buffer, 256, my_file) != NULL) {
+    sscanf(buffer, "%s %c %d %f %d", 
+      datas[cur_count].name, &datas[cur_count].type, 
+      &datas[cur_count].age, &datas[cur_count].height,
+      &datas[cur_count].weight);
+    ++cur_count;
+    if (cur_count >= cur_size) {
+      // hit our capacity -- make room for more
+      cur_size *= 2;
+      datas = realloc(datas, cur_size*sizeof(my_data));
+    }
+  }
+  
+  // shut 'er dahn
+  fclose(my_file);
+  
+  return datas;
+}
+
+6)
+1. No objects in C
+2. Can't overload functions in C
+3. C I/O is based purely on library calls, C++ can use <<, >>, etc.
+4. Can't pass by reference in C - only by value
+
+
+7)
+x = 4 bytes, y = 4 bytes
+
+
+8)
+The original string is likely "comp org rulez!1".
+
+What possibly happened is that Sally did not account for the fact that her and your system are little endian. Within each int, Sally would have needed to reverse the order that the characters were stored, e.g.:
+
+int a = (unsigned)'!' * 256*256*256 + (unsigned)'y' * 256*256 + (unsigned)'e' * 256 + (unsigned)'h';
+
+
+9)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+#include <ctype.h>
+
+#define ROWS 3
+#define COLS 2
+#define STR_LEN 16
+#define ROW_LENGTH 16
+
+char source_of_wisdom[][COLS][STR_LEN] = {{"01", "CompOrg is cool"}, {"02", "DS is cool too"}, {"03", "Dura lex"}};
+
+void mem_dump(void* s_addr, unsigned int length) {
+  assert(s_addr >= 0);
+  void *ptr = s_addr, *row_start_ptr;
+  unsigned int rows = 1 + ((length - 1) / ROW_LENGTH), i, j;
+
+  unsigned int alignment = (long long)s_addr % ROW_LENGTH;
+  if (alignment != 0) {
+    s_addr -= alignment;
+    length += alignment;
+  }
+
+  for (i = 0; i < rows; ++i) {
+    row_start_ptr = ptr;
+    printf("%8llx  ", (long long unsigned int)ptr);
+    for (j = 0; j < ROW_LENGTH; ++j) {
+      if (j == ROW_LENGTH / 2) {
+        printf(" ");
+      }
+      if (i * ROW_LENGTH + j < length) {
+        printf("%02x ", *((unsigned char *)ptr));
+        ptr++;
+      }
+      else {
+        printf("   ");
+      }
+    }
+    ptr = row_start_ptr;
+    printf(" |");
+    for (j = 0; j < ROW_LENGTH && i * ROW_LENGTH + j < length; ++j) {
+      if (i * ROW_LENGTH + j < length) {
+        if (isprint(*((unsigned char *)ptr))) {
+          printf("%c", *((unsigned char *)ptr));
+        }
+        else {
+          printf(".");
+        }
+        ptr++;
+      }
+      else {
+        printf(" ");
+      }
+    }
+    printf("|\n");
+  }
+}
+
+int main(int argc, char **argv, char **envp)
+{
+  int i, j;
+  char ***wisdom = (char ***)malloc(ROWS * sizeof(char**));
+  for (i = 0; i < ROWS; ++i) {
+    wisdom[i] = (char **)malloc(COLS * sizeof(char*));
+    for (j = 0; j < COLS; ++j) {
+      wisdom[i][j] = (char *)malloc(STR_LEN * sizeof(char));
+      strcpy(wisdom[i][j], source_of_wisdom[i][j]);
+    }
+  }
+
+  printf("Here are some facts:\n");
+  for (i = 0; i < ROWS; ++i) {
+    for (j = 0; j < COLS; ++j) {
+      printf("%20s", wisdom[i][j]);
+    }
+    printf("\n");
+  }
+
+  printf("Let's look at the pointers\n");
+  printf("--------------------------\n");
+  printf("&wisdom: %p\n", &wisdom);
+  printf("wisdom: %p\n", wisdom);
+  for (i = 0; i < ROWS; ++i) {
+    printf("wisdom[%d]: %p\t", i, wisdom[i]);
+  }
+  printf("\n");
+  for (i = 0; i < ROWS; ++i) {
+    for (j = 0; j < COLS; ++j) {
+      printf("wisdom[%d][%d]: %p\t", i, j, wisdom[i][j]);
+    }
+    printf("\n");
+  }
+
+  mem_dump(wisdom, ROWS * sizeof(char**));
+  printf("\n");
+  for (i = 0; i < ROWS; ++i) {
+    mem_dump(wisdom[i], COLS * sizeof(char*));
+  }
+  printf("\n");
+  for (i = 0; i < ROWS; ++i) {
+    for (j = 0; j < COLS; ++j) {
+      mem_dump(wisdom[i][j], STR_LEN * sizeof(char));
+    }
+    printf("\n");
+  }
+
+  for (i = 0; i < ROWS; ++i) {
+    for (j = 0; j < COLS; ++j) {
+      free(wisdom[i][j]);
+    }
+    free(wisdom[i]);
+  }
+  free(wisdom);
+
+  return EXIT_SUCCESS;
+}
+
+
+10)
+An easy way to do this would be:
+bash$ cat *.txt | ./cool_parser
+
+Recall, that cat outputs the contents of a file and '*' acts as a wildcard. 
+Calling cat *.txt would output the contents of all files that end in '.txt'. 
+We use '|' to pipe the standard output from 'cat *.txt' to the standard input 
+of cool_parser.
+
+
+11)
+E.g., the file could be named practice02_08.sh and have the following contents:
+#!/bin/bash
+
+# Preparation (requires logout after it is done to take effect)
+# sudo mkdir /data
+# sudo chown kuzmik:kuzmik /data
+# sudo groupadd csci2500-proj
+# sudo usermod -a -G csci2500-proj kuzmik
+
+rm -fdr /data/csci2500-proj/
+mkdir -p /data/csci2500-proj/
+cp -a ~/proj/o* /data/csci2500-proj/
+chgrp -R csci2500-proj /data/csci2500-proj/
+chmod -R u+rwx,g=rw,o=r /data/csci2500-proj/
+
+# Cleaning up (requires logout after it is done to take effect)
+# sudo deluser kuzmik csci2500-proj
+# sudo groupdel csci2500-proj
+# sudo rm -fdr /data 
+
+
+12)
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <limits.h>
+#include <errno.h>
+#include <ctype.h>
+
+#define BUFFER_SIZE 1000
+#define MAX_ARG_COUNT 255
+
+void parse(char * input, char* argument_list[]) {
+  input[strcspn(input, "\r\n")] = '\0';
+
+  int index = 0;
+  char *cur_ptr = input;
+  while(*cur_ptr) {
+    while (isspace(*cur_ptr)) {
+      *cur_ptr = '\0';
+      cur_ptr++;
+    }
+    argument_list[index] = cur_ptr;
+    index++;
+    while (*cur_ptr && !isspace(*cur_ptr)) {
+      cur_ptr++;
+    }
+  }
+  argument_list[index] = NULL;
+}
+
+int execute(char* argument_list[], char **envp) {
+  pid_t pid;
+  int status;
+
+  if ((pid = fork()) < 0) {
+    printf("Error: forking child process failed\n");
+    return EXIT_FAILURE;
+  }
+  else if (pid == 0) {
+    if (execvpe(argument_list[0], argument_list, envp) < 0) {
+      printf("Error: executing %s failed\n", argument_list[0]);
+      return EXIT_FAILURE;
+    }
+  }
+  else {
+    while (wait(&status) != pid) ;
+  }
+}
+
+void print_prompt(char *user, char *host, char *wd) {
+  printf("%s@%s %s %s %s$ ", user, host, __DATE__, __TIME__, wd);
+}
+
+int main(int argc, char **argv, char **envp)
+{
+  char host[HOST_NAME_MAX + 1];
+  char buffer[BUFFER_SIZE + 1];
+  char c, *c_ptr, *user, *wd;
+  char** argument_list;
+  int result, index, errno;
+
+  argument_list = malloc(MAX_ARG_COUNT * sizeof(char*));
+  if (!argument_list) {
+    printf("Error: memory allocation failed\n");
+    return EXIT_FAILURE;
+  }
+
+  for (index = 0; envp[index]; ++index) {
+    c_ptr = strchr(envp[index], '=');
+    c = *c_ptr;
+    *c_ptr = '\0';
+    if (!strcmp(envp[index], "USER")) {
+      user = malloc(strlen(c_ptr));
+      if (!user) {
+        printf("Error: memory allocation failed\n");
+        free(argument_list);
+        return EXIT_FAILURE;
+      }
+      strcpy(user, c_ptr + 1);
+    }
+    errno = 0;
+    result = gethostname(host, sizeof host + 1);
+    if (result) {
+      printf("Error: unable to determine hostname, errno: %d\n", errno);
+    }
+    if (!strcmp(envp[index], "PWD")) {
+      wd = malloc(strlen(c_ptr));
+      if (!wd) {
+        printf("Error: memory allocation failed\n");
+        free(user);
+        free(argument_list);
+        return EXIT_FAILURE;
+      }
+      strcpy(wd, c_ptr + 1);
+    }
+    *c_ptr = c;
+  }
+
+  for(;;) {
+    print_prompt(user, host, wd);
+    fgets(buffer, sizeof buffer, stdin);
+    parse(buffer, argument_list);
+    if (!strcmp(buffer, "exit")) {
+      free(wd);
+      free(user);
+      free(argument_list);
+      return EXIT_SUCCESS;
+    }
+    execute(argument_list, envp);
+  }
+
+  // Should never reach this line
+  return EXIT_FAILURE;
+}
+
+
+13)
+Instructions per second
+        = (instructions / second)
+        = (cycles / second) / (cycles / instruction)
+        = (clock rate) * 1 / (CPI)
+So, just (# GHz) / (# CPI)
+
+For 10 seconds ==> instructions / second * (10 seconds)
+so, just (# GHz) / (# CPI) * 10
+
+Processor with 4.5GHz and CPI of 1.5 executes 3 * 10^9 instructions per second, and processor with 3.5GHz and CPI of 1.0 executes 3.5 * 10^9 instructions per second.
+Processor with 4.5GHz and CPI of 1.5 executes 30 * 10^9 instructions in 10 seconds, and processor with 3.5GHz and CPI of 1.0 executes 35 * 10^9 instructions in 10 seconds.

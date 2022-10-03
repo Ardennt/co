@@ -1,0 +1,12 @@
+6) Short answer: give four differences between C and C++.
+
+1. C++ have vectors
+2. C++ have string types
+3. C++ have classes
+4. C++ operator overloading
+
+Similarities?
+1. uses same arithmetic operators + - = * / etc
+2. preprocessors #include
+3. requires a main() to execute program
+4. function definitions

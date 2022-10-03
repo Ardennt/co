@@ -118,29 +118,74 @@ However, the output you observe is somewhat nonsensical:
 Can you determine what the original secret string is and speculate on what might the issue be with Sally's program?
 
 
-9) Write a function mem_dump()that dumps the contents of memory to stdout. mem_dump() should take the starting memory address to dump and the number of bytes to dump. The output of mem_dump() should be similar to the output of "hexdump -C" command. Then define char*** arr, allocate memory for all elements of this two-dimensional array of C-strings, initialize all elements with C-string literals (i.e., literal C-strings like "CompOrg rulezzz!"), and determine all memory locations that are related to this array. Use your mem_dump() to print those memory locations and verify that they indeed contain data (characters and pointers) of your array.
+9) Write a function mem_dump()that dumps the contents of memory to 
+stdout. mem_dump() should take the starting memory address to dump 
+and the number of bytes to dump. The output of mem_dump() should be
+similar to the output of "hexdump -C" command. Then define char*** 
+arr, allocate memory for all elements of this two-dimensional array 
+of C-strings, initialize all elements with C-string literals (i.e., 
+literal C-strings like "CompOrg rulezzz!"), and determine all memory 
+locations that are related to this array. Use your mem_dump() to print 
+those memory locations and verify that they indeed contain data 
+(characters and pointers) of your array.
 
 
-10) Within a Unix-like command line environment, we have a directory that contains multiple text files with a ".txt" extension. We wish to pass the contents of all of these files directory directly into program "cool_parser" via stdin. Unfortunately, we don't have the source code for cool_parse and can't modify it. It doesn't matter in which order we pass the file contents to the parse. How can we accomplish our wishes in a single command?
+10) Within a Unix-like command line environment, we have a directory 
+that contains multiple text files with a ".txt" extension. We wish 
+to pass the contents of all of these files directory directly into 
+program "cool_parser" via stdin. Unfortunately, we don't have the 
+source code for cool_parse and can't modify it. It doesn't matter 
+in which order we pass the file contents to the parse. How can we 
+accomplish our wishes in a single command?
 
 
-11) Write a shell script that creates a new directory /data/csci2500-proj/ (if this directory already exists, it should be deleted first) and copies all files and directories whose names start with an o recursively from directory proj/ in your home directory to /data/csci2500-proj/. Then the script should change ownership and permissions on all files and directories inside /data/csci2500-proj/ according to the following:
+11) Write a shell script that creates a new directory /data/csci2500-proj/ 
+(if this directory already exists, it should be deleted first) and copies 
+all files and directories whose names start with an o recursively from 
+directory proj/ in your home directory to /data/csci2500-proj/. Then the 
+script should change ownership and permissions on all files and directories 
+inside /data/csci2500-proj/ according to the following:
 * You are the owner with full access
-* Group "csci2500-proj" (which is not the primary group for you) has group ownership with permissions to read and write files but not execute them and list, add, and remove files from directories but not enter the directories
+
+* Group "csci2500-proj" (which is not the primary group for you) has group 
+ownership with permissions to read and write files but not execute them and 
+list, add, and remove files from directories but not enter the directories
+
 * Everyone else can only read the files and list contents of the directories.
 The script should be capable of being run from any working directory.
 
 
-12) Write a C program that acts as a simple shell. It repeatedly takes one line of input from stdin and executes it as a command. Each command is the name of the executable (possibly with path) followed by command line arguments that depend on the specific command. Some commands might not have any arguments. Executable name is separated from the command line arguments by at least one space. Command line arguments are separated from each other by one or more spaces. The executable may reside in any of the directories listed in the PATH environment variable.
+12) Write a C program that acts as a simple shell. It 
+repeatedly takes one line of input from stdin and 
+executes it as a command. Each command is the name of
+the executable (possibly with path) followed by command 
+line arguments that depend on the specific command. Some 
+commands might not have any arguments. Executable name 
+is separated from the command line arguments by at least 
+one space. Command line arguments are separated from each 
+other by one or more spaces. The executable may reside in 
+any of the directories listed in the PATH environment 
+variable.
 
 You may assume the following:
-* All commands are external (i.e., do not worry about builtin shell commands) except for a special "exit" command which exits the program.
-* Spaces are only used to separate the executable name from the command line arguments and one argument from another argument. In other words, executable path/name or any command line argument may not contain spaces.
-* There will be no redirection (>, <) or pipes (|) in any of the commands.
+* All commands are external (i.e., do not worry about 
+builtin shell commands) except for a special "exit" 
+command which exits the program.
+
+* Spaces are only used to separate the executable name 
+from the command line arguments and one argument from 
+another argument. In other words, executable path/name 
+or any command line argument may not contain spaces.
+
+* There will be no redirection (>, <) or pipes (|) in 
+any of the commands.
 
 
-13) Consider two processors P1 and P2. P1 has clock rate 4.5GHz and a CPI of 1.5. P2 has a clock rate of 3.5GHz and a CPI of 1.0.
+13) Consider two processors P1 and P2. P1 has clock rate 
+4.5GHz and a CPI of 1.5. P2 has a clock rate of 3.5GHz 
+and a CPI of 1.0.
 
 Calculate the number of instructions per second that each processor executes.
 
-If each processor executes a program in 10 seconds, how many instructions does each processor execute?
+If each processor executes a program in 10 seconds, how many 
+instructions does each processor execute?
