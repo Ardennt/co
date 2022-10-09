@@ -104,6 +104,7 @@ main:
 ################################################################################
 mm_read:
   # save return address and any saved registers on the stack, if necessary
+  move $s3 $ra
   # get N
   move $t0, $zero
   li $v0, 5
@@ -117,42 +118,28 @@ mm_read:
   move $t1, $v0
   
   # store N and M
-  move $s0, $t0
-  move $s1, $t1
+  move $s1, $t0
+  move $s2, $t1
   
   # Setup up arguments and call mm_alloc - v0 is returned as base address
-  move $a0, $s0
-  move $a1, $s1
-
-  # addi $a0, $zero, 2
-  # addi $v0, $zero, 1
-  # syscall
-  jr $ra
-  jal mm_alloc
-
-
-  # addi $a0, $zero, 9
-  # move $sp, $v0
-  # addi $v0, $zero, 1
-  # syscall
+  move $a0, $s1
+  move $a1, $s2
+  jal mm_alloc #return address will change here
+  move $ra $s3
   
   # do nested loops to read in values
-  # move $t1, $zero # int i = 0
-  # For1:
-  # 	move $t2, $zero # int j = 0
-  # 	For2:
-  # 		# li $a0, 3
-  # 		# addi $v0, $zero, 1
-  # 		# syscall
-  # 		addi $t2, $t2, 1 # int j += 1
-  # 		blt $t2, $s1, For2
+  move $t1, $zero # int i = 0
+  For1:
+  	move $t2, $zero # int j = 0
+  	For2:
+  		move $a0, $t2
+  		li $v0, 1 
+  		syscall # print j
+  		addi $t2, $t2, 1 # int j += 1
+  		blt $t2, $s2, For2
 
-  # 	move $a0, $t1
-  #   addi $v0, $zero, 1
-  #   syscall
-
-  # 	addi $t1, $t1, 1 # int i += 1
-  # 	blt $t1, $s0, For1
+  	addi $t1, $t1, 1 # int i += 1
+  	blt $t1, $s1, For1
   
   
   # setup up return values
@@ -161,7 +148,6 @@ mm_read:
   # return to main
 
   # just store the value of before calling mm_alloc to jr to
-  jr 
   jr  $ra
 
 ################################################################################
@@ -179,16 +165,13 @@ mm_alloc:
   # set return value
   # restore stack, ra, and any saved registers, if necessary
   # return to main
-  move $a0, $ra
-  li $v0, 1
-  syscall
-  # mul $t0, $a0, $a1
-  # addi $t1, $zero, 4
-  # mul $t0, $t0, $t1 # size of bits to allocate
+  mul $t0, $a0, $a1
+  addi $t1, $zero, 4
+  mul $t0, $t0, $t1 # size of bits to allocate
   
-  # move $a0, $t0
-  # li $v0, 9
-  # syscall
+  move $a0, $t0
+  li $v0, 9
+  syscall
   
   jr  $ra
 
