@@ -44,46 +44,46 @@ main:
   move  $a0, $s0
   move  $a1, $s1
   move  $a2, $s2
-  jal mm_print
+  # jal mm_print
 
-  # Read in matrix 2 of some NxM size
-  sub $sp, $sp, 4   # make space on stack for return value
-  jal mm_read
+  # # Read in matrix 2 of some NxM size
+  # sub $sp, $sp, 4   # make space on stack for return value
+  # jal mm_read
 
-  # save matrix 2 values
-  move  $s3, $v0
-  move  $s4, $v1
-  lw    $s5, 0($sp)
-  add   $sp, $sp, 4   # restore stack
+  # # save matrix 2 values
+  # move  $s3, $v0
+  # move  $s4, $v1
+  # lw    $s5, 0($sp)
+  # add   $sp, $sp, 4   # restore stack
 
-  # Setup arguments and print out matrix 2
-  move  $a0, $s3
-  move  $a1, $s4
-  move  $a2, $s5
-  jal mm_print
+  # # Setup arguments and print out matrix 2
+  # move  $a0, $s3
+  # move  $a1, $s4
+  # move  $a2, $s5
+  # jal mm_print
 
-  # Setup arguments and call mm_mult
-  # Note: 5 arguments, so we need to use stack
-  # Note: num cols matrix 1 == num rows matrix 2
-  move  $a0, $s0    # num rows matrix1
-  move  $a1, $s1    # num cols matrix1
-  move  $a2, $s2    # address of matrix 1
-  move  $a3, $s4    # num cols matrix2
-  sub   $sp, $sp, 4   
-  sw    $s5, 0($sp) # address of matrix 2
-  jal mm_mult
-  add   $sp, $sp, 4
+  # # Setup arguments and call mm_mult
+  # # Note: 5 arguments, so we need to use stack
+  # # Note: num cols matrix 1 == num rows matrix 2
+  # move  $a0, $s0    # num rows matrix1
+  # move  $a1, $s1    # num cols matrix1
+  # move  $a2, $s2    # address of matrix 1
+  # move  $a3, $s4    # num cols matrix2
+  # sub   $sp, $sp, 4   
+  # sw    $s5, 0($sp) # address of matrix 2
+  # jal mm_mult
+  # add   $sp, $sp, 4
 
-  # print the result
-  move $a0, $s0 
-  move $a1, $s4
-  move $a2, $v0
-  jal mm_print
+  # # print the result
+  # move $a0, $s0 
+  # move $a1, $s4
+  # move $a2, $v0
+  # jal mm_print
 
-  # restore $ra, free stack space, and return
-  lw  $ra, 0($sp)
-  add $sp, $sp, 4
-  jr  $ra
+  # # restore $ra, free stack space, and return
+  # lw  $ra, 0($sp)
+  # add $sp, $sp, 4
+  # jr  $ra
 
 ################################################################################
 # mm_read: Read in a NxM matrix from standard input
@@ -120,20 +120,18 @@ mm_read:
   move $a1, $s2
   jal mm_alloc # return address will change here
   move $ra $s3
-
-  # save address of the array
-  move $s0 $v0
+  move $sp $v0 # base address of matrix
   
   # do nested loops to read in values
-  move $t0, $s0 # save "index" in t0
+  move $t0, $sp # save "memory address" in t0
   move $t1, $zero # int i = 0
   For1:
   	move $t2, $zero # int j = 0
   	For2:
-      li $v0, 5
-  		sw $v0, 0($t0) # read in integer
-      syscall
-
+      # li $v0, 5
+      # syscall # read in integer
+  		# sw $v0, 0($t0) 
+    
   		addi $t2, $t2, 1 # int j += 1
       addi $t0, $t0, 4 # increment memory address
   		blt $t2, $s2, For2
@@ -143,6 +141,9 @@ mm_read:
   
   
   # setup up return values
+  move $sp, $s0
+  move $v0, $s1
+  move $v1, $s2
   # Note: third return value goes on the stack *after* restoration below
   # restore stack, ra, and any saved registers, if necessary
   # return to main
@@ -190,7 +191,10 @@ mm_print:
   # save return address and any saved registers on the stack, if necessary
 
   # do nested loops to print out values
-  move $t0, $s0 # save "index" in t0
+  
+
+
+  move $t0, $a2 # save "index" in t0
   move $t1, $zero # int i = 0
   ForP1:
   	move $t2, $zero # int j = 0
@@ -201,10 +205,10 @@ mm_print:
 
   		addi $t2, $t2, 1 # int j += 1
       addi $t0, $t0, 4 # increment memory address
-  		blt $t2, $s2, ForP2
+  		blt $t2, $a1, ForP2
 
   	addi $t1, $t1, 1 # int i += 1
-  	blt $t1, $s1, ForP1
+  	blt $t1, $a0, ForP1
   # restore stack, ra, and any saved registers, if necessary
 
   # return to main
