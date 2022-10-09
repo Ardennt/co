@@ -141,7 +141,6 @@ mm_read:
   
   
   # setup up return values
-  move $sp, $s0
   move $v0, $s1
   move $v1, $s2
   # Note: third return value goes on the stack *after* restoration below
