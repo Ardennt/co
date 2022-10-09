@@ -106,20 +106,14 @@ mm_read:
   # save return address and any saved registers on the stack, if necessary
   move $s3 $ra
   # get N
-  move $t0, $zero
   li $v0, 5
   syscall
-  move $t0, $v0
+  move $s1, $v0
   
   # get M
-  move $t1, $zero
   li $v0, 5
   syscall
-  move $t1, $v0
-  
-  # store N and M
-  move $s1, $t0
-  move $s2, $t1
+  move $s2, $v0
   
   # Setup up arguments and call mm_alloc - v0 is returned as base address
   move $a0, $s1
@@ -138,6 +132,8 @@ mm_read:
   	For2:
       li $v0, 5
   		sw $v0, 0($t0) # read in integer
+      syscall
+
   		addi $t2, $t2, 1 # int j += 1
       addi $t0, $t0, 4 # increment memory address
   		blt $t2, $s2, For2
@@ -194,7 +190,21 @@ mm_print:
   # save return address and any saved registers on the stack, if necessary
 
   # do nested loops to print out values
+  move $t0, $s0 # save "index" in t0
+  move $t1, $zero # int i = 0
+  ForP1:
+  	move $t2, $zero # int j = 0
+  	ForP2:
+      li $v0, 1
+  		lw $a0, 0($t0) # read in integer
+      syscall
 
+  		addi $t2, $t2, 1 # int j += 1
+      addi $t0, $t0, 4 # increment memory address
+  		blt $t2, $s2, ForP2
+
+  	addi $t1, $t1, 1 # int i += 1
+  	blt $t1, $s1, ForP1
   # restore stack, ra, and any saved registers, if necessary
 
   # return to main
