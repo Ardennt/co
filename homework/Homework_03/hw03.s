@@ -132,8 +132,16 @@ mm_read:
 ################################################################################
 mm_alloc:
   # save return address and any saved registers on the stack, if necessary
-
+  addi  $sp, $sp, -4
+  sw    $fp, 0($sp) #store $sp into $fp 
   # Allocate sufficient space
+  mul   $t0 $a0 $a1 # t0 = N * M
+  sll   $t0, $t0, 2 # t0 = t0 * 2^2 < size in bytes
+
+  sw    $fp 0($sp) # old frame pointer
+  move  $fp $sp 
+  sub   $sp $sp $t0 # size
+  sw $ra -4($fp)  
 
   # set return value
 
