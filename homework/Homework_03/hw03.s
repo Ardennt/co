@@ -124,18 +124,22 @@ mm_read:
   # Setup up arguments and call mm_alloc - v0 is returned as base address
   move $a0, $s1
   move $a1, $s2
-  jal mm_alloc #return address will change here
+  jal mm_alloc # return address will change here
   move $ra $s3
+
+  # save address of the array
+  move $s0 $v0
   
   # do nested loops to read in values
+  move $t0, $s0 # save "index" in t0
   move $t1, $zero # int i = 0
   For1:
   	move $t2, $zero # int j = 0
   	For2:
-  		move $a0, $t2
-  		li $v0, 1 
-  		syscall # print j
+      li $v0, 5
+  		sw $v0, 0($t0) # read in integer
   		addi $t2, $t2, 1 # int j += 1
+      addi $t0, $t0, 4 # increment memory address
   		blt $t2, $s2, For2
 
   	addi $t1, $t1, 1 # int i += 1
