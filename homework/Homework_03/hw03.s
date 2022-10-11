@@ -74,17 +74,15 @@ main:
   jal mm_mult
   add   $sp, $sp, 4
 
-  # # print the result
-  # move $a0, $s0 
-  # move $a1, $s4
-  # move $a2, $v0
-  # jal mm_print
+  # print the result
+  move $a0, $s0 
+  move $a1, $s4
+  move $a2, $v0
+  jal mm_print
 
   # restore $ra, free stack space, and return
   lw  $ra, 0($sp)
   add $sp, $sp, 4
-  li $v0, 10
-  syscall
   jr  $ra
 
 ################################################################################
@@ -110,16 +108,16 @@ mm_read:
   # get N
   li $v0, 5
   syscall
-  move $s1, $v0
+  move $t3, $v0
   
   # get M
   li $v0, 5
   syscall
-  move $s2, $v0
+  move $t4, $v0
   
   # Setup up arguments and call mm_alloc - v0 is returned as base address
-  move $a0, $s1
-  move $a1, $s2
+  move $a0, $t3
+  move $a1, $t4
   jal mm_alloc # return address will change here
   move $ra, $s3
   
@@ -141,15 +139,15 @@ mm_read:
     
   		addi $t2, $t2, 1 # int j += 1
       addi $t0, $t0, 4 # increment memory address
-  		blt $t2, $s2, For2
+  		blt $t2, $t4, For2
 
   	addi $t1, $t1, 1 # int i += 1
-  	blt $t1, $s1, For1
+  	blt $t1, $t3, For1
   
   
   # setup up return values
-  move $v0, $s1
-  move $v1, $s2
+  move $v0, $t3
+  move $v1, $t4
   # Note: third return value goes on the stack *after* restoration below
   # restore stack, ra, and any saved registers, if necessary
   # return to main
@@ -203,12 +201,19 @@ mm_print:
       move $t3, $a0
       lw $a0, 0($t0)
       syscall
+      li $v0, 4
+      la $a0, tab
+      syscall
       move $a0, $t3
 
   		addi $t2, $t2, 1 # int j += 1
       addi $t0, $t0, 4 # increment memory address
   		blt $t2, $a1, ForP2
-
+    move $t3, $a0
+    li $v0, 4
+    la $a0, newline
+    syscall
+    move $a0, $t3
   	addi $t1, $t1, 1 # int i += 1
   	blt $t1, $a0, ForP1
   # restore stack, ra, and any saved registers, if necessary
@@ -245,14 +250,16 @@ mm_mult:
   
 
   # save return address and any saved registers on the stack, if necessary
-  move $t1, $ra # save return address
+  move $t3, $ra # save return address
 
   # set up and call mm_alloc for result matrix
-  move $t0, $a1 # save $a1 in $t0
+  move $t6, $a0
+  move $t4, $a1 # save $a1 in $t4
   move $a1, $a3 # borrow a3 to do the call
   jal mm_alloc #v0 contains the address of the result matrix
-  move $ra, $t1 # move return address back
-  move $a1, $t0 # revert back the values
+  move $ra, $t3 # move return address back
+  move $a1, $t4 # revert back the values
+  move $a0, $t6
 
   # three nested loops for matrix-matrix multiplication
   move $t1, $zero # int i = 0
@@ -266,19 +273,19 @@ mm_mult:
       ForMM3:
         # getting mat1->data[i][k]
         move $t0, $a2 # $t0 contains the base address for matrix 1
-        move $t6, $t1
-        mul $t6, $t6, $a3 # times a3
+        move $t6, $t1 # t6 = i
+        mul $t6, $t6, $a3 # i times a3
         sll $t6, $t6, 2 # times 4
         add $t0, $t0, $t6 # t0 = $a2 + 4 x $a3 x $t1
 
         move $t6, $t3
         sll $t6, $t6, 2 # $t6 = 4 x $t3
         add $t0, $t0, $t6 # t0 = $a2 + 4 x $a3 x $t1 + 4 x $t3
-        # $s0 now contains the address of data[i][k]
-        move $s0, $t0
+        # $s6 now contains the address of data[i][k]
+        move $s6, $t0
         
         # getting mat2->data[k][j]
-        move $t0, $sp # t0 contains the base address for matrix 2
+        lw $t0, 0($sp)
         move $t6, $t3
         mul $t6, $t6, $a3 # times a3
         sll $t6, $t6, 2 # times 4
@@ -287,38 +294,22 @@ mm_mult:
         move $t6, $t2
         sll $t6, $t6, 2
         add $t0, $t0, $t6
-        move $s1, $t0 #$s1 contains the address of data[k][j]
+        move $s7, $t0 #$s7 contains the address of data[k][j]
 
-        # FUCKING UP HEREEEEEEEEE
+        # get value stored at $s6 -> store at $t0
+        lw $t0, 0($s6)
 
-        # move $a0, $s0
-        # li $v0, 1
-        # syscall
-
-        # move $a0, $s1
-        # syscall
-        li $v0, 1
-        lw $a0, 0($s0)
-        syscall
-
-        lw $a0, 0($s1)
-        syscall
-
-        li $v0, 10
-        syscall
-
-        # get value stored at $s0 -> store at $t0
-        lw $t0, 0($s0)
-
-        # get value stored at $s1 -> store at $t6
-        lw $t6, 0($s1)
+        # get value stored at $s7 -> store at $t6
+        lw $t6, 0($s7)
 
         # multiply the two
         mul $t0, $t0, $t6
         add $t4, $t4, $t0 # add the value onto the sum
 
+        addi $t3, $t3, 1
         blt $t3, $a1, ForMM3
       # get address of result_matrix->data[i][j]
+
       move $t0, $v0 # address for the result_matrix
       move $t6, $t1
       mul $t6, $t6, $a3
