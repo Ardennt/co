@@ -234,21 +234,6 @@ mm_print:
 ################################################################################
 mm_mult:
 
-  # #print out values to show that it is working
-  # li $v0 1
-  # syscall
-  # move $a0 $a1
-  # syscall
-  # move $a0 $a2
-  # syscall
-
-  # move $a0 $a3
-  # syscall
-
-  # move $a0 $sp
-  # syscall
-  
-
   # save return address and any saved registers on the stack, if necessary
   move $t3, $ra # save return address
 
@@ -274,7 +259,7 @@ mm_mult:
         # getting mat1->data[i][k]
         move $t0, $a2 # $t0 contains the base address for matrix 1
         move $t6, $t1 # t6 = i
-        mul $t6, $t6, $a3 # i times a3
+        mul $t6, $t6, $a1 # i times a3
         sll $t6, $t6, 2 # times 4
         add $t0, $t0, $t6 # t0 = $a2 + 4 x $a3 x $t1
 
@@ -287,7 +272,7 @@ mm_mult:
         # getting mat2->data[k][j]
         lw $t0, 0($sp)
         move $t6, $t3
-        mul $t6, $t6, $a3 # times a3
+        mul $t6, $t6, $a3 # k times a3
         sll $t6, $t6, 2 # times 4
         add $t0, $t0, $t6
 
