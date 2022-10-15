@@ -1,0 +1,11 @@
+Lecture 11 - October 3, 2022
+
+Plan for today
++ Homework 3
+  - Reminder: Get started asap
+  - Reminder: keep the filename as hw03.s
++ HW 2 grading done
++ Test 1
+  - Today at 6 pm in DCC 308
++ Slides
+  - Chapter 2 slides (except x86 material)

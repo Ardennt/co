@@ -1,0 +1,73 @@
+
+1.) Simplify the below using associative/distributive/etc. properties:
+Q = (A*B + (C*B)*(C+B))
+
+Solution:
+Q = (A*B + (C*B)*(C+B))
+  = A*B + C*B*C + C*B*B
+  = A*B + C*B + C*B
+  = A*B + C*B
+  = B * (A+C)
+  
+2.) Use De Morgan's law to simplify:
+Q = ( (X*Y')' * (Y'*Z) )'
+
+De Morgan:
+(A + B)' = A'*B'
+(A*B)' = A' + B'
+
+Solution:
+Q = ( (X*Y')' * (Y'*Z) )'
+Q = (X*Y')'' + (Y'*Z)'
+Q = X*Y' + Y''*Z'
+Q = X*Y' + Y*Z'
+
+
+3.) Simplify:
+Q = ((A + (A+B)')' + A)'
+
+Solution:
+Q = ((A + (A+B)')' + A)'
+Q = ((A + A'*B')' + A)'
+Q = ((A' * (A'*B')') + A)'
+Q = ((A' * (A+B)) + A)'
+Q = ((A'*A + A'*B) + A)'
+Q = (A'*B + A)'
+Q = (A'*B)' * A'
+Q = (A'' + B') * A'
+Q = A*A' + B'*A'
+Q = B'*A'
+
+another way:
+Q = ((A + (A+B)')' + A)'
+Q = ((A + A'*B')' + A)'
+Q = ((A + A')*(A + B')'
+Q = ((A + B')' + A)'
+Q = (A'B + A)'
+Q = (A'B)'*A'
+Q = (A''+B')*A'
+Q = (A + B')*A'
+Q = B'A'
+  
+  
+4.) Give the truth table for:
+Q = A' + B*C'
+
+Solution:
+Q | A | B | C |
+1   0   0   0
+1   0   0   1
+1   0   1   0
+1   0   1   1
+0   1   0   0
+0   1   0   1
+1   1   1   0
+0   1   1   1
+
+
+5.) Show that NAND is a functionally complete (can represent AND, OR, NOT).
+
+Solution:
+AND -> A*B = ((A*B)'*1)'
+OR  -> A+B = (A'+B')'
+NOT ->  A' = (A*A)'

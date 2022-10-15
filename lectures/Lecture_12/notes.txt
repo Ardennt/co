@@ -1,0 +1,13 @@
+Lecture 12 - October 6, 2022
+
+Plan for today
++ Homework 3
+  - Submission page open
++ Homework 2 grades released
++ Test 1
+  - Grading is almost done
++ Lab 4
+  - MIPS nested procedures
++ Slides
+  - Finish chapter 2 slides (except x86 material)
+
