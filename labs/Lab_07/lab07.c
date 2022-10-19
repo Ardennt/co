@@ -131,16 +131,18 @@ int main()
    /*
     * TO DO: Implement test cases
     */
-
+   int failed = 0;
+   int total = 0;
    for (I0 = 0; I0 < 2; I0++){
       for (I1 = 0; I1 < 2; I1++){
          decoder(I0, I1, &O0, &O1, &O2, &O3);
          printf( "decoder( %d, %d ) | ( %d, %d, %d, %d )\n",
-          I0, I1, O0, O1, O2, O3);
+         I0, I1, O0, O1, O2, O3);
+         total++;
       }
    }
 
-   // printf("%d test cases out of %d failed.\n", failed, total);
+   printf("%d test cases out of %d failed.\n", failed, total);
 
    return EXIT_SUCCESS;
 }
