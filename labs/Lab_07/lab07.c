@@ -132,7 +132,15 @@ int main()
     * TO DO: Implement test cases
     */
 
-   printf("%d test cases out of %d failed.\n", failed, total);
+   for (I0 = 0; I0 < 2; I0++){
+      for (I1 = 0; I1 < 2; I1++){
+         decoder(I0, I1, &O0, &O1, &O2, &O3);
+         printf( "decoder( %d, %d ) | ( %d, %d, %d, %d )\n",
+          I0, I1, O0, O1, O2, O3);
+      }
+   }
+
+   // printf("%d test cases out of %d failed.\n", failed, total);
 
    return EXIT_SUCCESS;
 }
@@ -184,7 +192,18 @@ BIT multiplexer( BIT I0, BIT I1, BIT I2, BIT I3, BIT S0, BIT S1 )
 {
    /* TO DO: implement a 4-input multiplexer */
 
-   return FALSE;
+   // decode the selectors
+   BIT O0, O1, O2, O3;
+   decoder(S0, S1, &O0, &O1, &O2, &O3);
+   
+   // assign the gates
+   BIT G1 = and_gate(O0, I0);
+   BIT G2 = and_gate(O1, I1);
+   BIT G3 = and_gate(O2, I2);
+   BIT G4 = and_gate(O3, I3);
+   return (or_gate(or_gate(G1, G2), or_gate(G3, G4)));
+
+   // return FALSE;
 }
 
 
@@ -192,10 +211,10 @@ void decoder( BIT I0, BIT I1, BIT *O0, BIT *O1, BIT *O2, BIT *O3 )
 {
    /* TO DO: implement a 2-input decoder */
 
-   *O0 = !I0 && !I1;
-   *O1 = I0 && !I1;
-   *O2 = !I0 && I1;
-   *O3 = I0 && I1;
+   *O0 = and_gate(not_gate(I0), not_gate(I1));
+   *O1 = and_gate(I0, not_gate(I1));
+   *O2 = and_gate(not_gate(I0), I1);
+   *O3 = and_gate(I0, I1);
 
    return;
 }
