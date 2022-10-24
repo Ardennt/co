@@ -2,3 +2,21 @@
 \usepackage[margin=1.25in]{geometry}
 \usepackage{amsmath, amssymb, setspace, enumerate, enumitem}
 \usepackage{enumerate}
+\usepackage{setspace}
+\onehalfspacing
+
+\begin{document}
+    \begin{enumerate}
+        \item Simplify the following expressions using Boolean algebraic laws. Give each step of your simplification and denote which laws you’re using for each step. Do not skip or combine steps!
+        \begin{enumerate}
+            \item $A \cdot (A + B \cdot B) + (B + A) \cdot (A + B)$\\[0.25in]
+            \begin{tabular}{c | c}
+                $A \cdot (\overline{A} + BB) + \overline{(B+A)} \cdot (\overline{A} + B)$ & Demorgan's Law\\
+                $A \cdot (\overline{A} + BB) + (\overline{B} \cdot \overline{A}) \cdot (\overline{A} + B)$ & Idempotent Law\\
+                $A \cdot (\overline{A} + B) + (\overline{B} \cdot \overline{A}) \cdot (\overline{A} + B)$ & Distributive Law\\
+                $(\overline{A} + B)(A+\overline{B} \cdot \overline{A})$ & Distributive Law\\
+                ajsodjasoidjioasd & bye
+            \end{tabular}
+        \end{enumerate}
+    \end{enumerate}
+\end{document}
