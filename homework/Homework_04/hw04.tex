@@ -15,8 +15,48 @@
                 $A \cdot (\overline{A} + BB) + (\overline{B} \cdot \overline{A}) \cdot (\overline{A} + B)$ & Idempotent Law\\
                 $A \cdot (\overline{A} + B) + (\overline{B} \cdot \overline{A}) \cdot (\overline{A} + B)$ & Distributive Law\\
                 $(\overline{A} + B)(A+\overline{B} \cdot \overline{A})$ & Distributive Law\\
-                ajsodjasoidjioasd & bye
+                $(\overline{A} + B)(A + \overline{B} \cdot A + \overline{A})$ & Inverse Law\\
+                $(\overline{A} + B)(A + \overline{B} \cdot 1)$ & Identity Law\\
+                $(\overline{A} + B)(A + \overline{B})$ & Distributive Law\\
+                $(\overline{A} + B)A + (\overline{A} + B)\overline{B}$ & Distributive Law\\
+                $A\overline{A} + AB + \overline{A}\cdot\overline{B} + \overline{B}B$ & Inverse Law\\
+                $0 + AB + \overline{A}\cdot\overline{B} + 0$ & Identity Law\\
+                $AB + \overline{A}\cdot\overline{B} + 0$ & Identity Law\\
+                $AB + \overline{A}\cdot\overline{B}$
+            \end{tabular}
+            \item $\overline{C \cdot B} + A \cdot B \cdot C + \overline{A + C + \overline{B}}$\\[0.25in]
+            \begin{tabular}{c | c}
+                $\overline{CB} + ABC + \overline{A + C + \overline{B}}$ & Demorgan's Law\\
+                $(\overline{C} + \overline{B}) + ABC + \overline{A + C + \overline{B}}$ & Demorgan's Law\\
+                $\overline{C} + \overline{B} + ABC + \overline{A} \cdot \overline{C}B$ & Commutative Law\\
+                $\overline{C} + \overline{B} + ABC + \overline{A} B \overline{C}$ & Absorption Law\\
+                $(\overline{C} + \overline{B}) + ABC$ & Absorption Law\\
+                $(\overline{C} + \overline{B}) + AB$ & Absorption Law\\
+                $(\overline{C} + \overline{B}) + A$ & Absorption Law\\
+            \end{tabular}
+            \item $(A + B) \cdot (\overline{A} + C) \cdot (\overline{C} + B)$\\[0.25in]
+            \begin{tabular}{c | c}
+                $(A + B)(\overline{A} + C)(\overline{C} + B)$ & Distributive Law\\
+                $(A + B)(\overline{A} + C)\overline{C} + (A+B)(\overline{A} + C)B$ & Distributive Law\\
+                $(A+B)(\overline{A} \cdot \overline{C}) + (A+B)(C \overline{C}) + (A+B)(\overline{A} + C)B$ & Inverse Law\\
+                $(A+B)(\overline{A} \cdot \overline{C}) + (A+B)(0) + (A+B)(\overline{A} + C)B$ & Zero and One Law\\
+                $(A+B)(\overline{A} \cdot \overline{C}) + (A+B) (\overline{A} + C)B$ & Distributive Law\\
+                $(A+B)(\overline{A} \cdot \overline{C}) + (\overline{A} + C)(AB) + (\overline{A} + C)(BB)$ & Idempotent Law\\
+                $(A+B)(\overline{A} \cdot \overline{C}) + (\overline{A} + C)(AB) + (\overline{A} + C)(B)$ & Distributive Law\\
+                $A\overline{A} \cdot \overline{C} + \overline{A}B\overline{C} + (\overline{A} + C)(AB) + (\overline{A} + C)(B)$ & Inverse Law\\
+                $0\overline{C} + \overline{A}B\overline{C} + (\overline{A} + C)(AB) + (\overline{A} + C)B$ & Zero and One Law\\
+                $\overline{A}B\overline{C} + (\overline{A} + C)(AB) + (\overline{A} + C)B$ & Distributive Law\\
+                $\overline{A}B\overline{C} + \overline{A}AB + ABC + (\overline{A} + C)B$ & Inverse Law\\
+                $\overline{A}B\overline{C} + 0B + ABC + (\overline{A} + C)B$ & Zero and One Law\\
+                $\overline{A}B\overline{C} + ABC + (\overline{A} + C)B$ & Distributive Law\\
+                $\overline{A}B\overline{C} + ABC + \overline{A}B + BC$ & Commutative Law\\
+                $\overline{A}B + BC + ABC + \overline{A}B\overline{C}$ & Absorption Law\\
+                $\overline{A}B + BC + ABC$ & Absorption Law\\
+                $\overline{A}B + BC + AB$ & Absorption Law\\
+                $\overline{A}B + BC + A$ & Absorption Law\\
+                $\overline{A}B + BC$\\
             \end{tabular}
         \end{enumerate}
+        \item Find all solutions of the following Boolean equations without using the truth tables:
     \end{enumerate}
 \end{document}
