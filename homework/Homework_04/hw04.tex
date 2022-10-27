@@ -1,9 +1,8 @@
 \documentclass{article}
 \usepackage[margin=1.25in]{geometry}
 \usepackage{amsmath, amssymb, setspace, enumerate, enumitem}
-\usepackage{enumerate}
 \usepackage{setspace}
-\usepackage{graphicx}
+\usepackage{karnaugh-map}
 \onehalfspacing
 
 \begin{document}
@@ -11,7 +10,7 @@
         \item Simplify the following expressions using Boolean algebraic laws. Give each step of your simplification and denote which laws you’re using for each step. Do not skip or combine steps!
         \begin{enumerate}
             \item $A \cdot (A + B \cdot B) + (B + A) \cdot (A + B)$\\[0.25in]
-            \begin{tabular}{c | c}
+            \begin{tabular}{l l}
                 $A \cdot (\overline{A} + BB) + \overline{(B+A)} \cdot (\overline{A} + B)$ & Demorgan's Law\\
                 $A \cdot (\overline{A} + BB) + (\overline{B} \cdot \overline{A}) \cdot (\overline{A} + B)$ & Idempotent Law\\
                 $A \cdot (\overline{A} + B) + (\overline{B} \cdot \overline{A}) \cdot (\overline{A} + B)$ & Distributive Law\\
@@ -26,7 +25,7 @@
                 \boldmath{$AB + \overline{A}\cdot\overline{B}$}
             \end{tabular}
             \item $\overline{C \cdot B} + A \cdot B \cdot C + \overline{A + C + \overline{B}}$\\[0.25in]
-            \begin{tabular}{c | c}
+            \begin{tabular}{l l}
                 $\overline{CB} + ABC + \overline{A + C + \overline{B}}$ & Demorgan's Law\\
                 $(\overline{C} + \overline{B}) + ABC + \overline{A + C + \overline{B}}$ & Demorgan's Law\\
                 $(\overline{C} + \overline{B}) + ABC + \overline{A} \cdot \overline{C}B$ & Commutative Law\\
@@ -34,7 +33,7 @@
                 \boldmath{$(\overline{C} + \overline{B}) + A$}\\
             \end{tabular}
             \item $(A + B) \cdot (\overline{A} + C) \cdot (\overline{C} + B)$\\[0.25in]
-            \begin{tabular}{c | c}
+            \begin{tabular}{l l}
                 $(A + B)(\overline{A} + C)(\overline{C} + B)$ & Distributive Law\\
                 $(A + B)(\overline{A} + C)\overline{C} + (A+B)(\overline{A} + C)B$ & Distributive Law\\
                 $(A+B)(\overline{A} \cdot \overline{C}) + (A+B)(C \overline{C}) + (A+B)(\overline{A} + C)B$ & Inverse Law\\
@@ -87,38 +86,47 @@
         \end{enumerate}
         \item Simplify the following expression by first constructing a truth table, using that truth table to construct a K-map, and then using that K-map to simplify.\\
         $Q = \overline{X} \cdot \overline{Y} \cdot Z + X \cdot Y \cdot \overline{Z} + \overline{X} \cdot Y \cdot \overline{Z} + X \cdot \overline{Y} \cdot \overline{Z}$\\[0.25in]
-        \begin{tabular}{c | c | c | c}
-            x & y & z & result\\
-            0 & 0 & 0 & T\\
-            0 & 0 & 1 & F\\
-            0 & 1 & 0 & T\\
-            0 & 1 & 1 & F\\
-            1 & 0 & 0 & T\\
-            1 & 0 & 1 & F\\
-            1 & 1 & 0 & T\\
-            1 & 1 & 1 & F\\
-        \end{tabular}\\[0.25in]
-        \includegraphics[width=50mm,scale=0.5]{q3_kmap.png}
+
+        \begin{center}
+            Truth Table\\
+            \begin{tabular}{c | c | c | c}
+                x & y & z & result\\
+                0 & 0 & 0 & T\\
+                0 & 0 & 1 & F\\
+                0 & 1 & 0 & T\\
+                0 & 1 & 1 & F\\
+                1 & 0 & 0 & T\\
+                1 & 0 & 1 & F\\
+                1 & 1 & 0 & T\\
+                1 & 1 & 1 & F\\
+            \end{tabular}\\[0.25in]
+        \end{center}
+        
+
+        \begin{center}
+            K-Map\\
+            \begin{karnaugh-map}(label=corner)[2][4][1][$Z$][$Y$][$X$]
+                \manualterms{1,0,1,0,1,0,1,0}
+                \implicant{0}{4}[0,0]
+            \end{karnaugh-map}
+        \end{center}
         \begin{center}
             \textbf{This k-map simplifies the equation to $\overline{Z}$}
         \end{center}
         \item Convert the following truth table into its sum of products representation:\\[0.25in]
         \begin{tabular}{c c c | c}
             A & B & C & Output\\
-            0 & 0 & 0 & 1\\
+            \textbf{0} & \textbf{0} & \textbf{0} & \textbf{1}\\
             0 & 0 & 1 & 0\\
-            0 & 1 & 0 & 1\\
-            0 & 1 & 1 & 1\\
+            \textbf{0} & \textbf{1} & \textbf{0} & \textbf{1}\\
+            \textbf{0} & \textbf{1} & \textbf{1} & \textbf{1}\\
             1 & 0 & 0 & 0\\
             1 & 0 & 1 & 0\\
             1 & 1 & 0 & 0\\
-            1 & 1 & 1 & 1\\
+            \textbf{1} & \textbf{1} & \textbf{1} & \textbf{1}\\
         \end{tabular}
         \begin{itemize}
             \item Sums of product: $\overline{A} \cdot \overline{B} \cdot \overline{C} + \overline{A}B\overline{C} + \overline{A}BC + ABC$
-            \item $\overline{A} \cdot \overline{C} (\overline{B} + B) + BC(\overline{A} + A)$
-            \item $\overline{A} \cdot \overline{C} 1 + BC 1$
-            \item \textbf{Simplified version:} \boldmath{$\overline{A} \cdot \overline{C} + BC$}
         \end{itemize}
         \item Draw a logical circuit diagram that represents the above sum of products expression
         using OpenCircuits (https://opencircuits.io/). Clearly label all inputs/outputs and all
@@ -153,6 +161,113 @@
             \textbf{NOR\_or.circuit represents OR}\\
             \textbf{NOR\_not.circuit represents NOT}
         \end{center}
-        \item Hi
+        \item What is 5ED4 - 07A4 when these values represent unsigned 16-bit hexadecimal numbers? The result should be written in hexadecimal. Show your work.
+        \begin{center}
+            \begin{tabular}{c c c c c}
+                    & $5$ & $E(14)$ & $D(13)$ & $4$\\
+                $-$ & $0$ & $7$ & $A(10)$ & $4$\\
+                \hline
+                & $5$ & $7$ & $3$ & $0$\\
+            \end{tabular}\\[0.25in]
+            \boxed{\textbf{\LARGE Answer: 5730}}
+        \end{center}
+
+        \item What is 5ED4 - 07A4 when these values represent signed 16-bit hexadecimal numbers stored in sign-magnitude format? The result should be written in hexadecimal. Show your work.
+        \begin{center}
+            \begin{tabular}{c c c c c}
+                    & $5$ & $E(14)$ & $D(13)$ & $4$\\
+                $-$ & $0$ & $7$ & $A(10)$ & $4$\\
+                \hline
+                & $5$ & $7$ & $3$ & $0$\\
+            \end{tabular}\\[0.25in]
+            \boxed{\textbf{\LARGE Answer: 5730}}
+        \end{center}
+
+        \textbf{Explanation:}\\
+        In sign magnitude, the most significant bit is the sign bit. In our given equations, none of the leading bits are 1: $5 = 0101$, $0 = 0000$, The answer to this problem will be the same as the one prior.
+
+        \item Assume 185 and 122 are unsigned 8-bit decimal integers. Calculate 185 - 122. Is there overflow, underflow, or neither?
+        
+        \textbf{Decimal to binary conversion}
+        \begin{verbatim}
+            185 = 1011 1001
+            122 = 0111 1010
+        \end{verbatim}
+
+        To perform the binary subtraction, we must convert the number being subtracted to a negative binary number using two's complement, and perform binary addition
+
+        \textbf{Find 122 Two's Complement Number}
+        \begin{verbatim}
+            122 = 0111 1010
+                = 1000 0101 <- one's complement (flip all 1's and 0's)
+                = 1000 0110 <- add 1 to the end (carried over)
+        \end{verbatim}
+
+        \textbf{Calculate 185 + 122(Two's Complement Number)}
+        \begin{verbatim}
+              1 0000 0000 (carry)
+                1011 1001 (185)
+            +   1000 0110 (122's Two's Complement Number)
+            -------------
+              1 0011 1111
+        \end{verbatim}
+
+        \textbf{The answer is represented in 9 bits, results in an: }
+        \boxed{\LARGE \textbf{OVERFLOW}}
+
+        \item Assume 151 and 214 are signed 8-bit decimal integers stored in two's complement format. Calculate 151 - 214 using saturating arithmetic. The result should be written in decimal. Show your work.
+        
+        \textbf{Decimal to binary conversion}
+        \begin{verbatim}
+            151 = 1001 0111
+            214 = 1101 0110
+        \end{verbatim}
+
+        \textbf{151 in Two's Complement to obtain original value}
+        \begin{verbatim}
+                0000 0000 (carry)
+                0110 1000 (flip 1's and 0's)
+            +           1 (add 1)
+            -------------
+                0110 1001
+        \end{verbatim}
+
+        \textbf{214 in Two's Complement to obtain original value}
+        \begin{verbatim}
+                0000 0010 (carry)
+                0010 1001 (flip 1's and 0's)
+            +           1 (add 1)
+            -------------
+                0010 1010
+        \end{verbatim}
+
+        \textbf{Convert numbers back to decimal}
+        \begin{verbatim}
+            (151) 0110 1001 = 105
+            (214) 0010 1010 = 42
+        \end{verbatim}
+
+        \textbf{Perform operation}\\[0.25in]
+        105 - 42 = \boxed{\LARGE \textbf{63}}\\[0.25in]
+        For 8-bit signed integers, saturation limits are from $-128$ to $127$, since $-128\leq63\leq127$, no saturation is required.
+
+        \item Assume 151 and 214 are unsigned 8-bit integers. Calculate 151 + 214 using saturating arithmetic. The result should be written in decimal. Show your work.
+        
+        \textbf{Simple Addition}
+        \begin{verbatim}
+            151 + 214 = 365
+        \end{verbatim}
+
+        \textbf{Saturation}\\
+        For 8 bit unsigned integers, saturation limits are from 0 to 256, since $365 > 256$, the final answer will be saturated to the bounds of 256.
+
+        151 + 214 = \boxed{\LARGE \textbf{256}}
+
+        \item What decimal number does the bit pattern 0×0C000000 represent if it is a two's complement integer? An unsigned integer?
+        
+        \item If the bit pattern 0×0C000000 is placed into the Instruction Register, what MIPS instruction will be executed
+        
+        \item Give a reason why we use two’s complement representation for negative numbers in computer
+        arithmetic. Give an example of its usage.
     \end{enumerate}
 \end{document}
