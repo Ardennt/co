@@ -2,6 +2,7 @@
 \usepackage[margin=1.25in]{geometry}
 \usepackage{amsmath, amssymb, setspace, enumerate, enumitem}
 \usepackage{setspace}
+\usepackage{graphicx}
 \usepackage{karnaugh-map}
 \onehalfspacing
 
@@ -182,14 +183,30 @@
         (PNG, JPEG, or PDF) of your circuit diagram using OpenCircuits’ “Export Image” feature.
         \begin{center}
             \textbf{The images of the circuit diagram is submitted as A\_B\_C.png}\\[0.25in]
+            
             \textbf{0\_0\_0.png is true as seen in the truth table, the LED light is on}\\
+            \includegraphics[width=80mm]{circuits/0_0_0.png}\\[0.25in]
+
             \textbf{0\_1\_0.png is true as seen in the truth table, the LED light is on}\\
+            \includegraphics[width=80mm]{circuits/0_1_0.png}\\[0.25in]
+
             \textbf{0\_1\_1.png is true as seen in the truth table, the LED light is on}\\
+            \includegraphics[width=80mm]{circuits/0_1_1.png}\\[0.25in]
+
             \textbf{1\_1\_1.png is true as seen in the truth table, the LED light is on}\\
+            \includegraphics[width=80mm]{circuits/1_1_1.png}\\[0.25in]
+
             \textbf{0\_0\_1.png is false as seen in the truth table, the LED light is off}\\
+            \includegraphics[width=80mm]{circuits/0_0_1.png}\\[0.25in]
+
             \textbf{1\_0\_0.png is false as seen in the truth table, the LED light is off}\\
+            \includegraphics[width=80mm]{circuits/1_0_0.png}\\[0.25in]
+
             \textbf{1\_0\_1.png is false as seen in the truth table, the LED light is off}\\
+            \includegraphics[width=80mm]{circuits/1_0_1.png}\\[0.25in]
+
             \textbf{1\_1\_0.png is false as seen in the truth table, the LED light is off}\\
+            \includegraphics[width=80mm]{circuits/1_1_0.png}\\[0.25in]
         \end{center}
         \item Given inputs A and B, show that NOR {(A + B)} is functionally complete by giving logical
         circuits equivalent to AND {(A * B)}, OR {(A + B)}, and NOT {A} gates using only NOR
@@ -297,9 +314,9 @@
         \end{verbatim}
 
         \textbf{Saturation}\\
-        For 8 bit unsigned integers, saturation limits are from 0 to 256, since $365 > 256$, the final answer will be saturated to the bounds of 256.
+        For 8 bit unsigned integers, saturation limits are from 0 to 255, since $365 > 255$, the final answer will be saturated to the bounds of 255.
 
-        151 + 214 = \boxed{\text{\LARGE \textbf{256}}}
+        151 + 214 = \boxed{\text{\LARGE \textbf{255}}}
 
         \item What decimal number does the bit pattern 0×0C000000 represent if it is a two's complement integer? An unsigned integer?
         \begin{verbatim}

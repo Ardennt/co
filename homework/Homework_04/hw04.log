@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  28 OCT 2022 10:27
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.9.20)  28 OCT 2022 21:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -120,6 +120,21 @@ Package: enumitem 2019/06/20 v3.9 Customized lists
 \enit@inbox=\box52
 \enit@count@id=\count274
 \enitdp@description=\count275
+) (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+) (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen157
+\Gin@req@width=\dimen158
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/karnaugh-map/karnaugh-map.sty
 Package: karnaugh-map 2022/01/15 v2.0 Draw Karnaugh Maps
  (/usr/local/texlive/2022/texmf-dist/tex/latex/kvoptions/kvoptions.sty
@@ -143,30 +158,15 @@ Package: xparse 2022-01-12 L3 Experimental document command parser
 Package: xstring 2021/07/21 v1.84 String manipulations (CT)
 ) (/usr/local/texlive/2022/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty (/usr/local/texlive/2022/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty (/usr/local/texlive/2022/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty (/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
 \pgfutil@everybye=\toks25
-\pgfutil@tempdima=\dimen157
-\pgfutil@tempdimb=\dimen158
+\pgfutil@tempdima=\dimen159
+\pgfutil@tempdimb=\dimen160
  (/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.tex)) (/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
 \pgfutil@abb=\box54
 ) (/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex (/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/pgf.revision.tex)
 Package: pgfrcs 2021/05/15 v3.1.9a (3.1.9a)
 ))
 Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
- (/usr/local/texlive/2022/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
-File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
-)
-Package graphics Info: Driver file: pdftex.def on input line 107.
- (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
-))
-\Gin@req@height=\dimen159
-\Gin@req@width=\dimen160
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+ (/usr/local/texlive/2022/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty (/usr/local/texlive/2022/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty (/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
 Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
  (/usr/local/texlive/2022/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
 \pgfkeys@pathtoks=\toks26
@@ -359,20 +359,20 @@ File: tikzlibrarymatrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 ) (./hw04.aux)
 \openout1 = `hw04.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
-LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 9.
+LaTeX Font Info:    ... okay on input line 9.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -427,32 +427,32 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2022/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 12.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 13.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 12.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 13.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (17.27959pt too wide) in paragraph at lines 63--89
+Overfull \hbox (17.27959pt too wide) in paragraph at lines 64--90
 [] 
  []
 
 [2]
-Overfull \hbox (85.8865pt too wide) in paragraph at lines 92--108
+Overfull \hbox (85.8865pt too wide) in paragraph at lines 93--109
 [] 
  []
 
 [3]
-Overfull \hbox (66.69933pt too wide) in paragraph at lines 111--123
+Overfull \hbox (66.69933pt too wide) in paragraph at lines 112--124
 [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 127--129
+Underfull \hbox (badness 10000) in paragraph at lines 128--130
 
  []
 
@@ -462,35 +462,77 @@ Underfull \hbox (badness 10000) in paragraph at lines 127--129
 \@karnaughmap@local@southeast@=\count310
 \@karnaughmap@local@northwest@=\count311
 \@karnaughmap@local@southeast@=\count312
- [5] [6] [7] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 344--345
+ [5]
+<circuits/0_0_0.png, id=28, 2569.6pt x 1260.71pt>
+File: circuits/0_0_0.png Graphic file (type png)
+<use circuits/0_0_0.png>
+Package pdftex.def Info: circuits/0_0_0.png  used on input line 188.
+(pdftex.def)             Requested size: 227.62204pt x 111.66997pt.
+<circuits/0_1_0.png, id=30, 2569.6pt x 1260.71pt>
+File: circuits/0_1_0.png Graphic file (type png)
+<use circuits/0_1_0.png>
+Package pdftex.def Info: circuits/0_1_0.png  used on input line 191.
+(pdftex.def)             Requested size: 227.62204pt x 111.66997pt.
+<circuits/0_1_1.png, id=31, 2569.6pt x 1260.71pt>
+File: circuits/0_1_1.png Graphic file (type png)
+<use circuits/0_1_1.png>
+Package pdftex.def Info: circuits/0_1_1.png  used on input line 194.
+(pdftex.def)             Requested size: 227.62204pt x 111.66997pt.
+<circuits/1_1_1.png, id=32, 2569.6pt x 1260.71pt>
+File: circuits/1_1_1.png Graphic file (type png)
+<use circuits/1_1_1.png>
+Package pdftex.def Info: circuits/1_1_1.png  used on input line 197.
+(pdftex.def)             Requested size: 227.62204pt x 111.66997pt.
+ [6 <./circuits/0_0_0.png> <./circuits/0_1_0.png> <./circuits/0_1_1.png>]
+<circuits/0_0_1.png, id=39, 2569.6pt x 1260.71pt>
+File: circuits/0_0_1.png Graphic file (type png)
+<use circuits/0_0_1.png>
+Package pdftex.def Info: circuits/0_0_1.png  used on input line 200.
+(pdftex.def)             Requested size: 227.62204pt x 111.66997pt.
+<circuits/1_0_0.png, id=40, 2569.6pt x 1260.71pt>
+File: circuits/1_0_0.png Graphic file (type png)
+<use circuits/1_0_0.png>
+Package pdftex.def Info: circuits/1_0_0.png  used on input line 203.
+(pdftex.def)             Requested size: 227.62204pt x 111.66997pt.
+<circuits/1_0_1.png, id=41, 2569.6pt x 1260.71pt>
+File: circuits/1_0_1.png Graphic file (type png)
+<use circuits/1_0_1.png>
+Package pdftex.def Info: circuits/1_0_1.png  used on input line 206.
+(pdftex.def)             Requested size: 227.62204pt x 111.66997pt.
+<circuits/1_1_0.png, id=42, 2569.6pt x 1260.71pt>
+File: circuits/1_1_0.png Graphic file (type png)
+<use circuits/1_1_0.png>
+Package pdftex.def Info: circuits/1_1_0.png  used on input line 209.
+(pdftex.def)             Requested size: 227.62204pt x 111.66997pt.
+ [7 <./circuits/1_1_1.png> <./circuits/0_0_1.png> <./circuits/1_0_0.png> <./circuits/1_0_1.png>] [8 <./circuits/1_1_0.png>] [9] [10]
+Underfull \hbox (badness 10000) in paragraph at lines 361--362
 
  []
 
-[9]
-Overfull \hbox (11.37636pt too wide) in paragraph at lines 361--361
+
+Overfull \hbox (11.37636pt too wide) in paragraph at lines 378--378
  []    \OT1/cmtt/m/n/10 we get a value of 10010, getting rid of overflow, we get 0010, but 0010 = 2?[] 
  []
 
-
-Overfull \hbox (42.87608pt too wide) in paragraph at lines 381--381
+[11]
+Overfull \hbox (42.87608pt too wide) in paragraph at lines 398--398
  []\OT1/cmtt/m/n/10 here, we get a value of 10000, getting rid of the overflow, we get 0000, and 0000 = 0.[] 
  []
 
-[10] (./hw04.aux) ) 
+[12] (./hw04.aux) ) 
 Here is how much of TeX's memory you used:
- 15237 strings out of 478268
- 305629 string characters out of 5846347
+ 15295 strings out of 478268
+ 306826 string characters out of 5846347
  598199 words of memory out of 5000000
- 33169 multiletter control sequences out of 15000+600000
+ 33217 multiletter control sequences out of 15000+600000
  479815 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 115i,14n,118p,719b,1221s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 99i,14n,103p,719b,1221s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on hw04.pdf (10 pages, 149302 bytes).
+Output written on hw04.pdf (12 pages, 1770108 bytes).
 PDF statistics:
- 91 PDF objects out of 1000 (max. 8388607)
- 58 compressed objects within 1 object stream
+ 114 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 53 words of extra memory for PDF output out of 10000 (max. 10000000)
 

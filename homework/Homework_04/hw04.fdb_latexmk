@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1666967253 "/Users/jiaweiwu/Documents/CS/comporg/homework/Homework_04/hw04.tex" "hw04.pdf" "hw04" 1666967254
-  "/Users/jiaweiwu/Documents/CS/comporg/homework/Homework_04/hw04.tex" 1666967252 24290 24e9e8bdf171f77dfc09d0b3d348bde6 ""
+["pdflatex"] 1667007379 "/Users/jiaweiwu/Documents/CS/comporg/homework/Homework_04/hw04.tex" "hw04.pdf" "hw04" 1667007384
+  "/Users/jiaweiwu/Documents/CS/comporg/homework/Homework_04/hw04.tex" 1667007378 24917 a9701a9edaa8c52e43e2d426899a883c ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -146,8 +146,16 @@
   "/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1647878959 4410336 7d30a02e9fa9a16d7d1f8d037ba69641 ""
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1663728032 2826436 9a9aba40e05c78b51a146a53976c174d ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
-  "hw04.aux" 1666967254 33 06c322e1d88c4778ac780ba5e7d05c77 "pdflatex"
-  "hw04.tex" 1666967252 24290 24e9e8bdf171f77dfc09d0b3d348bde6 ""
+  "circuits/0_0_0.png" 1666914200 342108 3ad67ab096aba69b368d493cf4f7084a ""
+  "circuits/0_0_1.png" 1666914200 320173 ff33d4b70342d8c6cc6dc317a913085c ""
+  "circuits/0_1_0.png" 1666914200 343628 75938e5023b4feb24fc57a4c4e4d8e89 ""
+  "circuits/0_1_1.png" 1666914200 337472 d52be0a9d3304aa5229b98a1c1dba1ab ""
+  "circuits/1_0_0.png" 1666914200 325862 3a8f4fb39745f97cca957dd7e61e9c5a ""
+  "circuits/1_0_1.png" 1666914200 321373 e7c203d8fb5ddb6383b4ed4b6186c2cc ""
+  "circuits/1_1_0.png" 1666914200 328719 0d8c94de747c8f076bbc2a5bac992118 ""
+  "circuits/1_1_1.png" 1666914200 341419 9e10b339dc5c4f809301ba47f38e5045 ""
+  "hw04.aux" 1667007384 33 e6d77a6cc1977d88a849501f83258f9d "pdflatex"
+  "hw04.tex" 1667007378 24917 a9701a9edaa8c52e43e2d426899a883c ""
   (generated)
   "hw04.aux"
   "hw04.log"
