@@ -1,0 +1,311 @@
+1. Manually perform the following conversions (assume binary/hexadecimal values are using 2's complement notation) 
+using the minimal number of digits in the result to represent the original value exactly:
+
+0100000110001111 binary to decimal
+-499 decimal to binary
+0x0000FEED hexadecimal to decimal
+0xFFFFFFFE hexadecimal to decimal
+0xFFFFFFED hexadecimal to decimal
+0x7FFF hexadecimal to decimal
+0x8000 hexadecimal to decimal
+0xCAFEBABE hexadecimal to binary
+11101 binary to hexadecimal
+10111010101010101010101010101101 binary to hexadecimal
+100101100011101 binary to hexadecimal
+-1 decimal to hexadecimal
+42 decimal to hexadecimal
+-15 decimal to hexadecimal
+
+
+2. Manually compute the following expressions. 0b prefix denotes binary numbers. Whenever possible, avoid performing conversions to other number systems:
+0x000000E7 - 0x000000E9
+0xDEADBAAD - 0xDEADBEEF
+0xFEEDC0FF - 0xFEEDC0DE
+0xFFFFFFED - 0xFFFFFFFF
+0b010001 + 0b010010
+0b10010001 & 0b11110000
+0b10010001 | 0b11110000
+0b10010001 << 2
+0b10010001 >> 2
+0xFEEDFEED << 0xFF
+
+
+3. What do the following hexadecimal values equal to?
+0x00
+0x0000
+0x00000000
+0x41
+0xCACA
+0xFFFF
+0x8000000
+0x00000001
+
+
+4. Assuming all values are signed integers that use 2's complement notation, represent the given values (0b prefix denotes binary numbers) 
+using the specified number of bits. If it is not possible, explain why:
+
+0x0 using 8 bits
+-5 using 32 bits
+0xFF using 32 bits
+-128 using 8 bits
+128 using 8 bits
+0x35 using 8 bits
+0xF0 using 16 bits
+0xF0 using 32 bits
+0b1000 using 8 bits
+0b0100 using 8 bits
+
+
+5. Give the values stored in temporary registers $t0, $t1, $t2, and $t3 after the following block of MIPS code executes. 
+You can give decimal integer values or binary (you only need to show the least significant byte of each word). If the 
+value of any register cannot be determined based on the information given, write "Undefined".
+li    $t0, 3
+sll   $t1, $t0, 2
+or    $t2, $t1, $t0
+and   $t3, $t2, $t0
+
+
+6. Consider the following memory dump of the data segment in QtSpim (see practice02_06.png).
+
+Assuming the architecture is little-endian, give the hexadecimal value of the word that starts at address 0x10010008 in the data segment.
+
+If this word represents an unsigned integer, what is its decimal value? Recall that the maximum 32-bit unsigned integer value is 4,294,967,295 (decimal number system).
+
+Alternatively, if we consider this integer to be signed (using 2's complement notation), what is its decimal value then?
+
+Finally, you need to change the value of this word to represent -7 using 2's complement notation. Show the contents of the data segment after updating the value. For full credit, fill in both the Memory Address and the Value columns for all 4 rows.
+
+  Memory address    |  Value (byte)
+--------------------------------------
+                    |                 
+                    |                 
+                    |                 
+                    |                 
+
+
+7. Convert the following C code to MIPS. 
+
+void swap_array_values(int* arr1, int* arr2, int length)
+{
+  for (int i = 0; i < length; ++i) {
+    int temp = arr1[i];
+    arr1[i] = arr2[i];
+    arr2[i] = temp;
+  }
+
+  return;
+}
+
+
+8. Describe what's wrong with the following MIPS code for function fun_function:
+
+fun_function:
+  # store our return address
+  sub $sp, $sp, 4   
+  sw  $ra, 0($sp)
+  
+  # get our input arguments
+  move  $s0, $a0
+  move  $s1, $a1
+
+  # print them out
+  li    $v0, 1
+  move  $a0, $s0
+  syscall
+  move  $a0, $s1
+  syscall
+
+  # restore ra and return
+  lw  $ra, 0($sp)
+  add $sp, $sp, 4
+  jr  $ra
+
+
+9. Write a MIPS program that asks the user for a positive integer n, then 
+builds a right triangle as shown in the example below. Implement this 
+using nested for loops.
+
+What is n? 4
+*******
+*****
+***
+*
+
+Implement a MIPS function that prints out the above given an input argument for n in the a0 register. You can assume there exists in the .data segment
+star:    .asciiz "*"
+newline: .asciiz "\n"
+
+
+10. Give an example supported by the MIPS ISA for each of the MIPS design principles given below:
+Design Principle 1: Simplicity favors regularity
+Design Principle 2: Smaller is faster
+Design Principle 3: Make the common case fast
+Design Principle 4: Good design demands good compromises
+
+
+11. Find all syntax and semantic errors in the following code:
+# This function should check if the input argument is 0 or not. If the argument 
+# is 0, the function should pass the value of 1 to the cluck_cluck function AND 
+# return the value of 1 to the caller. Likewise, if the argument is not 0, the 
+# function should pass the value of 0 to the cluck_cluck function AND return 
+# the value of 0 to the caller.
+bawk_bawk:  
+  # get our input argument
+  move  $s0, $a0 # save s0 before you add anything to it
+
+  # if our input == 0
+  #   return value = 1
+  # else
+  #   return value = 0
+  beq $s0, $zero, zero
+  li  $a0, 0
+  # jr $ra here
+zero:
+  li  $a0, 1
+
+  # call cluck_cluck function with argument of 1/0
+  j   cluck_cluck
+
+  # return to caller
+  jr  $ra
+
+
+12. You're implementing a leaf procedure in MIPS. The procedure will utilize registers $t0 and $s0 to 
+perform some basic calculations and then return to the caller. Based on the MIPS conventions discussed 
+in class, what do you have to save on the stack within the leaf procedure?
+
+$s0
+
+
+13. Recall that prime numbers between 2 and 25 are as follows: 2, 3, 5, 7, 11, 13, 17, 19, and 23.
+
+Write MIPS code to determine whether a given unsigned integer (passed as an argument) is prime or not:
+  * Implement this as a procedure labeled isprime. The procedure must return 1 if prime and 0 otherwise.
+  * You may assume the argument belongs to the range [2; 25].
+  * You may hardcode the list of prime numbers in the data segment.
+  * Your implementation must use register $t0 but no other $t-registers. It also must use register $s0. You may use any of the other $s-registers, if necessary.
+  * Make sure you follow all register usage conventions and save certain registers on the stack when it is required.
+
+Consider the following starter code of the main procedure which calls your isprime:
+         .data
+version: .asciiz "1.0\n"
+primes:  .word 2, 3, 5, 7, 11, 13, 17, 19, 23
+prime_str: .asciiz "PRIME\n"
+not_prime_str: .asciiz "NOT PRIME\n"
+
+         .text
+         .globl main
+main:
+         la    $t0, version
+
+
+
+
+         jr    $ra
+
+
+Fill in the body of main procedure so that it:
+  * Request an integer from the user
+  * Calls isprime
+  * Prints "PRIME" or "NOT PRIME" depending on the primality of the integer entered by the use.
+
+Remember to save/restore registers on the stack, when required. Also, make sure that register $t0 which is set in the first line of main, maintains its value throughout the entire procedure.
+
+
+14. For all parts of this problem, clearly show all work to get full credit. You are given the following Boolean formula:
+
+~(~(A*~B) + C * 1 + B * 0) + ~(A + ~C) * (B + C)
+
+a. Express the same function as a Sum of Products (SOP) using only algebraic transformations (i.e., only applying axioms, laws, and identities of Boolean algebra).
+
+b. Use truth tables to prove that your Sum of Products formula from part a defines the same Boolean function as the one given by the original formula.
+
+c. Use the truth table from part b to express this Boolean function as the Product of Sums (POS).
+
+d. Implement this Boolean function (use any of the formulas but specify which formula you used) as a logic circuit using only 2-input AND, 2-input OR, and NOT gates. Clearly mark all input and output signals.
+
+
+15. Give examples of functionally complete sets of Boolean operators.
+
+
+16.
+
+a. Design a logic circuit that implements a 2-decoder with an additional "E" (Enable). When "E" is 1, the 
+output of the decoder is the same as the output of a regular 2-decoder without an E input. When E is 0, 
+all outputs are 0. You are only allowed to use one 2-decoder and up to four other gates.
+
+b. Use the 2-decoder with Enable that you designed in part a to design a 4-decoder (a decoder with four 
+inputs and 16 outputs). You are only allowed to use as many 2-decoders with Enable as you need but no 
+other components.
+
+
+17.
+
+You are given a 3-bit binary A (A2A1A0) and a 2-bit binary B (B1B0). Define a Boolean function G which 
+is 1 when the number of ones in A is greater than or equal to the number of ones in B, and 0 otherwise. 
+To help you get started, here are three example rows from the truth table for G.
+
++----+----+----+----+----+---+-----------------------------------------------------------------------------------------------+
+|       A      |    B    | G |                                            Comments                                           |
++----+----+----+----+----+   +-----------------------------------------------------------------------------------------------+
+| A2 | A1 | A0 | B1 | B0 |   |                                                                                               |
++----+----+----+----+----+---+-----------------------------------------------------------------------------------------------+
+| 1  |  0 |  0 |  1 |  1 | 0 | There is one 1 in A which is not greater or equal than the number of ones in B (two ones)     |
+| 1  |  0 |  1 |  0 |  1 | 1 | There are two ones in A which is greater or equal than the number of ones in B (only one one) |
+| 1  |  0 |  1 |  1 |  1 | 1 | There are two ones in A which is greater or equal than the number of ones in B (two ones)     |
++----+----+----+----+----+---+-----------------------------------------------------------------------------------------------+
+
+a.
+Use K-map method to produce minimal (i.e., using the smallest number of terms and variables) Boolean 
+formula for G. For full credit, show all work, including the tables/groupings for the K-map method 
+but do not forget that the final result is a Boolean formula.
+
+b.
+Implement Boolean function G from Part (a) using the minimum number of logic gates AND, OR, and 
+NOT where each gate has the smallest number of inputs. You may use gates with any number of inputs. 
+Draw a corresponding logic circuit. Clearly label all inputs and outputs.
+
+
+18. Take a look at the 4-mux given on slide 69 of the csci2500-f21-ch03a-slides.pdf slides. What is 
+the purpose of the 2-decoder in this instance? Describe it in terms of its logical function. Is there 
+a different implementation we could use for the 4-mux that doesn't use a decoder?
+
+
+19. Consider the 1-bit ALU given on slide "New 1-bit ALU" of the Chapter-3b slides. Update this ALU 
+by adding the logical operations of XOR and NOR to it. Draw the updated circuit diagram for this ALU. 
+List any assumptions you need to make and be as detailed as possible.
+
+
+20. Given the 1-bit ALU shown in practice02-20.png, fill in the table by specifying the inputs and 
+control lines for each given operation. More specifically, each cell of the table should contain 
+one or more bits, with each bit specified as 0, 1, or X for a "don't care" input (i.e., the bit 
+does not affect the instruction). Note that inputs a and b are both 1-bit inputs.
+
++───────────────────────+───────+──────────+──────────+──────────+────────────+
+| Desired 1-Bit Result  | Less  | Ainvert  | Binvert  | CarryIn  | Operation  |
++───────────────────────+───────+──────────+──────────+──────────+────────────+
+| a AND b               |       |          |          |          |            |
+| a OR b                |       |          |          |          |            |
+| a + b                 |       |          |          |          |            |
+| a - b                 |       |          |          |          |            |
++───────────────────────+───────+──────────+──────────+──────────+────────────+
+
+
+21. Describe a problem that could arise arise when using an S-R latch within some logical circuit. What solution did we propose to address this?
+
+22. Consider the following circuit (practice02_22.png) that shows yet another variant of a flip-flop called J-K. 
+Assume clock period is 2000 ns and all gates have a latency of 333 ns. Draw timing diagram showing at least the 
+CLK, J, K, Q, and ~Q (you may show other signals as well if you wish) starting from the state when Q=1, ~Q=0, J=0, 
+K=0 and then K changes from 0 to 1. Make sure your diagram is to scale. Use arrows to show the causal relationship 
+between signals in your diagram. In a few sentences, explain how this flip-flop works and how it is different from 
+the SR flip-flop that we reviewed in class.
+
+23. You are given a 32-bit ALU which consists of 32 1-bit ALUs (practice02_23_01.png). A 1-bit ALU is in 
+practice02_23_02.png, and the full adder component is implemented in practice02_23_03.png.
+
+Recall that a latency (delay) of a digital circuit (gate, component, etc.) is the amount of time between all inputs 
+are supplied and all outputs of that circuit are stable and valid.
+
+Assuming that AND, OR, and NOT gates have the same delay of t nanoseconds, what is the latency of the 32-bit ALU 
+shown above? For simplicity, you may assume the delay of multiplexors to be 0.
+
