@@ -1,0 +1,9 @@
+Lecture 18 - October 31, 2022
+
+Plan for today
++ HW 5
+  - Released next week
++ Slides
+  - Finish with Chapter 3/Appendix B
+  - Start on MIPS processor design (Chapter-4)
+  - Lot o' slides for next couple weeks

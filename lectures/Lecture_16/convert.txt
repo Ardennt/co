@@ -1,0 +1,50 @@
+1.) Convert 0xBEEF to decimal
+
+F = 15*16^0
+E = 14*16^1
+E = 14*16^2
+B = 11*16^3 
+
+0xBEEF = 15 + 14*16 + 14*256 + 11*4096 = 48879
+
+
+2.) Convert 0xB0D3 to binary
+
+B = 1011
+0 = 0000
+D = 1101
+3 = 0011
+
+0xB0D3 = 0b1011000011010011
+
+
+3.) Convert 12.625 to IEEE single precision floating point
+
+x = (-1)^s * (1 + f) * 2^(e + bias)
+
+positive => s = 0
+single precision => bias = 127
+
+12.625 = 8 + 4 + 1/2 + 1/8
+12.625 = 2^3 + 2^2 + 2^-1 + 2^-2
+12.625 = 0b1100.101 
+=> fraction = [1]100101 0...0 = 10010100000000000000
+
+exponent = 3 + bias = 130 = 10000010
+
+FP = 0 10000001 10010100000000000000
+
+
+4.) Convert -54.875 to IEEE single precision floating point
+
+negative => s = -1
+single precision => bias = 127
+
+54.875 = 32 + 16 + 4 + 2 + 1/2 + 1/4 + 1/8
+54.875 = 2^5 + 2^4 + 2^2 + 2^1 + 2^-1 + 2^-2 + 2^-3
+54.875 = 0b110110.111
+=> fraction = [1]10110111 0...0 = 10110111000000000000
+
+exponent = 5 + bias = 132 = 10000100
+
+FP = 1 10000100 10110111000000000000

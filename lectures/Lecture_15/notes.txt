@@ -1,0 +1,12 @@
+Lecture 15 - October 24, 2022
+
+Plan for today
++ HW 4
+  - Due Friday (10/28)
++ Exam 2
+  - Moved to 11/7
++ Slides
+  - ALU
+  - Building a 1-bit ALU (https://circuitverse.org/simulator)
+  - Memory
+
