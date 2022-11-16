@@ -106,11 +106,97 @@ void plus_minus(struct reg registers[10], int ourReg, char var1[8], char var2[8]
     }
 }
 
-void mult_divide(struct reg registers[10], int ourReg, char var1[8], char var2[8], int tmp_var, int usedtmp, char operation){
+void mult_divide(struct reg registers[10], int ourReg, char var1[8], char var2[8], int *tmp_var, int usedtmp, char operation){
     int first_var = inReg(registers, var1[0]);
     int second_var = inReg(registers, var2[0]);
 
-    
+    // it's the last variable
+    if (var2[strlen(var2)-1] == ';'){
+        // both are chars
+        if (isalpha(var2[0])){
+            // multiplying two variables, one of them is the end
+            if (operation == '*') printf("mult ");
+            else printf("div ");
+
+            // used temporary variable requires you to print the tempvar
+            if (usedtmp){
+                printf("$t%d,$s%d\n", *tmp_var, second_var);
+                // access hi or lo depending on division or modulus
+                if (operation == '%') printf("mfhi ");
+                else printf("mflo ");
+                printf("$s%d\n", ourReg);
+            }
+            // haven't used the temporary variable, just multiple both
+            else {
+                printf("$s%d,$s%d\n", first_var, second_var);
+                // access hi or lo depending on division or modulus
+                if (operation == '%') printf("mfhi ");
+                else printf("mflo ");
+                printf("$s%d\n", ourReg);
+            }
+        }
+        else {
+            // case check whether it's 0 or not
+            if (var2[0] == '0'){
+                printf("li $s%d,0\n", ourReg);
+                return;
+            }
+
+            char new_var2[8]; // for some reason it's segfaulting when i call remove_semicolon
+            sscanf(var2, "%s", new_var2);
+            remove_semicolon(new_var2);
+            printf("li $t%d,%s\n", *tmp_var, new_var2);
+
+            if (operation == '*') printf("mult ");
+            else printf("div ");
+
+            printf("$s%d,$t%d\n", first_var, *tmp_var);
+            *tmp_var += 1;
+            // access hi or lo depending on division or modulus
+            if (operation == '%') printf("mfhi ");
+            else printf("mflo ");
+            printf("$s%d\n", ourReg);
+        }
+        return;
+    }
+
+    if (isalpha(var2[0])){
+        if (operation == '*') printf("mult ");
+        else printf("div ");
+        // if previously used a temp variable
+        if (usedtmp) {
+            printf("$t%d,$s%d\n", *tmp_var-1, second_var);
+            // access hi or lo depending on division or modulus
+            if (operation == '%') printf("mfhi ");
+            else printf("mflo ");
+            printf("$t%d\n", *tmp_var);
+        } else {
+            printf("$s%d,$s%d\n", first_var, second_var);
+            // access hi or lo depending on division or modulus
+            if (operation == '%') printf("mfhi ");
+            else printf("mflo ");
+            printf("$t%d\n", *tmp_var);
+        }
+    }
+    else {
+        // case check whether it's 0 or not
+        if (var2[0] == '0'){
+            printf("li $s%d,0\n", ourReg);
+            return;
+        }
+
+        printf("li $t%d,%s\n", *tmp_var, var2);
+
+        if (operation == '*') printf("mult ");
+        else printf("div ");
+
+        printf("$s%d,$t%d\n", first_var, *tmp_var);
+        *tmp_var += 1;
+        // access hi or lo depending on division or modulus
+        if (operation == '%') printf("mfhi ");
+        else printf("mflo ");
+        printf("$t%d\n", *tmp_var);
+    }
 }
 
 // return the value of the right hand side of the equation
@@ -146,8 +232,8 @@ void getRHS(struct reg registers[10], int ourReg, char line[128], int offset, in
         if (operation[0] == '+' || operation[0] == '-'){
             plus_minus(registers, ourReg, tmp, var, *tmpReg, usedtmp, operation[0]);
         } 
-        else if (operation[0] == '*' || operation[0] == '/'){
-
+        else if (operation[0] == '*' || operation[0] == '/' || operation[0] == '%'){
+            mult_divide(registers, ourReg, tmp, var, *&tmpReg, usedtmp, operation[0]);
         }
 
         offset += n;
