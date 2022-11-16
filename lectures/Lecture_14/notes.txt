@@ -1,0 +1,12 @@
+Lecture 14 - October 17, 2022
+
+Plan for today
++ HW 3
+  - Being graded
++ HW 4
+  - Posted
++ Slides
+  - Finish with digital components
+  - K-maps
+  - Maybe start ALU
++ Drop deadline this Friday, 10/21

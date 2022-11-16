@@ -1,0 +1,28 @@
+Lecture 20 - November 10, 2022
+
+Plan for today
++ Grading
+  - Test 2 = underway
+  - HW 4 = almost done
++ Slides
+  - MIPS processor design (Chapter 4)
+  - Verilog HDL
+
+
+16-bit displacement:
+1000 0000 0001 1001
+
+Sign-extended to 32 bits and then shifted left by 2 places by re-routing wires inside the bus:
+1111 1111 1111 1111 1000 0000 0001 1001
+  ////                               ||
+ 1111  1111 1111 1110 0000 0000 0110 0100
+
+Extending the sign preserves the value:
+-2^1 2^0
+   1   0    -2 // Original value
+
+ -2^3 2^2 2^1 2^0
+    1   1   1   0   -8 + 4 + 2 = -2  // After sign extension to 4 total bits
+
+    1   0   0   0   -8  // After shifting left by 2 places
+

@@ -1,0 +1,7 @@
+Lecture 19 - November 7, 2022
+
+Plan for today
+
++ Slides
+  - Sequential circuits
+  - Datapath

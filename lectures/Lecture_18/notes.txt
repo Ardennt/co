@@ -1,0 +1,18 @@
+Lecture 18 - November 3, 2022
+
+Plan for today
++ Grading
+  - HW 4 underway
++ Test 2
+  - Practice problems
+    * practice02.txt
++ HW 5
+  - Released
+  - Start early (which means yesterday or even earlier!)
+    * Lots of coding
+    * More time consuming than you might think
+    * Debug locally so that by the time Submitty submission page opens, you have everything ready.
+    * DO NOT attempt to use Submitty as a debugging tool. The number of submission attempts will be limited, as usual.
++ Slides
+  - Finish with Chapter 3/Appendix B
+  - Start on MIPS processor design (Chapter 4)
