@@ -3,8 +3,8 @@ module Count4(clk,rst,enable,upDown, count);
    input clk, rst, enable, upDown;
    output reg [3:0] count;
 
-   // insert code here
-   always @(posedge clk) begin
+// insert code here 
+always @(posedge clk) begin
       if (rst) begin
          count = 0;
       end
