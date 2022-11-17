@@ -25,12 +25,20 @@ int inReg(struct reg registers[10], char letter){
 
 // keeps track of temp variables
 void add_tmp(int *tmp_var){
-    if (*tmp_var > 9) {
+    if (*tmp_var >= 9) {
         *tmp_var = 0;
     }
     else {
         *tmp_var += 1;
     }
+}
+
+int prev_tmp(int tmp_var){
+    if (tmp_var == 0) {
+        return 9;
+    }
+    
+    return tmp_var - 1;
 }
 
 // used when using li is needed
@@ -121,6 +129,8 @@ void breakDown(struct reg registers[10], int ourReg, char var1[64], char var2[64
             printf("move $s%d,$t%d\n", ourReg, t_after);
         }
     }
+    // t_after and t_before are both used, we need to advance
+    add_tmp(*&tmp_var);
 }
 
 // break_down but we're given a -1 or 1
@@ -130,7 +140,7 @@ void breakdown_1(struct reg registers[10], int ourReg, char var1[64], char var2[
     // last variable
     if (var2[strlen(var2)-1] == ';'){
         if (usedtmp) {
-            printf("move $t%d,$t%d\n", *tmp_var, *tmp_var-1);
+            printf("move $t%d,$t%d\n", *tmp_var, prev_tmp(*tmp_var));
             if (num > 0) printf("move $s%d,$t%d\n", ourReg, *tmp_var);
             else printf("sub $s%d,$zero,$t%d\n", ourReg, *tmp_var);
         }
@@ -143,10 +153,10 @@ void breakdown_1(struct reg registers[10], int ourReg, char var1[64], char var2[
     }
     else {
         if (usedtmp) {
-            printf("move $t%d,$t%d\n", *tmp_var, *tmp_var-1);
+            printf("move $t%d,$t%d\n", *tmp_var, prev_tmp(*tmp_var));
             add_tmp(*&tmp_var);
-            if (num > 0) printf("move $t%d,$t%d\n", *tmp_var, *tmp_var-1);
-            else printf("sub $t%d,$zero,$t%d\n", *tmp_var, *tmp_var-1);
+            if (num > 0) printf("move $t%d,$t%d\n", *tmp_var, prev_tmp(*tmp_var));
+            else printf("sub $t%d,$zero,$t%d\n", *tmp_var, prev_tmp(*tmp_var));
         }
         else {
             printf("move $t%d,$t%d\n", *tmp_var, first_reg);
@@ -164,8 +174,8 @@ void breakdown_1_div(struct reg registers[10], int ourReg, char var1[64], char v
 
     if (var2[strlen(var2)-1] == ';'){
         if (usedtmp){
-            if (num > 0) printf("move $s%d,$t%d\n", ourReg, *tmp_var-1);
-            else printf("sub $s%d,$zero,$t%d\n", ourReg, *tmp_var-1);
+            if (num > 0) printf("move $s%d,$t%d\n", ourReg, prev_tmp(*tmp_var));
+            else printf("sub $s%d,$zero,$t%d\n", ourReg, prev_tmp(*tmp_var));
         }
         else {
             if (num > 0) printf("move $s%d,$s%d\n", ourReg, first_reg);
@@ -174,8 +184,8 @@ void breakdown_1_div(struct reg registers[10], int ourReg, char var1[64], char v
     }
     else {
         if (usedtmp){
-            if (num > 0) printf("move $t%d,$t%d\n", *tmp_var, *tmp_var-1);
-            else printf("sub $t%d,$zero,$t%d\n", *tmp_var, *tmp_var-1);
+            if (num > 0) printf("move $t%d,$t%d\n", *tmp_var, prev_tmp(*tmp_var));
+            else printf("sub $t%d,$zero,$t%d\n", *tmp_var, prev_tmp(*tmp_var));
         }
         else {
             if (num > 0) printf("move $t%d,$s%d\n", *tmp_var, first_reg);
@@ -224,7 +234,7 @@ void plus_minus(struct reg registers[10], int ourReg, char var1[64], char var2[6
             else printf("sub ");
 
             if (usedtmp) {
-                printf("$s%d,$t%d,$s%d\n", ourReg, *tmp_var-1, second_var);
+                printf("$s%d,$t%d,$s%d\n", ourReg, prev_tmp(*tmp_var), second_var);
             // didn't use a temporary variable
             } else {
                 printf("$s%d,$s%d,$s%d\n", ourReg, first_var, second_var);
@@ -234,7 +244,7 @@ void plus_minus(struct reg registers[10], int ourReg, char var1[64], char var2[6
         else {
             int v2 = atoi(var2);
             if (usedtmp) {
-                printf("addi $s%d,$t%d,", ourReg, *tmp_var-1);
+                printf("addi $s%d,$t%d,", ourReg, prev_tmp(*tmp_var));
             }
             else {
                 printf("addi $s%d,$s%d,", ourReg, first_var);
@@ -254,7 +264,7 @@ void plus_minus(struct reg registers[10], int ourReg, char var1[64], char var2[6
         else printf("sub ");
 
         if (usedtmp) {
-            printf("$t%d,$t%d,$s%d\n", *tmp_var, *tmp_var-1, second_var);
+            printf("$t%d,$t%d,$s%d\n", *tmp_var, prev_tmp(*tmp_var), second_var);
         } else {
             printf("$t%d,$s%d,$s%d\n", *tmp_var, first_var, second_var);
         }
@@ -264,7 +274,7 @@ void plus_minus(struct reg registers[10], int ourReg, char var1[64], char var2[6
     else {
         int v2 = atoi(var2);
         if (usedtmp) {
-            printf("addi $t%d,$t%d,", *tmp_var, *tmp_var-1);
+            printf("addi $t%d,$t%d,", *tmp_var, prev_tmp(*tmp_var));
         }
         else {
             printf("addi $t%d,$s%d,", *tmp_var, first_var);
@@ -282,8 +292,8 @@ void divide_constant(struct reg registers[10], int ourReg, char var1[64], char v
     if (var2[strlen(var2)-1] == ';'){
         
         if (usedtmp) {
-            printf("bltz $t%d,L%d\n", *tmp_var-1, *L_count);
-            printf("srl $s%d,$t%d,%d\n", ourReg, *tmp_var-1, pow_of_two(v2));
+            printf("bltz $t%d,L%d\n", prev_tmp(*tmp_var), *L_count);
+            printf("srl $s%d,$t%d,%d\n", ourReg, prev_tmp(*tmp_var), pow_of_two(v2));
             // negative condition
             if (v2 < 0) {
                 printf("sub $s%d,$zero,$s%d\n", ourReg, ourReg);
@@ -292,7 +302,7 @@ void divide_constant(struct reg registers[10], int ourReg, char var1[64], char v
             // first L
             printf("L%d:\n", *L_count);
             printf("li $t%d,%d\n", *tmp_var, v2);
-            printf("div $t%d,$t%d\n", *tmp_var - 1, *tmp_var);
+            printf("div $t%d,$t%d\n", prev_tmp(*tmp_var), *tmp_var);
         }
         else {
             printf("bltz $s%d,L%d\n", first_reg, *L_count);
@@ -311,8 +321,8 @@ void divide_constant(struct reg registers[10], int ourReg, char var1[64], char v
     }
     else {
         if (usedtmp) {
-            printf("bltz $t%d,L%d\n", *tmp_var-1, *L_count);
-            printf("srl $t%d,$t%d,%d\n", *tmp_var, *tmp_var-1, pow_of_two(v2));
+            printf("bltz $t%d,L%d\n", prev_tmp(*tmp_var), *L_count);
+            printf("srl $t%d,$t%d,%d\n", *tmp_var, prev_tmp(*tmp_var), pow_of_two(v2));
             add_tmp(*&tmp_var);
             // negative condition
             if (v2 < 0) {
@@ -322,7 +332,7 @@ void divide_constant(struct reg registers[10], int ourReg, char var1[64], char v
             // first L
             printf("L%d:\n", *L_count);
             printf("li $t%d,%d\n", *tmp_var, v2);
-            printf("div $t%d,$t%d\n", *tmp_var, *tmp_var-1);
+            printf("div $t%d,$t%d\n", *tmp_var, prev_tmp(*tmp_var));
         }
         else {
             printf("bltz $s%d,L%d\n", first_reg, *L_count);
@@ -335,7 +345,7 @@ void divide_constant(struct reg registers[10], int ourReg, char var1[64], char v
             // first L
             printf("L%d:\n", *L_count);
             printf("li $t%d,%d\n", *tmp_var, v2);
-            printf("div $t%d,$t%d\n", *tmp_var, *tmp_var-1);
+            printf("div $t%d,$t%d\n", *tmp_var, prev_tmp(*tmp_var));
         }
         // jumping condition
         printf("mflo $t%d\n", *tmp_var);
@@ -361,7 +371,7 @@ void mult(struct reg registers[10], int ourReg, char var1[64], char var2[64], in
 
             // used temporary variable requires you to print the tempvar
             if (usedtmp){
-                printf("mult $t%d,$s%d\n", *tmp_var-1, second_var);
+                printf("mult $t%d,$s%d\n", prev_tmp(*tmp_var), second_var);
                 printf("mflo $s%d\n", ourReg);
             }
             // haven't used the temporary variable, just multiple both
@@ -389,7 +399,7 @@ void mult(struct reg registers[10], int ourReg, char var1[64], char var2[64], in
     if (isalpha(var2[0])){
         // if previously used a temp variable
         if (usedtmp) {
-            printf("mult $t%d,$s%d\n", *tmp_var-1, second_var);
+            printf("mult $t%d,$s%d\n", prev_tmp(*tmp_var), second_var);
             // access hi or lo depending on division or modulus
             printf("mflo $t%d\n", *tmp_var);
         } else {
@@ -427,7 +437,7 @@ void divide_mod(struct reg registers[10], int ourReg, char var1[64], char var2[6
 
             // used temporary variable requires you to print the tempvar
             if (usedtmp){
-                printf("div $t%d,$s%d\n", *tmp_var-1, second_var);
+                printf("div $t%d,$s%d\n", prev_tmp(*tmp_var), second_var);
                 // access hi or lo depending on division or modulus
                 if (operation == '%') printf("mfhi ");
                 else printf("mflo ");
@@ -456,7 +466,7 @@ void divide_mod(struct reg registers[10], int ourReg, char var1[64], char var2[6
 
             if (usedtmp){
                 printf("li $t%d,%d\n", *tmp_var, v2);
-                printf("div $t%d,$t%d\n", *tmp_var-1, *tmp_var);
+                printf("div $t%d,$t%d\n", prev_tmp(*tmp_var), *tmp_var);
                 add_tmp(*&tmp_var);
             }
             else {
@@ -477,7 +487,7 @@ void divide_mod(struct reg registers[10], int ourReg, char var1[64], char var2[6
     if (isalpha(var2[0])){
         // if previously used a temp variable
         if (usedtmp) {
-            printf("div $t%d,$s%d\n", *tmp_var-1, second_var);
+            printf("div $t%d,$s%d\n", prev_tmp(*tmp_var), second_var);
             // access hi or lo depending on division or modulus
             if (operation == '%') printf("mfhi ");
             else printf("mflo ");
@@ -506,7 +516,7 @@ void divide_mod(struct reg registers[10], int ourReg, char var1[64], char var2[6
 
         printf("li $t%d,%s\n", *tmp_var, var2);
         if (usedtmp){
-            printf("div $t%d,$%d\n", *tmp_var - 1, *tmp_var);
+            printf("div $t%d,$%d\n", prev_tmp(*tmp_var), *tmp_var);
         }
         else {
             printf("div $s%d,$t%d\n", first_var, *tmp_var);
