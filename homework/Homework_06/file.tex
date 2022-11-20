@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{amsmath, amssymb, setspace, enumerate, enumitem}
+\usepackage{setspace}
+\usepackage{graphicx}
+\onehalfspacing
+
+\begin{document}
+    \textbf{Problem 12.14.5}
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{What are the values of the ALU control unit's inputs for this instruction?}\\
+        sw \boxed{ALUOp = 00}, \boxed{ALU control input = 0010}
+        \item \textbf{What is the new PC address after this instruction is executed? Highlight the path through which this value is determined.}\\
+        for sw \$t4, 20(\$t5): the path begins at PC, then passes through the adder PC + 4, then to the branch mux, then goes back to PC. New PC address ends up being \boxed{PC + 4}
+        \item \textbf{For each mux, show the values of its inputs and outputs during the execution of this instruction. List values that are register outputs at Reg [xn]}\\
+        0xadac0016 = 101011 01101 01100 0000000000010110\\
+        op = 101011 = 43\\
+        rs = 01101 = 13\\
+        rt = 01100 = 12\\
+        address = 0000 0000 0001 0110 = 22\\[0.25in]
+        \begin{tabular}{l | l | l | l}
+            & alusrc & memtoreg & branch\\
+            INPUT& Reg[x12] and 22& Inputs: Reg[x13] + 22 and $<$undefined$>$ & PC + 4\\
+            OUTPUT& Output: 22&  $<$undefined$>$ & PC + 4
+        \end{tabular}\\[0.25in]
+        \item \textbf{What are the input values for the ALU and the two add units?}\\
+        \boxed{\text{alu}} Reg[x13] and 22\\
+        \boxed{\text{PC + 4 adder}} PC and 4\\
+        \boxed{\text{branch}} PC + 4 and 22 $\times$ 4
+        \item \textbf{What are the values of all inputs for the registers unit?}
+    \end{enumerate}
+\end{document}
