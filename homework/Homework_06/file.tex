@@ -6,10 +6,10 @@
 \onehalfspacing
 
 \begin{document}
-    \textbf{Problem 12.14.5}
+    \noindent \textbf{Problem 12.14.5}
     \begin{enumerate}[label=(\alph*)]
         \item \textbf{What are the values of the ALU control unit's inputs for this instruction?}\\
-        sw \boxed{ALUOp = 00}, \boxed{ALU control input = 0010}
+        sw \boxed{\textbf{\LARGE ALUOp = 00}}, \boxed{\textbf{\LARGE ALU control input = 0010}}
         \item \textbf{What is the new PC address after this instruction is executed? Highlight the path through which this value is determined.}\\
         for sw \$t4, 20(\$t5): the path begins at PC, then passes through the adder PC + 4, then to the branch mux, then goes back to PC. New PC address ends up being \boxed{PC + 4}
         \item \textbf{For each mux, show the values of its inputs and outputs during the execution of this instruction. List values that are register outputs at Reg [xn]}\\
@@ -19,14 +19,94 @@
         rt = 01100 = 12\\
         address = 0000 0000 0001 0110 = 22\\[0.25in]
         \begin{tabular}{l | l | l | l}
-            & alusrc & memtoreg & branch\\
+            & \boxed{\textbf{\Large alusrc}} & \boxed{\textbf{\Large memtoreg}} & \boxed{\textbf{\Large branch}}\\
             INPUT& Reg[x12] and 22& Inputs: Reg[x13] + 22 and $<$undefined$>$ & PC + 4\\
             OUTPUT& Output: 22&  $<$undefined$>$ & PC + 4
         \end{tabular}\\[0.25in]
         \item \textbf{What are the input values for the ALU and the two add units?}\\
-        \boxed{\text{alu}} Reg[x13] and 22\\
-        \boxed{\text{PC + 4 adder}} PC and 4\\
-        \boxed{\text{branch}} PC + 4 and 22 $\times$ 4
+        \boxed{\textbf{\LARGE alu}} Reg[x13] and 22\\
+        \boxed{\textbf{\LARGE PC + 4 adder}} PC and 4\\
+        \boxed{\textbf{\LARGE branch}} PC + 4 and 22 $\times$ 4
         \item \textbf{What are the values of all inputs for the registers unit?}
     \end{enumerate}
+    \noindent \textbf{Problem 12.14.7}: Problems in this exercise assume that the logic blocks used to implement a processor's datapath (COD Figure 4.21) have the following latencies:
+    
+    \begin{table}[ht]
+        \centering
+        \resizebox{\textwidth}{!}
+        {\begin{tabular}{cccccccccc}
+            \hline
+            imem/dmem & regfile & mux & ALU & adder & gate & regread & reg setup & sign extend & control\\
+            \hline
+            250 & 150 & 25 & 200 & 150 & 5 & 30 & 20 & 50 & 50\\
+            \hline
+        \end{tabular}}
+    \end{table}
+
+    "Register read" is the time needed after the rising clock edge for the new register value to appear on the output. This value applies to the PC only. "Register setup" is the amount of time a register's data input must be stable before the rising edge of the clock. This value applies to both the PC and Register File.
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{What is the latency of an R-type instruction(i.e., how long must the clock period be to ensure that this instruction works correctly)?}
+        \\
+        cycle: adder, mux = 150 + 25\\
+        r-path: read address(reg read), imem/dmem, ALU, mux, write data(reg setup) = 30 + 250 + 200 + 25 + 20\\
+        total: 150 + 25 + 30 + 250 + 200 + 25 + 20 = \boxed{\textbf{\LARGE 700}}
+        \item \textbf{What is the latency of lw? (Check your answer carefully. Many students place extra muxes on the critical path.)}
+        \\
+        cycle: adder, mux = 150 + 25\\
+        lw path: read address(reg read), imem, ALU, dmem, mux, write data(reg setup) = 30 + 250 + 200 + 250 + 25 + 20\\
+        total: 150 + 25 + 30 + 250 + 200 + 250 + 25 + 20 = \boxed{\textbf{\LARGE 950}}
+        \item \textbf{What is the latency of sw? (Check your answer carefully. Many students place extra muxes on the critical path.)}
+        \\
+        cycle: adder, mux = 150 + 25\\
+        sw path: read address(reg read), imem, ALU, dmem = 30 + 250 + 200 + 250\\
+        total: 150 + 25 + 30 + 250 + 200 + 250 = \boxed{\textbf{\LARGE 905}}\\
+        \item \textbf{What is the latency of beq?}
+        \\
+        cycle: adder, ALU, mux = 150 + 200 + 25\\
+        beq path: read address(reg read), imem, and gate, mux, write data(reg setup) = 30 + 250 + 5 + 25 + 20\\
+        total: 150 + 200 + 25 + 30 + 250 + 5 + 25 + 20 = \boxed{\textbf{\LARGE 705}}
+        \item \textbf{What is the latency of an arithmetic, logical, or shift I-type (non-load) instruction?}
+        \\
+        cycle: adder, mux = 150 + 25\\
+        path: read address(reg read), imem, ALU, mux, write data(reg setup) = 30 + 250 + 200 + 25 + 20\\
+        total: 150 + 25 + 30 + 250 + 200 + 25 + 20 = \boxed{\textbf{\LARGE 700}}\\
+        \item \textbf{What is the minimum clock period for this CPU?}
+        \\
+        imem, regfile, ALU, dmem, regfile = 250 + 150 + 200 + 250 + 150 = \boxed{\textbf{\LARGE 1000}}
+    \end{enumerate}
+    \textbf{Problem 12.14.10} When the processor designers consider a possible improvement to the processor datapath, the decision usually depends on the cost/performance trade-off. In the following three problems, assume that we are beginning with the datapath from COD figure 4.21, the latencies from Exercise 4.7, and the following costs:
+    
+    \begin{table}[ht]
+        \centering
+        \resizebox{\textwidth}{!}
+        {\begin{tabular}{cccccccccc}
+            \hline
+            imem/dmem & regfile & mux & ALU & adder & gate & regread & reg setup & sign extend & control\\
+            \hline
+            250 & 150 & 25 & 200 & 150 & 5 & 30 & 20 & 50 & 50\\
+            \hline
+        \end{tabular}}
+    \end{table}
+
+    \begin{table}[ht]
+        \centering
+        \resizebox{\textwidth}{!}
+        {\begin{tabular}{cccccccccc}
+            \hline
+            I-Mem & Register File & Mux & ALU & Adder & D-Mem & Single Register & Sign Extended & Sign Gate & Control\\
+            \hline
+            1000 & 200 & 10 & 100 & 30 & 2000 & 5 & 100 & 1 & 500\\
+            \hline
+        \end{tabular}}
+    \end{table}
+    
+    \noindent Suppose doubling the number of general purpose registers from 32 to 64 would reduce the number of lw and sw instruction by 12\%, but increase the latency of the register file from 150 ps to 160 ps and double the cost from 200 to 400. (Use the instruction mix from Exercise 4.8 and ignore the other effects on the ISA discussed in Exercise 2.18.)
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{What is the speedup achieved by adding this improvement?}
+        \\ hi
+        \item \textbf{Compare the change in performance to the change in cost.}
+        \item \textbf{Given the cost/performance ratios you just calculated, describe a situation where it makes sense to add more registers and describe a situation where it doesn't make sense to add more registers.}
+    \end{enumerate}
+
+
 \end{document}
