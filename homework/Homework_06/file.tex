@@ -59,7 +59,7 @@
         \\
         cycle: adder, mux = 150 + 25\\
         sw path: read address(reg read), imem, ALU, dmem = 30 + 250 + 200 + 250\\
-        total: 150 + 25 + 30 + 250 + 200 + 250 = \boxed{\textbf{\LARGE 905}}\\
+        total: 150 + 25 + 30 + 250 + 200 + 250 = \boxed{\textbf{\LARGE 905}}
         \item \textbf{What is the latency of beq?}
         \\
         cycle: adder, ALU, mux = 150 + 200 + 25\\
@@ -69,7 +69,7 @@
         \\
         cycle: adder, mux = 150 + 25\\
         path: read address(reg read), imem, ALU, mux, write data(reg setup) = 30 + 250 + 200 + 25 + 20\\
-        total: 150 + 25 + 30 + 250 + 200 + 25 + 20 = \boxed{\textbf{\LARGE 700}}\\
+        total: 150 + 25 + 30 + 250 + 200 + 25 + 20 = \boxed{\textbf{\LARGE 700}}
         \item \textbf{What is the minimum clock period for this CPU?}
         \\
         imem, regfile, ALU, dmem, regfile = 250 + 150 + 200 + 250 + 150 = \boxed{\textbf{\LARGE 1000}}
@@ -110,7 +110,7 @@
         clock cycle time after doubling numbers of general purpose registers:\\
         250 + 250 + 160 + 25 + 200 + 150 + 5 + 30 + 20 + 50 + 50 = 1190ps\\
         from 4.8: lw = 25\%, sw = 11\%, total = 36\%\\
-        $36 - 36 \times 0.12 = 31.68$\\
+        $36 - 36 \times 0.12 = 31.68$\\6
         before: 100\% instructions, now $100 - (36 - 31.68)$\% = 95.68\%.\\
         old speed = $\frac{1180}{100} = 11.8$\\
         new speed = $\frac{1190}{95.68} \approx 12.44$\\
@@ -150,10 +150,17 @@
 
     \begin{enumerate}[label=\textbf{(\alph*)}]
         \item \textbf{What is the clock cycle time in a pipelined and non-pipelined processor?}
+        \\ non-pipelined processor = 250 + 350 + 150 + 300 + 200 = \boxed{\textbf{\LARGE 1250ps}}
+        \\ pipelined processor = max(250, 350, 150, 300, 200) = \boxed{\textbf{\LARGE 350ps}}
         \item \textbf{What is the total latency of an lw instruction in a pipelined and non-pipelined processor?}
+        \\ non-pipelined processor = CT = \boxed{\textbf{\LARGE 1250ps}}
+        \\ pipelined processor = CT $\times$ number of cycles = 350 $\times$ 5 = \boxed{\textbf{\LARGE 1750ps}} (\textbf{lw} instruction uses all 5 stages)
         \item \textbf{If we can split one stage of the pipelined datapath into two new stages, each with half the latency of the original stage, which stage would you split and what is the new clock cycle time of the processor?}
+        \\ We would split ID to reach 175 in each stage. Our new clock cycle time for the pipelined datapath would be \boxed{\textbf{\LARGE 300}} (from MEM).
         \item \textbf{Assuming there are no stalls or hazards, what is the utilization of the data memory?}
+        \\ Load and store = 20\% + 15\% = \boxed{\textbf{\LARGE 35\%}}.
         \item \textbf{Assuming there are no stalls or hazards, what is the utilization of the write-register port of the "Registers" unit?}
+        \\ ALU/Logic, and Load = 45\% + 20\% = \boxed{\textbf{\LARGE 65\%}}.
     \end{enumerate}
 
 
