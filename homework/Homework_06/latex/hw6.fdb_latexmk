@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1669590483 "c:/Users/ardennt/Documents/CS/comporg/homework/Homework_06/file.tex" "file.pdf" "file" 1669590483
+["pdflatex"] 1669845307 "c:/Users/ardennt/Documents/CS/comporg/homework/Homework_06/latex/hw6.tex" "hw6.pdf" "hw6" 1669845307
   "C:/Users/ardennt/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1666801636 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/ardennt/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1663279001 11548 3d9cfb07b8c30a06de6e585e37cbcea8 ""
   "C:/Users/ardennt/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1663276254 10773107 cb191ebd97441df48cbcb8022a0bad00 ""
@@ -50,10 +50,10 @@
   "D:/HDD Apps/MiKTeX/tex/latex/l3backend/l3backend-pdftex.def" 1661881568 30282 33c465a64f2bd5ad4a68a7b2f555a29b ""
   "D:/HDD Apps/MiKTeX/tex/latex/setspace/setspace.sty" 1324294077 22913 a27d7908fc6f0385466454a966a316eb ""
   "D:/HDD Apps/MiKTeX/tex/latex/tools/enumerate.sty" 1636710260 3468 068d84ef9735e15f11c5a120c0a1a139 ""
-  "c:/Users/ardennt/Documents/CS/comporg/homework/Homework_06/file.tex" 1669590482 10505 faf23463a4e9916862b21cda05956d26 ""
-  "file.aux" 1669590483 32 c81c40425fbb5e93b90fba65da0b5e61 "pdflatex"
-  "file.tex" 1669590482 10505 faf23463a4e9916862b21cda05956d26 ""
+  "c:/Users/ardennt/Documents/CS/comporg/homework/Homework_06/latex/hw6.tex" 1669844366 10515 5e6108e41b3e535e1527c64dd5a406af ""
+  "hw6.aux" 1669845307 32 c81c40425fbb5e93b90fba65da0b5e61 "pdflatex"
+  "hw6.tex" 1669844366 10515 5e6108e41b3e535e1527c64dd5a406af ""
   (generated)
-  "file.aux"
-  "file.log"
-  "file.pdf"
+  "hw6.aux"
+  "hw6.log"
+  "hw6.pdf"

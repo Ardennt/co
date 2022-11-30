@@ -1,7 +1,7 @@
-PWD c:\Users\ardennt\Documents\CS\comporg\homework\Homework_06
+PWD c:\Users\ardennt\Documents\CS\comporg\homework\Homework_06\latex
 INPUT C:\Users\ardennt\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\ardennt\Documents\CS\comporg\homework\Homework_06\file.tex
-OUTPUT file.log
+INPUT c:\Users\ardennt\Documents\CS\comporg\homework\Homework_06\latex\hw6.tex
+OUTPUT hw6.log
 INPUT D:\HDD Apps\MiKTeX\tex\latex\base\article.cls
 INPUT D:\HDD Apps\MiKTeX\tex\latex\base\article.cls
 INPUT D:\HDD Apps\MiKTeX\tex\latex\base\article.cls
@@ -233,10 +233,10 @@ INPUT D:\HDD Apps\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT D:\HDD Apps\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT D:\HDD Apps\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
 INPUT D:\HDD Apps\MiKTeX\tex\latex\l3backend\l3backend-pdftex.def
-INPUT .\file.aux
-INPUT file.aux
-INPUT file.aux
-OUTPUT file.aux
+INPUT .\hw6.aux
+INPUT hw6.aux
+INPUT hw6.aux
+OUTPUT hw6.aux
 INPUT D:\HDD Apps\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT D:\HDD Apps\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
 INPUT D:\HDD Apps\MiKTeX\tex\context\base\mkii\supp-pdf.mkii
@@ -278,9 +278,9 @@ INPUT D:\HDD Apps\MiKTeX\fonts\tfm\public\cm\cmbx7.tfm
 INPUT D:\HDD Apps\MiKTeX\fonts\tfm\public\cm\cmbx5.tfm
 INPUT D:\HDD Apps\MiKTeX\fonts\tfm\jknappen\ec\tcrm1000.tfm
 INPUT D:\HDD Apps\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
-OUTPUT file.pdf
+OUTPUT hw6.pdf
 INPUT C:\Users\ardennt\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
-INPUT file.aux
+INPUT hw6.aux
 INPUT C:\Users\ardennt\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1000.pk
 INPUT C:\Users\ardennt\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcrm1000.pk
 INPUT D:\HDD Apps\MiKTeX\fonts\type1\public\amsfonts\cm\cmbx10.pfb
