@@ -1,0 +1,566 @@
+1) Convert the following decimal to IEEE single precision floating point binary representation. Show your work.
+57.75
+
+
+2) Convert the following IEEE single precision floating point binary representation to decimal. Show your work.
+1 01111110 10000000000000000000000
+
+
+3) Consider the following MIPS code that simulates processing transactions in a banking application. We assume 
+that all transactions have the same amount specified by the user. The number of transactions and the starting 
+balance of the account are also specified by the user:
+
+      .data
+txt1: .asciiz "Enter starting balance: "
+txt2: .asciiz "Enter transaction amount: "
+txt3: .asciiz "Enter the number of transactions: "
+txt4: .asciiz "Computed balance is $"
+txt5: .asciiz "Expected balance is $"
+newline:
+      .asciiz "\n"
+
+      .text
+      .globl main
+
+main: addi  $sp, $sp, -4    # store current $ra
+      sw    $ra, 0($sp)
+
+      la    $a0, txt1
+      li    $v0, 4
+      syscall
+
+      li    $v0, 6
+      syscall                 # the value read from the user will be in $f0
+      mov.s $f11, $f0         # move from $f0 to $f11
+
+      la    $a0, txt2
+      li    $v0, 4
+      syscall
+      li    $v0, 6
+      syscall                 # the value read from the user will be in $f0
+      mov.s $f10, $f0         # move from $f0 to $f10
+      
+      la    $a0, txt3
+      li    $v0, 4
+      syscall
+
+      li    $v0, 5
+      syscall
+      move  $t9, $v0
+
+      move  $t0, $t9
+      mov.s $f12, $f11        # move from $f11 to $f12
+      mov.s $f1, $f10         # move from $f10 to $f1
+loop_f:
+      beq   $t0, $zero, end_f
+      add.s $f12, $f12, $f1 
+      addi  $t0, $t0, -1 
+      j loop_f
+end_f:
+      la    $a0, txt4
+      li    $v0, 4
+      syscall
+      li    $v0, 2
+      syscall
+      la    $a0, newline
+      li    $v0, 4
+      syscall
+
+      mtc1  $t9, $f12         # move from $t9 to $f12
+      # Convert from integer to float. Integer is in $f12, the float is written to $f12.
+      cvt.s.w $f12, $f12
+      mov.s $f1, $f10         # move from $f10 to $f1
+      
+      mul.s $f12, $f12, $f1
+      add.s $f12, $f12, $f11
+
+      la    $a0, txt5
+      li    $v0, 4
+      syscall
+      li    $v0, 2
+      syscall
+      la    $a0, newline
+      li    $v0, 4
+      syscall
+
+cont: lw    $ra, 0($sp)     # restore $ra
+      addi  $sp, $sp, 4
+      li    $v0, 10
+      syscall
+
+When you run this program and enter:
+
+Enter starting balance: 0.0
+Enter transaction amount: 0.25
+Enter the number of transactions: 1000
+
+the output is:
+
+Computed balance is $250.0
+Expected balance is $250.0
+
+However, when you run the program and enter:
+
+Enter starting balance: 100.56
+Enter transaction amount: 0.01
+Enter the number of transactions: 10000
+
+the output is:
+
+Computed balance is $200.526
+Expected balance is $200.56
+
+a. Explain why in the second run the balance computed by the program does not match the value we expect. Be detailed and specific but avoid rambling. A few sentences that are to the point are better than half a page of explanations which are vague or too general.
+
+b. Fix the program, so that it is _guaranteed_ that the balance computed by the program for any inputs that do not cause overflow always matches the value we expect. You are not allowed to use any multiplication instructions (except for computing the "expected" value as shown in the original code) but you can use division. You may find the following instructions useful:
+* cvt.w.s to convert a floating point value to an integer (fractional part is truncated). For example, cvt.w.s $f4, $f4 instruction converts the float in $f4 to an integer which is also written into $f4.
+* mfc1/mtc1 to move data between the registers of CP1 and general purpose MIPS registers. For example, mfc1 $t0,$f4 moves the value of $f4 to $t0. mtc1 $t2, $f2 moves $t2 to $f2.
+
+After fixing your code the sample run of the program should look like this:
+
+Enter starting balance: 100.56
+Enter transaction amount: 0.01
+Enter the number of transactions: 10000
+Computed balance is $200.56
+Expected balance is $200.56
+
+
+4) Write a complete MIPS program that computes the determinant of a square matrix of double values. Recall that in mathematics, determinant is a scalar value that is a function of all the elements of a square matrix. It can be computed using the so called "Laplace expansion" method:
+
+If square matrix A is defined as:
+a1  a2  ...  an
+b1  b2  ...  bn
+...
+z1  z2  ...  zn
+
+the determinant of A is:
+
+det(A) = a11 * det(M11) - a12 * det(M12) + a13 * det(M13) - ... +- a1n * det(M1n)
+
+where Mij is called the minor of matrix A and is formed by eliminating row i and column j from A.
+
+The determinant of a 1 by 1 matrix is the value of the element, i.e., det(a11) = a11. For example if matrix B is:
+
+B = -5
+
+det(B) = -5
+
+Thus, the general formula for the determinant of A would be:
+
+det(A) = for all i from 0 to n, sum(aij * (-1)^(i + j) * det(Mij))
+
+For example, for A = 
+1.67   0.00   -7.46  0.39
+-1.65  7.75   9.48  -3.11
+6.12   -4.58  1.65  -0.19
+-5.54  0.95   -8.40 1.50
+
+det(A) = 1.67 * det(M11) - 0.00 * det(M12) + (-7.46) * det(M13) - 0.39 * det(M14) = (-74.38895595) - 0.00 * 52.952268 + (-7.46) * 8.879437 - 0.39 * 81.255609 = -172.31924348
+
+det(M11) = 7.75 * det(1.65   -0.19) - 9.48 * det(-4.58  -0.19) + (-3.11) * det(-4.58   1.65 ) = 
+                      -8.40  1.50                0.95   1.50                   0.95    -8.40
+
+= 7.75 * (1.65 * 1.50 - (-0.19) * (-8.40)) - 9.48 * ((-4.58) * 1.50 - (-0.19) * 0.95) - 3.11 * ((-4.58) * (-8.40) - 1.65 * 0.95) = -44.544285
+
+det(M12) = (-1.65) * det(1.65   -0.19) - 9.48 * det(6.12   -0.19) + (-3.11) * det(6.12   1.65 ) = 
+                         -8.40  1.50                -5.54  1.50                   -5.54  -8.40
+= (-1.65) * (1.65 * 1.50 - (-0.19) * (-8.40)) - 9.48 * (6.12 * 1.50 - (-0.19) * (-5.54)) + (-3.11) * (6.12 * (-8.40) - 1.65 * (-5.54)) = 52.952268
+
+det(M13) = (-1.65) * det(-4.58  -0.19) - 7.75 * det(6.12   -0.19) + (-3.11) * det(6.12   -4.58) = 
+                         0.95   1.50                -5.54  1.50                   -5.54  0.95
+= (-1.65) * ((-4.58) * 1.50 - (-0.19) * 0.95) - 7.75 * (6.12 * 1.50 - (-0.19) * (-5.54)) + (-3.11) * (6.12 * 0.95 - (-4.58) * (-5.54)) =  8.879437
+
+det(M14) = (-1.65) * det(-4.58   1.65 ) - 7.75 * (6.12   1.65 ) + 9.48 * (6.12   -4.58) = 
+                         0.95    -8.40            -5.54  -8.40            -5.54  0.95
+= (-1.65) * ((-4.58) * (-8.40) - 1.65 * 0.95) - 7.75 * (6.12 * (-8.40) - 1.65 * (-5.54)) + 9.48 * (6.12 * 0.95 - (-4.58) * (-5.54)) = 81.255609
+
+
+Make sure the following requirements are satisfied:
+* The user must be asked to enter the size of the matrix and all elements.
+* The matrix must be dynamically allocated (i.e., placed in the heap).
+* The program should be structured such that there is a recursive procedure called det. Code in procedure main should be calling det with appropriate arguments and then printing the value of the determinant that det returned. 
+* All register usage and calling conventions must be satisfied.
+
+Here is an example output of the program:
+4
+1.67
+0.00
+-7.46
+0.39
+-1.65
+7.75
+9.48
+-3.11
+6.12
+-4.58
+1.65
+-0.19
+-5.54
+0.95
+-8.40
+1.50
+-172.31924348
+
+
+5) Convert the following C code to MIPS.
+
+#include<stdlib.h>
+#include<stdio.h>
+
+#define PLANETS_CNT 8
+char* planets[PLANETS_CNT] = {"Mercury", "Venus", "Earth", "Mars",
+                               "Jupiter", "Saturn", "Uranus", "Neptune"};
+/* Average planet distances from the Sun in light years and miles*/
+double distance[PLANETS_CNT][2] = {{0.000006123880620837039, -1},
+                                   {-1, 66999999.963716},
+                                   {0.00001582002493716235, -1},
+                                   {-1, 141999999.923099},
+                                   {0.00008233217279125351, -1},
+                                   {-1, 884999999.520723},
+                                   {0.0003027918751413869, -1},
+                                   {0.00047460074811487044, -1}};
+
+double miles_to_ly(double miles) {
+  return miles / 5878625370000;
+}
+
+double ly_to_miles(double ly) {
+  return 5878625370000 * ly;
+}
+
+int main()
+{
+  int i;
+  for (i = 0; i < PLANETS_CNT; ++i) {
+    if (distance[i][0] == -1 && distance[i][1] != -1) {
+      distance[i][0] = miles_to_ly(distance[i][1]);
+    }
+    else if (distance[i][0] != -1 && distance[i][1] == -1) {
+      distance[i][1] = ly_to_miles(distance[i][0]);
+    }
+    else if (distance[i][0] == -1 && distance[i][1] == -1) {
+      printf("No distance is given for %s\n", planets[i]);
+      return EXIT_SUCCESS;
+    }
+  }
+  printf("Planet\tLight years\tMiles\n");
+  for (i = 0; i < PLANETS_CNT; ++i) {
+    printf("%s\t%f\t\%f\n", planets[i], distance[i][0], distance[i][1]);
+  }
+  return EXIT_SUCCESS;
+}
+
+
+6) For this problem, you may assume a big-endian architecture.
+
+a.
+Review the code provided below. Recall that syscall 2 is used to print a floating point value. Write MIPS code to implement two procedures.
+
+The first procedure, called "avg", computes the average (arithmetic mean) of a series of values.
+
+The second procedure, called "warmer", prints one of two messages: ``It is warmer in Troy" or ``It is warmer in Anchorage", depending on which city has a higher annual average low temperature. Make sure you follow all calling and register usage conventions, save/restore registers when necessary, etc.
+
+The expected output of running this program would be similar to the following:
+January average low temperature in Troy is -209.50000000
+-12.68333340
+-0.94166678
+It is warmer in Anchorage
+
+
+Fill in the code below comment lines #1 and #2.
+
+
+         .data
+# Monthly average low temperature data, degrees C
+# (Jan, Feb, ..., Dec)
+troy: .float -209.5, -8.6, -3.9, 3.0, 8.7, 14.3, 17.1, 15.9, 11.3, 4.8, 0.2, -5.5
+anchorage: .float -11.6, -10.1, -7.1, -1.6, 4.2, 8.7, 11.2, 10.0, 5.6, -1.6, -8.6, -10.4
+const0: .float 0.0
+const12: .float 12.0
+jan_str: .asciiz "January average low temperature in "
+avg_str: .asciiz "Annual average low temperature in "
+is_str: .asciiz " is "
+warmer_str: .asciiz "It is warmer in "
+troy_str: .asciiz "Troy"
+anchorage_str: .asciiz "Anchorage"
+nl: .asciiz "\n"
+
+         .text
+         .globl main
+main:    addi  $sp, $sp, -4
+         sw    $ra, 0($sp)
+
+         la    $a0, jan_str
+         li    $v0, 4
+         syscall
+         la    $a0, troy_str
+         syscall
+         la    $a0, is_str
+         syscall
+
+         la    $t0, troy
+         lwc1  $f12, 0($t0)
+         li    $v0, 2
+         syscall
+
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+         la    $a0, avg_str
+         syscall
+         la    $a0, troy_str
+         syscall
+         la    $a0, is_str
+         syscall
+         
+         la    $a0, troy
+         li    $a1, 12
+         jal   avg
+         mov.s $f1, $f0
+
+         mov.s $f12, $f0
+         li    $v0, 2
+         syscall
+
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+         la    $a0, avg_str
+         syscall
+         la    $a0, anchorage_str
+         syscall
+         la    $a0, is_str
+         syscall
+         
+         la    $a0, anchorage
+         li    $a1, 12
+         jal   avg
+         mov.s $f13, $f0
+
+         mov.s $f12, $f0
+         li    $v0, 2
+         syscall
+
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+
+         mov.s $f12, $f1
+         jal   warmer
+
+         lw    $ra, 0($sp)
+         addi  $sp, $sp, 4
+
+         li    $v0, 10
+         syscall
+
+
+#        $a0 the base address of an array of floats
+#        $a1 the size of the array
+#        $f0 return value (the average of array elements)
+avg:
+         #1
+
+
+
+
+
+
+         jr    $ra
+
+#        $f12 Annual average low temperature in Troy
+#        $f13 Annual average low temperature in Anchorage
+warmer:
+         #2
+
+
+
+
+
+
+         jr    $ra
+
+
+
+
+
+b.
+Suppose the January average low temperature for Troy from the MIPS source code in part (a) is stored at memory address 0x10010000. 
+What is the actual word value at memory address 0x10010000? Show your answer both as binary (you may use spaces to separate groups 
+of bits) and hexadecimal.
+
+Binary: 
+
+Hexadecimal: 
+
+c.
+As you are debugging your program from part (a), you notice that the January average low temperature for Troy is probably incorrect. 
+You replace the word at memory address 0x10010000 with the new value of 0xc11a0000. If you re-run your program now, what would be the 
+first line of output?
+
+
+d.
+Suppose you replace the line with the "troy" label in the code from part (a) with the following line:
+troy: .float -9.8, -8.6, -3.9, 3.0, 8.7, 14.3, 17.1, 15.9, 11.3, 4.8, 0.2, -5.5
+
+(note that the only difference from the original code is the value of January average low temperature in Troy which is now -9.8). When 
+you re-run your program now, the first line of output looks like this:
+
+January average low temperature in Troy is -9.80000019
+
+Explain why the value that was printed is different from the value that was specified in the source code. What could you do to ensure 
+that the value used in computations is exactly the value -9.8 specified in code?
+
+
+7) Fuel efficiency is measured differently in different countries. In the U.S., it is expressed as the distance 
+in miles a vehicle would travel using one gallon of fuel. In many other countries, it is given as the amount of fuel in liters consumed 
+to travel the distance of 100 km. One U.S. mile is 1.609344 km. One U.S. gallon is 3.78541 liters.
+
+Write a complete MIPS program that asks the user to enter fuel consumption (in liters per 100 km) as a rational number, then converts 
+it to the MPG rating and prints the result. Structure your code such that the conversion is performed by a separate procedure.
+
+
+8) The period of a simple pendulum is defined according to the following formula:
+
+T = 2 * pi * sqrt(L/g)
+
+where T is the period, s; pi is the constant (assume it is 3.14159265); L is the pendulum length, m; g is the acceleration due to 
+gravity, m/s^2)
+
+Write a complete MIPS program that asks the user to enter values of L and g as rational numbers, then computes the value of T and prints 
+it. There are some additional requirements:
+
+* If the user entered a negative value for g, no computation should be attempted. Instead, the program should report that an invalid value 
+was entered for g and terminate. It is OK to enter a negative value for L.
+
+* If the result of the computation is NaN, +Infinity, or -Infinity, the program should print those values translated to Spanish as follows:
++-----------+-------------+
+|  English  |   Spanish   |
++-----------+-------------+
+| NaN       | No numérico |
+| +Infinity | +Infinito   |
+| -Infinity | -Infinito   |
++-----------+-------------+
+
+9) Consider the slide "Datapath With Jumps Added" datapath from the Chapter 4 slides. Suppose there is a hardware issue where the ALUSrc 
+control line is fixed at 0. Give an example of an instruction that would be impacted, and how that instruction is impacted.
+
+10) Recall "Datapath With Control" figure from the textbook and lecture slides (practice03_10_01.png). Suppose the following instruction 
+is executed in this datapath:
+
+lw $4,-4($3)
+
+Recall that the format of I-type instructions is as shown in practice03_10_02.png.
+
+Assume that data memory is all zeros and that the processor's registers have the following decimal values at the beginning of the cycle in 
+which the above instruction is fetched:
+
++─────+─────+─────+─────+─────+─────+─────+─────+──────+──────+
+| r0  | r1  | r2  | r3  | r4  | r5  | r6  | r8  | r12  | r31  |
++─────+─────+─────+─────+─────+─────+─────+─────+──────+──────+
+| 0   | -2  | 4   | 40  | 8   | -1  | -16 | 0   | 2    | 6    |
++─────+─────+─────+─────+─────+─────+─────+─────+──────+──────+
+
+What are the values of all data and control inputs for the "Registers" unit and all data inputs of the "ALU" unit?
+read reg1 3
+read reg2 4
+write reg 4
+write data 0
+regwrite 1
+
+
+ALU unit
+-4
+40
+
+Which of the following instructions is/are not supported by this datapath?
+
+and
+sub
+slt
+j -> no jump instruction
+or
+lw
+beq
+sw
+add
+
+11) Assume we have no forwarding available in our datapath. Re-order the below instructions to optimally reduce the number of hazards, 
+while still ensuring correctness of the code.
+
+lw  $t0, 0($s0)
+lw  $t1, 4($s0)
+add $t0, $t0, $s0
+add $t1, $t1, $s1
+sw  $t0, 0($s0)
+sw  $t1, 4($s0)
+
+12) With the re-ordered instructions from problem 11, give a pipeline diagram for the program (like on slide "Pop Quiz Answer" of 
+"Chapter-4_MIPS_Processor_Pipelining-slides.pdf"). How many cycles does the program take to execute? What's the programs CPI?
+
+12 cycles, CPI = 2
+
+13) Consider the below code for matrix-matrix multiplication, from the Homework 3 solution file. If both matrices we're multiplying are 
+2x2, how many incorrect branch predictions would result for a static predictor for 'always branch'? What about a 1-bit predictor? Assume 
+that the initial prediction is 'branch'.
+
+  li  $t0, 0    # our i < N_1
+loop_i:
+  beq $t0, $s0, end_i
+
+  li  $t1, 0    # our j < M_2
+loop_j:
+  beq $t1, $s3, end_j
+
+  li  $t3, 0    # our accumulator, will set result[i,j] to this
+
+  li  $t2, 0    # our k < M_1
+loop_k:
+  beq $t2, $s1, end_k
+
+  # result[i,j] +=  mat1[i,k] * mat2[k,j];
+
+  # get address of mat1[i,k] = 4*(i*M_1 + k)
+  mul $t4, $t0, $s1
+  add $t4, $t4, $t2
+  sll $t4, $t4, 2
+  add $t4, $t4, $s2
+
+  # get mat1[i,k]
+  lw  $t4, 0($t4)
+
+  # get address of mat2[k,j] = 4*(k*M_2 + j)
+  mul $t5, $t2, $s3
+  add $t5, $t5, $t1
+  sll $t5, $t5, 2
+  add $t5, $t5, $s4
+
+  # get mat2[k,j]
+  lw  $t5, 0($t5)
+
+  # multiply and save in accumulator
+  mul $t4, $t4, $t5
+  add $t3, $t3, $t4
+
+  add $t2, $t2, 1
+  j loop_k
+end_k:
+
+  # set result[i,j] = t3  
+  # get address of mat3[i,j] = 4*(i*M_2 + j)
+  mul $t4, $t0, $s3
+  add $t4, $t4, $t1
+  sll $t4, $t4, 2
+  add $t4, $t4, $s5
+
+  # save result
+  sw  $t3, 0($t4)
+
+  add $t1, $t1, 1
+  j loop_j
+end_j:
+
+  add $t0, $t0, 1
+  j loop_i
+end_i:
+

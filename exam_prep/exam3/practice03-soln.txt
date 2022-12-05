@@ -1,0 +1,1372 @@
+1) Convert the following decimal to IEEE single precision floating point binary representation. Show your work.
+57.75
+
+
+2) Convert the following IEEE single precision floating point binary representation to decimal. Show your work.
+1 01111110 10000000000000000000000
+
+
+3) Consider the following MIPS code that simulates processing transactions in a banking application. We assume that all transactions have the same amount specified by the user. The number of transactions and the starting balance of the account are also specified by the user:
+
+      .data
+txt1: .asciiz "Enter starting balance: "
+txt2: .asciiz "Enter transaction amount: "
+txt3: .asciiz "Enter the number of transactions: "
+txt4: .asciiz "Computed balance is $"
+txt5: .asciiz "Expected balance is $"
+newline:
+      .asciiz "\n"
+
+      .text
+      .globl main
+
+main: addi  $sp, $sp, -4    # store current $ra
+      sw    $ra, 0($sp)
+
+      la    $a0, txt1
+      li    $v0, 4
+      syscall
+
+      li    $v0, 6
+      syscall                 # the value read from the user will be in $f0
+      mov.s $f11, $f0         # move from $f0 to $f11
+
+      la    $a0, txt2
+      li    $v0, 4
+      syscall
+      li    $v0, 6
+      syscall                 # the value read from the user will be in $f0
+      mov.s $f10, $f0         # move from $f0 to $f10
+      
+      la    $a0, txt3
+      li    $v0, 4
+      syscall
+
+      li    $v0, 5
+      syscall
+      move  $t9, $v0
+
+      move  $t0, $t9
+      mov.s $f12, $f11        # move from $f11 to $f12
+      mov.s $f1, $f10         # move from $f10 to $f1
+loop_f:
+      beq   $t0, $zero, end_f
+      add.s $f12, $f12, $f1 
+      addi  $t0, $t0, -1 
+      j loop_f
+end_f:
+      la    $a0, txt4
+      li    $v0, 4
+      syscall
+      li    $v0, 2
+      syscall
+      la    $a0, newline
+      li    $v0, 4
+      syscall
+
+      mtc1  $t9, $f12         # move from $t9 to $f12
+      # Convert from integer to float. Integer is in $f12, the float is written to $f12.
+      cvt.s.w $f12, $f12
+      mov.s $f1, $f10         # move from $f10 to $f1
+      
+      mul.s $f12, $f12, $f1
+      add.s $f12, $f12, $f11
+
+      la    $a0, txt5
+      li    $v0, 4
+      syscall
+      li    $v0, 2
+      syscall
+      la    $a0, newline
+      li    $v0, 4
+      syscall
+
+cont: lw    $ra, 0($sp)     # restore $ra
+      addi  $sp, $sp, 4
+      li    $v0, 10
+      syscall
+
+When you run this program and enter:
+
+Enter starting balance: 0.0
+Enter transaction amount: 0.25
+Enter the number of transactions: 1000
+
+the output is:
+
+Computed balance is $250.0
+Expected balance is $250.0
+
+However, when you run the program and enter:
+
+Enter starting balance: 100.56
+Enter transaction amount: 0.01
+Enter the number of transactions: 10000
+
+the output is:
+
+Computed balance is $200.526
+Expected balance is $200.56
+
+a. Explain why in the second run the balance computed by the program does not match the value we expect. Be detailed and specific but avoid rambling. A few sentences that are to the point are better than half a page of explanations which are vague or too general.
+
+b. Fix the program, so that it is _guaranteed_ that the balance computed by the program for any inputs that do not cause overflow always matches the value we expect. You are not allowed to use any multiplication instructions (except for computing the "expected" value as shown in the original code) but you can use division. You may find the following instructions useful:
+* cvt.w.s to convert a floating point value to an integer (fractional part is truncated). For example, cvt.w.s $f4, $f4 instruction converts the float in $f4 to an integer which is also written into $f4.
+* mfc1/mtc1 to move data between the registers of CP1 and general purpose MIPS registers. For example, mfc1 $t0,$f4 moves the value of $f4 to $t0. mtc1 $t2, $f2 moves $t2 to $f2.
+
+After fixing your code the sample run of the program should look like this:
+
+Enter starting balance: 100.56
+Enter transaction amount: 0.01
+Enter the number of transactions: 10000
+Computed balance is $200.56
+Expected balance is $200.56
+
+
+4) Write a complete MIPS program that computes the determinant of a square matrix of double values. Recall that in mathematics, determinant is a scalar value that is a function of all the elements of a square matrix. It can be computed using the so called "Laplace expansion" method:
+
+If square matrix A is defined as:
+a1  a2  ...  an
+b1  b2  ...  bn
+...
+z1  z2  ...  zn
+
+the determinant of A is:
+
+det(A) = a11 * det(M11) - a12 * det(M12) + a13 * det(M13) - ... +- a1n * det(M1n)
+
+where Mij is called the minor of matrix A and is formed by eliminating row i and column j from A.
+
+The determinant of a 1 by 1 matrix is the value of the element, i.e., det(a11) = a11. For example if matrix B is:
+
+B = -5
+
+det(B) = -5
+
+Thus, the general formula for the determinant of A would be:
+
+det(A) = for all i from 0 to n, sum(aij * (-1)^(i + j) * det(Mij))
+
+For example, for A = 
+1.67   0.00   -7.46  0.39
+-1.65  7.75   9.48  -3.11
+6.12   -4.58  1.65  -0.19
+-5.54  0.95   -8.40 1.50
+
+det(A) = 1.67 * det(M11) - 0.00 * det(M12) + (-7.46) * det(M13) - 0.39 * det(M14) = (-74.38895595) - 0.00 * 52.952268 + (-7.46) * 8.879437 - 0.39 * 81.255609 = -172.31924348
+
+det(M11) = 7.75 * det(1.65   -0.19) - 9.48 * det(-4.58  -0.19) + (-3.11) * det(-4.58   1.65 ) = 
+                      -8.40  1.50                0.95   1.50                   0.95    -8.40
+
+= 7.75 * (1.65 * 1.50 - (-0.19) * (-8.40)) - 9.48 * ((-4.58) * 1.50 - (-0.19) * 0.95) - 3.11 * ((-4.58) * (-8.40) - 1.65 * 0.95) = -44.544285
+
+det(M12) = (-1.65) * det(1.65   -0.19) - 9.48 * det(6.12   -0.19) + (-3.11) * det(6.12   1.65 ) = 
+                         -8.40  1.50                -5.54  1.50                   -5.54  -8.40
+= (-1.65) * (1.65 * 1.50 - (-0.19) * (-8.40)) - 9.48 * (6.12 * 1.50 - (-0.19) * (-5.54)) + (-3.11) * (6.12 * (-8.40) - 1.65 * (-5.54)) = 52.952268
+
+det(M13) = (-1.65) * det(-4.58  -0.19) - 7.75 * det(6.12   -0.19) + (-3.11) * det(6.12   -4.58) = 
+                         0.95   1.50                -5.54  1.50                   -5.54  0.95
+= (-1.65) * ((-4.58) * 1.50 - (-0.19) * 0.95) - 7.75 * (6.12 * 1.50 - (-0.19) * (-5.54)) + (-3.11) * (6.12 * 0.95 - (-4.58) * (-5.54)) =  8.879437
+
+det(M14) = (-1.65) * det(-4.58   1.65 ) - 7.75 * (6.12   1.65 ) + 9.48 * (6.12   -4.58) = 
+                         0.95    -8.40            -5.54  -8.40            -5.54  0.95
+= (-1.65) * ((-4.58) * (-8.40) - 1.65 * 0.95) - 7.75 * (6.12 * (-8.40) - 1.65 * (-5.54)) + 9.48 * (6.12 * 0.95 - (-4.58) * (-5.54)) = 81.255609
+
+
+Make sure the following requirements are satisfied:
+* The user must be asked to enter the size of the matrix and all elements.
+* The matrix must be dynamically allocated (i.e., placed in the heap).
+* The program should be structured such that there is a recursive procedure called det. Code in procedure main should be calling det with appropriate arguments and then printing the value of the determinant that det returned. 
+* All register usage and calling conventions must be satisfied.
+
+Here is an example output of the program:
+4
+1.67
+0.00
+-7.46
+0.39
+-1.65
+7.75
+9.48
+-3.11
+6.12
+-4.58
+1.65
+-0.19
+-5.54
+0.95
+-8.40
+1.50
+-172.31924348
+
+
+5) Convert the following C code to MIPS.
+
+#include<stdlib.h>
+#include<stdio.h>
+
+#define PLANETS_CNT 8
+char* planets[PLANETS_CNT] = {"Mercury", "Venus", "Earth", "Mars",
+                               "Jupiter", "Saturn", "Uranus", "Neptune"};
+/* Average planet distances from the Sun in light years and miles*/
+double distance[PLANETS_CNT][2] = {{0.000006123880620837039, -1},
+                                   {-1, 66999999.963716},
+                                   {0.00001582002493716235, -1},
+                                   {-1, 141999999.923099},
+                                   {0.00008233217279125351, -1},
+                                   {-1, 884999999.520723},
+                                   {0.0003027918751413869, -1},
+                                   {0.00047460074811487044, -1}};
+
+double miles_to_ly(double miles) {
+  return miles / 5878625370000;
+}
+
+double ly_to_miles(double ly) {
+  return 5878625370000 * ly;
+}
+
+int main()
+{
+  int i;
+  for (i = 0; i < PLANETS_CNT; ++i) {
+    if (distance[i][0] == -1 && distance[i][1] != -1) {
+      distance[i][0] = miles_to_ly(distance[i][1]);
+    }
+    else if (distance[i][0] != -1 && distance[i][1] == -1) {
+      distance[i][1] = ly_to_miles(distance[i][0]);
+    }
+    else if (distance[i][0] == -1 && distance[i][1] == -1) {
+      printf("No distance is given for %s\n", planets[i]);
+      return EXIT_SUCCESS;
+    }
+  }
+  printf("Planet\tLight years\tMiles\n");
+  for (i = 0; i < PLANETS_CNT; ++i) {
+    printf("%s\t%f\t\%f\n", planets[i], distance[i][0], distance[i][1]);
+  }
+  return EXIT_SUCCESS;
+}
+
+
+6) For this problem, you may assume a big-endian architecture.
+
+a.
+Review the code provided below. Recall that syscall 2 is used to print a floating point value. Write MIPS code to implement two procedures.
+
+The first procedure, called "avg", computes the average (arithmetic mean) of a series of values.
+
+The second procedure, called "warmer", prints one of two messages: ``It is warmer in Troy" or ``It is warmer in Anchorage", depending on which city has a higher annual average low temperature. Make sure you follow all calling and register usage conventions, save/restore registers when necessary, etc.
+
+The expected output of running this program would be similar to the following:
+January average low temperature in Troy is -209.50000000
+-12.68333340
+-0.94166678
+It is warmer in Anchorage
+
+
+Fill in the code below comment lines #1 and #2.
+
+
+         .data
+# Monthly average low temperature data, degrees C
+# (Jan, Feb, ..., Dec)
+troy: .float -209.5, -8.6, -3.9, 3.0, 8.7, 14.3, 17.1, 15.9, 11.3, 4.8, 0.2, -5.5
+anchorage: .float -11.6, -10.1, -7.1, -1.6, 4.2, 8.7, 11.2, 10.0, 5.6, -1.6, -8.6, -10.4
+const0: .float 0.0
+const12: .float 12.0
+jan_str: .asciiz "January average low temperature in "
+avg_str: .asciiz "Annual average low temperature in "
+is_str: .asciiz " is "
+warmer_str: .asciiz "It is warmer in "
+troy_str: .asciiz "Troy"
+anchorage_str: .asciiz "Anchorage"
+nl: .asciiz "\n"
+
+         .text
+         .globl main
+main:    addi  $sp, $sp, -4
+         sw    $ra, 0($sp)
+
+         la    $a0, jan_str
+         li    $v0, 4
+         syscall
+         la    $a0, troy_str
+         syscall
+         la    $a0, is_str
+         syscall
+
+         la    $t0, troy
+         lwc1  $f12, 0($t0)
+         li    $v0, 2
+         syscall
+
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+         la    $a0, avg_str
+         syscall
+         la    $a0, troy_str
+         syscall
+         la    $a0, is_str
+         syscall
+         
+         la    $a0, troy
+         li    $a1, 12
+         jal   avg
+         mov.s $f1, $f0
+
+         mov.s $f12, $f0
+         li    $v0, 2
+         syscall
+
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+         la    $a0, avg_str
+         syscall
+         la    $a0, anchorage_str
+         syscall
+         la    $a0, is_str
+         syscall
+         
+         la    $a0, anchorage
+         li    $a1, 12
+         jal   avg
+         mov.s $f13, $f0
+
+         mov.s $f12, $f0
+         li    $v0, 2
+         syscall
+
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+
+         mov.s $f12, $f1
+         jal   warmer
+
+         lw    $ra, 0($sp)
+         addi  $sp, $sp, 4
+
+         li    $v0, 10
+         syscall
+
+
+#        $a0 the base address of an array of floats
+#        $a1 the size of the array
+#        $f0 return value (the average of array elements)
+avg:
+         #1
+
+
+
+
+
+
+         jr    $ra
+
+#        $f12 Annual average low temperature in Troy
+#        $f13 Annual average low temperature in Anchorage
+warmer:
+         #2
+
+
+
+
+
+
+         jr    $ra
+
+
+
+
+
+b.
+Suppose the January average low temperature for Troy from the MIPS source code in part (a) is stored at memory address 0x10010000. What is the actual word value at memory address 0x10010000? Show your answer both as binary (you may use spaces to separate groups of bits) and hexadecimal.
+
+Binary: 
+
+Hexadecimal: 
+
+c.
+As you are debugging your program from part (a), you notice that the January average low temperature for Troy is probably incorrect. You replace the word at memory address 0x10010000 with the new value of 0xc11a0000. If you re-run your program now, what would be the first line of output?
+
+
+d.
+Suppose you replace the line with the "troy" label in the code from part (a) with the following line:
+troy: .float -9.8, -8.6, -3.9, 3.0, 8.7, 14.3, 17.1, 15.9, 11.3, 4.8, 0.2, -5.5
+
+(note that the only difference from the original code is the value of January average low temperature in Troy which is now -9.8). When you re-run your program now, the first line of output looks like this:
+
+January average low temperature in Troy is -9.80000019
+
+Explain why the value that was printed is different from the value that was specified in the source code. What could you do to ensure that the value used in computations is exactly the value -9.8 specified in code?
+
+
+7) Fuel efficiency is measured differently in different countries. In the U.S., it is expressed as the distance in miles a vehicle would travel using one gallon of fuel. In many other countries, it is given as the amount of fuel in liters consumed to travel the distance of 100 km. One U.S. mile is 1.609344 km. One U.S. gallon is 3.78541 liters.
+
+Write a complete MIPS program that asks the user to enter fuel consumption (in liters per 100 km) as a rational number, then converts it to the MPG rating and prints the result. Structure your code such that the conversion is performed by a separate procedure.
+
+
+8) The period of a simple pendulum is defined according to the following formula:
+
+T = 2 * pi * sqrt(L/g)
+
+where T is the period, s; pi is the constant (assume it is 3.14159265); L is the pendulum length, m; g is the acceleration due to gravity, m/s^2)
+
+Write a complete MIPS program that asks the user to enter values of L and g as rational numbers, then computes the value of T and prints it. There are some additional requirements:
+* If the user entered a negative value for g, no computation should be attempted. Instead, the program should report that an invalid value was entered for g and terminate. It is OK to enter a negative value for L.
+* If the result of the computation is NaN, +Infinity, or -Infinity, the program should print those values translated to Spanish as follows:
++-----------+-------------+
+|  English  |   Spanish   |
++-----------+-------------+
+| NaN       | No numérico |
+| +Infinity | +Infinito   |
+| -Infinity | -Infinito   |
++-----------+-------------+
+
+9) Consider the slide "Datapath With Jumps Added" datapath from the Chapter 4 slides. Suppose there is a hardware issue where the ALUSrc control line is fixed at 0. Give an example of an instruction that would be impacted, and how that instruction is impacted.
+
+10) Recall "Datapath With Control" figure from the textbook and lecture slides (practice03_10_01.png). Suppose the following instruction is executed in this datapath:
+
+lw $4,-4($3)
+
+Recall that the format of I-type instructions is as shown in practice03_10_02.png.
+
+Assume that data memory is all zeros and that the processor's registers have the following decimal values at the beginning of the cycle in which the above instruction is fetched:
+
++─────+─────+─────+─────+─────+─────+─────+─────+──────+──────+
+| r0  | r1  | r2  | r3  | r4  | r5  | r6  | r8  | r12  | r31  |
++─────+─────+─────+─────+─────+─────+─────+─────+──────+──────+
+| 0   | -2  | 4   | 40  | 8   | -1  | -16 | 0   | 2    | 6    |
++─────+─────+─────+─────+─────+─────+─────+─────+──────+──────+
+
+What are the values of all data and control inputs for the "Registers" unit and all data inputs of the "ALU" unit?
+
+Which of the following instructions is/are not supported by this datapath?
+
+and
+sub
+slt
+j
+or
+lw
+beq
+sw
+add
+
+11) Assume we have no forwarding available in our datapath. Re-order the below instructions to optimally reduce the number of hazards, while still ensuring correctness of the code.
+
+lw  $t0, 0($s0)
+add $t0, $t0, $s0
+sw  $t0, 0($s0)
+lw  $t1, 4($s0)
+add $t1, $t1, $s1
+sw  $t1, 4($s0)
+
+
+12) With the re-ordered instructions from problem 1, give a pipeline diagram for the program (like on slide "Pop Quiz Answer" of "Chapter-4_MIPS_Processor_Pipelining-slides.pdf"). How many cycles does the program take to execute? What's the programs CPI?
+
+
+13) Consider the below code for matrix-matrix multiplication, from the Homework 3 solution file. If both matrices we're multiplying are 2x2, how many incorrect branch predictions would result for a static predictor for 'always branch'? What about a 1-bit predictor? Assume that the initial prediction is 'branch'.
+
+  li  $t0, 0    # our i < N_1
+loop_i:
+  beq $t0, $s0, end_i
+
+  li  $t1, 0    # our j < M_2
+loop_j:
+  beq $t1, $s3, end_j
+
+  li  $t3, 0    # our accumulator, will set result[i,j] to this
+
+  li  $t2, 0    # our k < M_1
+loop_k:
+  beq $t2, $s1, end_k
+
+  # result[i,j] +=  mat1[i,k] * mat2[k,j];
+
+  # get address of mat1[i,k] = 4*(i*M_1 + k)
+  mul $t4, $t0, $s1
+  add $t4, $t4, $t2
+  sll $t4, $t4, 2
+  add $t4, $t4, $s2
+
+  # get mat1[i,k]
+  lw  $t4, 0($t4)
+
+  # get address of mat2[k,j] = 4*(k*M_2 + j)
+  mul $t5, $t2, $s3
+  add $t5, $t5, $t1
+  sll $t5, $t5, 2
+  add $t5, $t5, $s4
+
+  # get mat2[k,j]
+  lw  $t5, 0($t5)
+
+  # multiply and save in accumulator
+  mul $t4, $t4, $t5
+  add $t3, $t3, $t4
+
+  add $t2, $t2, 1
+  j loop_k
+end_k:
+
+  # set result[i,j] = t3  
+  # get address of mat3[i,j] = 4*(i*M_2 + j)
+  mul $t4, $t0, $s3
+  add $t4, $t4, $t1
+  sll $t4, $t4, 2
+  add $t4, $t4, $s5
+
+  # save result
+  sw  $t3, 0($t4)
+
+  add $t1, $t1, 1
+  j loop_j
+end_j:
+
+  add $t0, $t0, 1
+  j loop_i
+end_i:
+
+
+
+SOLUTIONS
+---------
+
+1)
+x = (-1)^s * (1 + f) * 2^(e + bias)
+
+positive => s = 0
+single precision => bias = 127
+
+57.75 = 32 + 16 + 8 + 1 + 1/2 + 1/4
+57.75 = 2^5 + 2^4 + 2^3 + 2^0 + 2^-1 + 2^-2
+57.75 = 0b111001.11
+=> fraction = [1]1100111[0..0] = 11001[0..0]
+
+exponent = 5 + bias = 132 = 10000100
+
+FP = 0 10000100 11001110000000000000000
+
+
+2)
+1  10000000000000000000000
+
+x = (-1)^s * (1 + f) * 2^(e + bias)
+
+s = 1 => negative
+exponent - bias => -1
+f = 0b11
+
+--> (-1)*0b0.11 -> 1/2 + 1/4 = -0.75
+
+
+3)
+a. Many decimal values cannot be represented in IEEE 754 format exactly since they have non-terminating fraction part and cannot be represented exactly with finite number of bits. For example, 0.01 will likely be represented as approximately 0.0099998 or something similar. While the representation error (the difference between the value represented as a floating-point number and the value that we needed to store) is very small for a single given value, when many arithmetic operations are performed, errors accumulate, and become significant. We can see the effect of this accumulated error in a quite significant difference (more than three cents) between the actual value computed by performing multiple additions and the expected value (either computed mathematically which would be perfectly accurate or using multiplication which might still exhibit some representation error but it would be smaller since there is no accumulation of the error).
+
+b. Possible solution:
+
+      .data
+txt1: .asciiz "Enter starting balance: "
+txt2: .asciiz "Enter transaction amount: "
+txt3: .asciiz "Enter the number of transactions: "
+txt4: .asciiz "Computed balance is $"
+txt5: .asciiz "Expected balance is $"
+newline:
+      .asciiz "\n"
+dot:  .asciiz "."
+cent_f:
+      .float 0.01
+dollar:
+      .word 100
+
+      .text
+      .globl main
+
+main: addi  $sp, $sp, -4    # store current $ra
+      sw    $ra, 0($sp)
+
+      la    $a0, txt1
+      li    $v0, 4
+      syscall
+
+      li    $v0, 6
+      syscall                 # the value read from the user will be in $f0
+      mov.s $f11, $f0         # move from $f0 to $f11
+
+      la    $a0, txt2
+      li    $v0, 4
+      syscall
+      li    $v0, 6
+      syscall                 # the value read from the user will be in $f0
+      mov.s $f10, $f0         # move from $f0 to $f10
+      
+      la    $a0, txt3
+      li    $v0, 4
+      syscall
+
+      li    $v0, 5
+      syscall
+      move  $t9, $v0
+
+      move  $t0, $t9
+      lwc1  $f0, cent_f
+      div.s $f1, $f11, $f0
+      cvt.w.s $f1, $f1
+      mfc1  $t1,$f1
+
+      div.s $f1, $f10, $f0
+      cvt.w.s $f1, $f1
+      mfc1  $t2, $f1
+loop_i:
+      beq   $t0, $zero, end_i
+      add   $t1, $t1, $t2 
+      addi  $t0, $t0, -1
+      j loop_i
+end_i:
+      la    $a0, txt4
+      li    $v0, 4
+      syscall
+
+      lw    $t3, dollar
+      div   $t1, $t3
+      mflo  $a0
+      li    $v0, 1
+      syscall
+      la    $a0, dot
+      li    $v0, 4
+      syscall
+      mfhi  $a0
+      li    $v0, 1
+      syscall
+
+      la    $a0, newline
+      li    $v0, 4
+      syscall
+
+      mtc1  $t9, $f12         # move from $t9 to $f12
+      # Convert from integer to float. Integer is in $f12, the float is written to $f12.
+      cvt.s.w $f12, $f12
+      mov.s $f1, $f10         # move from $f10 to $f1
+      
+      mul.s $f12, $f12, $f1
+      add.s $f12, $f12, $f11
+
+      la    $a0, txt5
+      li    $v0, 4
+      syscall
+      li    $v0, 2
+      syscall
+      la    $a0, newline
+      li    $v0, 4
+      syscall
+
+cont: lw    $ra, 0($sp)     # restore $ra
+      addi  $sp, $sp, 4
+      li    $v0, 10
+      syscall 
+
+4)
+      .data
+newline:
+      .asciiz "\n"
+      .align 3
+zero: .double 0.0
+
+      .text
+      .globl main
+
+main: addi  $sp, $sp, -4    # store current $ra
+      sw    $ra, 0($sp)
+
+      li    $v0, 5
+      syscall
+      move  $s0, $v0        # matrix size n
+
+      mul   $s1, $s0, $s0   # n^2
+      sll   $a0, $s1, 3
+      li    $v0, 9
+      syscall
+      move  $s2, $v0        # base address of matrix
+
+      move  $t0, $zero
+      move  $t1, $s2
+read_loop:
+      beq   $t0, $s1, read_loop_end
+      li    $v0, 7
+      syscall
+      sll   $t2, $t0, 3
+      add   $t2, $t2, $t1
+      sdc1  $f0, 0($t2)
+      addi  $t0, $t0, 1
+      j read_loop
+read_loop_end:
+      move  $a0, $s2
+      move  $a1, $s0
+      jal   det
+      mov.d $f12, $f0
+      li    $v0, 3
+      syscall
+main_end:
+      lw    $ra, 0($sp)     # restore $ra
+      addi  $sp, $sp, 4
+      li    $v0, 10
+      syscall
+
+det:
+      addi  $sp, $sp, -28
+      sw    $ra, 0($sp)      # store current $ra
+      sw    $s0, 4($sp)      # store current $s0
+      sw    $s1, 8($sp)      # store current $s1
+      sw    $s2, 12($sp)     # store current $s2
+      sw    $s3, 16($sp)     # store current $s3
+      sw    $s4, 20($sp)     # store current $s4
+      sw    $s5, 24($sp)     # store current $s5
+
+      li    $t0, 1
+      bne   $a1, $t0, recurse
+      ldc1  $f0, 0($a0)
+      j     det_end
+recurse:
+      move  $s0, $a0
+      move  $s1, $a1
+      addi  $s2, $s1, -1
+      move  $s3, $zero
+      la    $t0, zero
+      l.d   $f2, 0($t0)
+      mfc1.d $s4, $f2
+det_loop:
+      beq   $s3, $s1, det_loop_end
+      mul   $a0, $s2, $s2
+      sll   $a0, $a0, 3
+      li    $v0, 9
+      syscall
+
+      move  $t0, $zero
+      mul   $t1, $s1, $s1
+      sll   $t1, $t1, 3
+      move  $t2, $zero
+copy_loop:
+      beq   $t0, $t1, copy_loop_end
+      sll   $t4, $s1, 3
+      slt   $t3, $t0, $t4
+      bne   $t3, $zero, copy_loop_inc
+      div   $t0, $t4
+      mfhi  $t4
+      sra   $t4, $t4, 3
+      beq   $t4, $s3, copy_loop_inc
+      move  $t4, $s0
+      add   $t4, $t4, $t0
+      l.d   $f8, 0($t4)
+      add   $t5, $v0, $t2
+      s.d   $f8, 0($t5)
+      addi  $t2, $t2, 8
+copy_loop_inc:
+      addi  $t0, $t0, 8
+      j     copy_loop
+copy_loop_end:
+      
+      move  $a0, $v0
+      move  $a1, $s2
+      jal   det
+      
+      mtc1.d $s4, $f4
+      sll   $t0, $s3, 3
+      add   $t0, $t0, $s0
+      ldc1  $f2, 0($t0)
+      mul.d $f2, $f2, $f0
+      andi  $t0, $s3, 0x00000001
+      bne   $t0, $zero, det_loop_sub
+      add.d $f2, $f4, $f2
+      j det_loop_cont
+det_loop_sub:
+      sub.d $f2, $f4, $f2
+det_loop_cont:
+      mfc1.d $s4, $f2
+      addi  $s3, $s3, 1
+      j det_loop
+det_loop_end:
+      mtc1.d $s4, $f0
+det_end:
+      lw    $ra, 0($sp)     # restore $ra
+      lw    $s0, 4($sp)     # restore $s0
+      lw    $s1, 8($sp)     # restore $s1
+      lw    $s2, 12($sp)    # restore $s2
+      lw    $s3, 16($sp)    # restore $s3
+      lw    $s4, 20($sp)    # restore $s4
+      lw    $s5, 24($sp)    # restore $s5
+      addi  $sp, $sp, 28
+      jr    $ra
+
+
+5)
+      .data
+txt1: .asciiz "Planet\tLight years\tMiles\n"
+txt2: .asciiz "No distance is given for "
+newline:
+      .asciiz "\n"
+tab:  .asciiz "\t"
+planets_cnt:
+      .word 8
+      .align 3
+mply: .double 5878625370000
+negone:
+      .double -1
+planets:
+      .asciiz "Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune"
+dist_ly:
+      .double 0.000006123880620837039, -1, 0.00001582002493716235, -1, 0.00008233217279125351, -1, 0.0003027918751413869, 0.00047460074811487044
+dist_miles:
+      .double -1, 66999999.963716, -1, 141999999.923099, -1, 884999999.520723, -1, -1
+
+      .text
+      .globl main
+
+main: addi  $sp, $sp, -20
+      sw    $ra, 0($sp)       # store current $ra
+      sw    $s0, 4($sp)       # store current $s0
+      sw    $s1, 8($sp)       # store current $s1
+      sw    $s2, 12($sp)      # store current $s2
+      sw    $s3, 16($sp)      # store current $s3
+
+      la    $s0, planets_cnt
+      lw    $s0, 0($s0)
+      sll   $s0, $s0, 3
+      move  $s1, $zero
+main_loop:
+      beq   $s1, $s0, main_loop_end
+
+      la    $s2, dist_ly
+      add   $s2, $s2, $s1
+      ldc1  $f12, 0($s2)
+      la    $s3, dist_miles
+      add   $s3, $s3, $s1
+      ldc1  $f10, 0($s3)
+      la    $t2, negone
+      ldc1  $f8, 0($t2)
+      c.eq.d $f8, $f12
+      bc1f  no_err
+      c.eq.d $f8, $f10
+      bc1f  no_err
+
+      la    $a0, txt2
+      li    $v0, 4
+      syscall
+      move  $t0, $zero
+      la    $t1, planets
+find_planet_loop:
+      beq   $t0, $s1, find_planet_end
+      lbu   $t2, 0($t1)
+      bne   $t2, $zero, cont_search
+      addi  $t0, $t0, 8
+cont_search:
+      addi  $t1, $t1, 1
+      j find_planet_loop
+find_planet_end:
+      move  $a0, $t1
+      li    $v0, 4
+      syscall
+      j print_loop_end
+no_err:
+      c.eq.d $f8, $f12
+      bc1f  comp_miles
+      mov.d $f12, $f10
+      jal   miles_to_ly
+      s.d   $f12, 0($s2)
+      j     main_inc
+comp_miles:
+      c.eq.d $f8, $f10
+      bc1f  main_inc
+      jal   ly_to_miles
+      s.d   $f12, 0($s3)
+main_inc:
+      addi  $s1, $s1, 8
+      j main_loop
+main_loop_end:
+
+      la    $a0, txt1
+      li    $v0, 4
+      syscall
+
+      la    $s0, planets_cnt
+      lw    $s0, 0($s0)
+      sll   $s0, $s0, 3
+      move  $s1, $zero
+      la    $t1, planets
+print_loop:
+      beq   $s1, $s0, print_loop_end
+      move  $a0, $t1
+      li    $v0, 4
+      syscall
+adv_loop:
+      lbu   $t2, 0($t1)
+      beq   $t2, $zero, adv_end
+      addi  $t1, $t1, 1
+      j adv_loop
+adv_end:
+      addi  $t1, $t1, 1
+      la    $a0, tab
+      li    $v0, 4
+      syscall
+      la    $t0, dist_ly
+      add   $t0, $t0, $s1
+      ldc1  $f12, 0($t0)
+      li    $v0, 3
+      syscall
+      la    $a0, tab
+      li    $v0, 4
+      syscall
+      la    $t0, dist_miles
+      add   $t0, $t0, $s1
+      ldc1  $f12, 0($t0)
+      li    $v0, 3
+      syscall
+      la    $a0, tab
+      li    $v0, 4
+      syscall
+      la    $a0, newline
+      li    $v0, 4
+      syscall
+      addi  $s1, $s1, 8
+      j print_loop
+print_loop_end:
+
+      lw    $ra, 0($sp)     # restore $ra
+      lw    $s0, 4($sp)     # restore $s0
+      lw    $s1, 8($sp)     # restore $s1
+      lw    $s2, 12($sp)    # restore $s2
+      lw    $s3, 16($sp)    # restore $s3
+      addi  $sp, $sp, 20
+      li    $v0, 10
+      syscall
+
+miles_to_ly:
+      la    $t0, mply
+      ldc1  $f0, 0($t0)
+      div.d $f12, $f12, $f0
+      jr    $ra
+
+ly_to_miles:
+      la    $t0, mply
+      ldc1  $f0, 0($t0)
+      mul.d $f12, $f12, $f0
+      jr    $ra
+
+6)
+a. Possible solution:
+
+         .data
+# Monthly average low temperature data, degrees C
+# (Jan, Feb, ..., Dec)
+troy: .float -209.5, -8.6, -3.9, 3.0, 8.7, 14.3, 17.1, 15.9, 11.3, 4.8, 0.2, -5.5
+anchorage: .float -11.6, -10.1, -7.1, -1.6, 4.2, 8.7, 11.2, 10.0, 5.6, -1.6, -8.6, -10.4
+const0: .float 0.0
+const12: .float 12.0
+jan_str: .asciiz "January average low temperature in "
+avg_str: .asciiz "Annual average low temperature in "
+is_str: .asciiz " is "
+warmer_str: .asciiz "It is warmer in "
+troy_str: .asciiz "Troy"
+anchorage_str: .asciiz "Anchorage"
+nl: .asciiz "\n"
+
+         .text
+         .globl main
+main:    addi  $sp, $sp, -4
+         sw    $ra, 0($sp)
+
+         la    $a0, jan_str
+         li    $v0, 4
+         syscall
+         la    $a0, troy_str
+         syscall
+         la    $a0, is_str
+         syscall
+
+         la    $t0, troy
+         lwc1  $f12, 0($t0)
+         li    $v0, 2
+         syscall
+
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+         la    $a0, avg_str
+         syscall
+         la    $a0, troy_str
+         syscall
+         la    $a0, is_str
+         syscall
+         
+         la    $a0, troy
+         li    $a1, 12
+         jal   avg
+         mov.s $f1, $f0
+
+         mov.s $f12, $f0
+         li    $v0, 2
+         syscall
+
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+         la    $a0, avg_str
+         syscall
+         la    $a0, anchorage_str
+         syscall
+         la    $a0, is_str
+         syscall
+         
+         la    $a0, anchorage
+         li    $a1, 12
+         jal   avg
+         mov.s $f13, $f0
+
+         mov.s $f12, $f0
+         li    $v0, 2
+         syscall
+
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+
+         mov.s $f12, $f1
+         jal   warmer
+
+         lw    $ra, 0($sp)
+         addi  $sp, $sp, 4
+
+         li    $v0, 10
+         syscall
+
+#        $a0 the base address of an array of floats
+#        $a1 the size of the array
+#        $f0 return value (the average of array elements)
+avg:     move  $t0, $a0
+         move  $t1, $a1
+         li    $t2, 0
+         la    $t3, const0
+         lwc1  $f16, 0($t3)
+loop:    beq   $t2, $t1, done
+         lwc1  $f17, 0($t0)
+         add.s $f16, $f16, $f17
+         addi  $t2, $t2, 1
+         addi  $t0, $t0, 4
+         j     loop
+done:    la    $t3, const12
+         lwc1  $f17, 0($t3)
+         div.s $f0, $f16, $f17
+
+         jr    $ra 
+
+#        $f12 Annual average low temperature in Troy
+#        $f13 Annual average low temperature in Anchorage
+warmer:  la    $a0, warmer_str
+         li    $v0, 4
+         syscall
+
+         c.lt.s $f12, $f13
+         bc1t  w_anchorage
+         la    $a0, troy_str
+         li    $v0, 4
+         syscall
+         j     w_done
+
+w_anchorage:
+         la    $a0, anchorage_str
+         li    $v0, 4
+         syscall
+
+w_done:
+         la    $a0, nl
+         li    $v0, 4
+         syscall
+
+         jr    $ra
+
+b.
+S: - => 1
+209.5 => 11010001.1 => 1.10100011 => actual exponent: 7 (moved . 7 positions to the left)
+Significand: 1.10100011 => fraction 10100011
+Exponent: 7 + 127 (bias) = 134 => 10000110
+
+Binary: 1 10000110 10100011000000000000000
+1100 0011 0101 0001 1000 0000 0000 0000
+Hexadecimal: 0xc3518000
+
+c.
+0xc11a0000 => 1100 0001 0001 1010 0000 0000 0000 0000
+1 10000010 00110100000000000000000
+S: 1 => -
+Exponent: 10000010 => 128 + 2 = 130
+Actual exponent: 130 - 127 (bias) = 3
+Fraction: 001101
+Significand: 1.001101 =[move . 3 positions to the right]=> 1001.101 => 9.625
+
+January average low temperature in Troy is -9.62500000
+
+d.
+Decimal value -9.8 cannot be represented exactly using the number of bits in mantissa provided by the single-precision IEEE 754 format. In fact, -9.8 cannot be represented exactly no matter how many bits are in mantissa because there is no finite series of the powers of 2 that sums up to precisely 9.8. Therefore, there is nothing that can be done to represent -9.8 with no error, unless arbitrary-precision representation is used instead of IEEE 754.
+
+7)
+      .data
+txt1: .asciiz "Enter fuel consumption (in liters per 100 km): "
+txt2: .asciiz "Miles Per Gallon (MPG) rating is: "
+newline:
+      .asciiz "\n"
+lpg:  .float 3.78541
+kmpm: .float 1.609344
+const100:
+      .float 100.0
+      .text
+      .globl main
+
+main: addi  $sp, $sp, -4      # store current $ra
+      sw    $ra, 0($sp)
+
+      la    $a0, txt1
+      li    $v0, 4
+      syscall
+
+      li    $v0, 6
+      syscall                 # the value read from the user will be in $f0
+
+      mov.s $f12, $f0         # move from $f0 to $f12
+      jal   lp1002mpg
+
+      la    $a0, txt2
+      li    $v0, 4
+      syscall
+
+      li    $v0, 2
+      syscall
+      la    $a0, newline
+      li    $v0, 4
+      syscall
+
+      lw    $ra, 0($sp)     # restore $ra
+      addi  $sp, $sp, 4
+      li    $v0, 10
+      syscall
+
+lp1002mpg:
+      la    $t0, const100
+      lwc1  $f11, 0($t0)
+      div.s $f12, $f11, $f12
+      la    $t0, lpg
+      lwc1  $f11, 0($t0)
+      mul.s $f12, $f11, $f12
+      la    $t0, kmpm
+      lwc1  $f11, 0($t0)
+      div.s $f12, $f12, $f11
+      jr    $ra
+
+8)
+      .data
+txt1: .asciiz "Ingrese la longitud del péndulo L en metros: "
+txt2: .asciiz "Ingrese la aceleración debida a la gravedad g en m/s^2: "
+txt3: .asciiz "Se ingresó un valor negativo para g que no es válido. ¡El programa está saliendo!"
+txt4: .asciiz "El período del péndulo T es "
+s:    .asciiz " s\n"
+pinfinity:
+      .asciiz "+Infinito"
+ninfinity:
+      .asciiz "-Infinito"
+nan:  .asciiz "No numérico"
+newline:
+      .asciiz "\n"
+      .align 3
+pi:   .double 3.14159265
+two:  .double 2.0
+zero: .double 0.0
+      .text
+      .globl main
+
+main: addi  $sp, $sp, -8
+      sw    $ra, 0($sp)       # store current $ra
+      sw    $s0, 4($sp)       # store current $s0
+
+      la    $a0, txt1
+      li    $v0, 4
+      syscall
+
+      li    $v0, 7
+      syscall                 # the value read from the user will be in $f0
+
+      mov.d $f12, $f0         # move from $f0 to $f12
+
+      la    $a0, txt2
+      li    $v0, 4
+      syscall
+
+      li    $v0, 7
+      syscall                 # the value read from the user will be in $f0
+
+      mov.d $f10, $f0         # move from $f0 to $f10
+      la    $s0, zero
+      ldc1  $f8, 0($s0)
+      c.lt.d $f10, $f8
+      bc1f  cont1
+      la    $a0, txt3
+      li    $v0, 4
+      syscall
+      j main_end
+cont1:
+      jal   pend
+
+      la    $a0, txt4
+      li    $v0, 4
+      syscall
+
+      mfc1.d $t0, $f12
+      li    $t2, 0x7ff00000   #+Infinity (double)
+      bne   $t1, $t2, cont2
+      bne   $t0, $zero, cont2
+      la    $a0, pinfinity
+      li    $v0, 4
+      syscall 
+      j main_end
+cont2:
+      li    $t2, 0xfff00000   #-Infinity (double)
+      bne   $t1, $t2, cont3
+      bne   $t0, $zero, cont3
+      la    $a0, ninfinity
+      li    $v0, 4
+      syscall 
+      j main_end
+cont3:
+      li    $t2, 0x7ff00000   #NaN's exponent
+      andi  $t3, $t1, 0x7ff00000  # mask for the exponent
+      bne   $t3, $t2, cont5
+      andi  $t3, $t1, 0x000fffff  # mask for the fraction (first word)
+      bne   $t3, $zero, cont4
+      beq   $t0, $zero, cont5 # Should not happen since it is +-Infinity
+cont4:      
+      la    $a0, nan
+      li    $v0, 4
+      syscall 
+      j main_end
+cont5:
+      li    $v0, 3
+      syscall
+      la    $a0, s
+      li    $v0, 4
+      syscall
+
+main_end:
+      lw    $s0, 4($sp)     # restore $s0
+      lw    $ra, 0($sp)     # restore $ra
+      addi  $sp, $sp, 8
+      li    $v0, 10
+      syscall
+
+pend:
+      div.d $f12, $f12, $f10
+      sqrt.d $f12, $f12
+      la    $t0, pi
+      ldc1  $f10, 0($t0)
+      mul.d $f12, $f12, $f10
+      la    $t0, two
+      ldc1  $f10, 0($t0)
+      mul.d $f12, $f12, $f10
+      jr    $ra
+
+9)
+lw/sw - these require ALUSrc to be 1, as the mux selects the sign-extended immediate field as the second input to the ALU. The 
+ALU then computes a memory address as the base address stored in some register plus the immediate offset value. If ALUSrc is 
+stuck at 0, the contents of some random register will be the second input to the ALU.
+
+
+10)
+Registers
+---------
+RegWrite:        1
+Read register 1: 3
+Read register 2: 4
+Write register:  4
+Write data:      0
+
+ALU
+---
+40
+-4
+
+
+j (jump instruction)
+
+
+11)
+We note that registers $t0 and $t1 have several dependencies. We can re-order by 'interleaving' updates to these two registers:
+
+lw  $t0, 0($s0)
+lw  $t1, 4($s0)
+add $t0, $t0, $s0
+add $t1, $t1, $s1
+sw  $t0, 0($s0)
+sw  $t1, 4($s0)
+
+
+12)
+          Cycle   1 2 3 4 5 6 7 8 9 0 1 2
+lw  $t0, 0($s0)   F D E M W
+lw  $t1, 4($s0)     F D E M W
+add $t0, $t0, $s0     * F D E M W 
+add $t1, $t1, $s1         F D E M W
+sw  $t0, 0($s0)             * F D E M W
+sw  $t1, 4($s0)                 F D E M W
+
+It takes 12 cycles to execute 6 instructions. The CPI is 2.
+
+
+13)
+Relevant portion of the code:
+loop_i:
+  beq $t0, $s0, end_i
+loop_j:
+  beq $t1, $s3, end_j
+loop_k:
+  beq $t2, $s1, end_k
+  
+  j loop_k
+end_k:
+  j loop_j
+end_j:
+  j loop_i
+end_i:
+
+
+Each loop iterates 2 times. For each loop, there is 3 branch checks. 2 that don't branch and one that does. The loop_i branch check is encountered 3 times. The loop_j branch check is encountered 6 times. The loop_j check is encountered 12 times. There's 21 total checks.
+
+Static predictor: 
+We predict correctly once for loop_i, 2 times for loop_j, and 4 times for loop_k. So we branch 7 total times, and have 14 incorrect predictions.
+
+1-bit predictor:
+Following the entire flow of the program (beq checks, predictions, and results given below)
+       
+       prediction  reality
+loop_i     branch    don't
+loop_j      don't    don't
+loop_k      don't    don't
+loop_k      don't    don't
+loop_k      don't   branch
+loop_j     branch    don't
+loop_k      don't    don't
+loop_k      don't    don't
+loop_k      don't   branch
+loop_j     branch   branch
+loop_i     branch    don't
+loop_j      don't    don't 
+loop_k      don't    don't
+loop_k      don't    don't
+loop_k      don't   branch
+loop_j     branch    don't
+loop_k      don't    don't
+loop_k      don't    don't
+loop_k      don't   branch
+loop_j     branch   branch
+loop_i     branch   branch
+
+correct predictions: 13 / 21
