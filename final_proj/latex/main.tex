@@ -1,0 +1,81 @@
+\documentclass{article}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{amsmath, amssymb, setspace, enumerate, enumitem}
+\usepackage{setspace}
+\usepackage{graphicx}
+\doublespacing
+
+\author{Jericho Dizon\\Jose Idrovo\\Adrian Rodriguez\\Jiawei Wu}
+\title{\textbf{MIPS Datapath Group Project}}
+\begin{document}
+     \begin{titlepage}
+        \maketitle
+     \end{titlepage}
+
+     \begin{enumerate}
+        \setcounter{enumi}{1}
+        \item \textbf{Verilog Model}
+        \\ The Verilog code we selected is from Zybooks 12.9.1, it is attached in file verilog.v
+        \item \textbf{Datapath}
+        \\ We implemented a pipelined datatpath in our verilog code.
+        \item \textbf{Memory}
+        \\ Single level memory implementation
+        \item \textbf{Simulation}
+        \\ Sample MIPS program 
+        \begin{verbatim}
+add $s1,$s2,$s3
+add $s4,$s1,$s3
+j dest
+
+Contents of each instruction
+r-type instructions
+line    opcode[31:26]   rs[25:11]   rt[20:16]   rd[15:11]   shAmt[10:6] funct[5:0]
+1       000000          10010 (s2)  10011 (s3)  10001 (s1)  X           100000
+2       000000          10001 (s1)  10011 (s3)  10100 (s4)  X           100000
+
+i-type instruction
+line    opcode[31:26]   address[25:0]
+3       000010          dest
+        \end{verbatim}
+
+        Verilog Processor Execution: ()
+        \textbf{Cycle 1 (Instruction Fetch):}
+        \\ In cycle 1 of execution, PC, Instruction, and the Add ALU is used
+        \\ \textbf{PC: } Input: 0, Output = 0
+        \\ \textbf{Instruction Memory: } Input: 0, 
+
+        \textbf{Cycle 2 (Instruction Decode):}
+        \\ In cycle 2 of execution, WriteReg, our Control Unit, Register File, and Sign Extend are used. 
+        \\ \textbf{Execution}
+
+        \textbf{Cycle 3 (Execution):}
+
+        \textbf{Cycle 4 (Memory):}
+
+        \textbf{Cycle 5 (Write Back):}
+
+        \item \textbf{References}
+        \\ https://bellerofonte.diism.unisi.it/index.php
+        \\ Computer Organization and Design - Interative Version (MIPS)
+        \\ FOR REFERENCE AMIGOS:
+        \\  Single-level memory is organizing memory with processor and (slow) main memory (DRAM)
+        \\  Compare with multilevel memory, which has at least one (quick) cache between the processor and main memory.
+        
+        % MULT4to1 AND MIPS ALU %
+        %https://learn.zybooks.com/zybook/RPICSCI2500KuzminFall2022/chapter/9/section/2?content_resource_id=61945269%
+
+        \item \textbf{Contributions}
+        \\  Jose Idrovo:
+        \\  
+        \\  Adrian Rodriguez:
+        \\  
+        \\  Jericho Dizon:
+        \\  
+        \\  Jiawei Wu: 
+
+     \end{enumerate}
+
+     
+     
+     
+\end{document}
